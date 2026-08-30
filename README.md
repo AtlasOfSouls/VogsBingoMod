@@ -14,7 +14,7 @@ If you have any questions or are interested in seeing more about Silksong Bingo,
 Contact me (atlasofsouls) if you find any bugs, or if you want to make additions/suggestions!
 
 Credits:  
-Abyss, for curating the goalset and hosting caravan  
+Abby, for curating the goalset and hosting caravan  
 Bingosync, for hosting the servers that the mod connects to  
 The Hollow Knight/Silksong Modding Discord, for various help getting me started with modding Silksong  
 The Silksong Bingo Discord for helping with feedback and suggestions  
