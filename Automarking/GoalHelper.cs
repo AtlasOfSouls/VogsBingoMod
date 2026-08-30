@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SilksongBingoMod.Automarking
+namespace VogsBingoMod.Automarking
 {
     internal class GoalHelper
     {
@@ -125,7 +125,7 @@ namespace SilksongBingoMod.Automarking
                 return nameToID[goalName];
             } catch (Exception)
             {
-                SilksongBingoModPlugin.LogError($"Could not find a goal ID for goal: \"{goalName}\"");
+                VogsBingoModPlugin.LogError($"Could not find a goal ID for goal: \"{goalName}\"");
                 return 0;
             }
         }
@@ -147,7 +147,7 @@ namespace SilksongBingoMod.Automarking
                 json = Automarker.GetGoalsJson();
             } catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
                 json = "";
             }
             return JsonHelper.GetGoalNamesFromList(json);

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using SilksongBingoMod.UI;
+using VogsBingoMod.UI;
 using UnityEngine;
 
-namespace SilksongBingoMod.Automarking
+namespace VogsBingoMod.Automarking
 {
     internal class Automarker : MonoBehaviour
     {
@@ -76,10 +76,10 @@ namespace SilksongBingoMod.Automarking
         internal static string GetGoalsJson()
         {
             Assembly executeAssembly = Assembly.GetExecutingAssembly();
-            Stream stream = executeAssembly.GetManifestResourceStream($"SilksongBingoMod.Automarking.Goals.json");
+            Stream stream = executeAssembly.GetManifestResourceStream($"VogsBingoMod.Automarking.Goals.json");
             if (stream == null)
             {
-                SilksongBingoModPlugin.LogError($"Could not find the goals resource.");
+                VogsBingoModPlugin.LogError($"Could not find the goals resource.");
                 return "";
             }
             MemoryStream memoryStream = new MemoryStream();
@@ -453,7 +453,7 @@ namespace SilksongBingoMod.Automarking
                     goalCompleted = (AutomarkRosaryStringHandler.GetNonPurchasedStringsBroken() + AutomarkRosaryStringHandler.GetFrayedStringsBroken()) >= 8;
                     break;
                 default:
-                    SilksongBingoModPlugin.LogError($"There isn't a check for goalID {goalID}");
+                    VogsBingoModPlugin.LogError($"There isn't a check for goalID {goalID}");
                     break;
             }
             if (goalCompleted)

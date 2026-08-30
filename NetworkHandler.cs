@@ -8,10 +8,10 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SilksongBingoMod.UI;
+using VogsBingoMod.UI;
 using UnityEngine;
 
-namespace SilksongBingoMod
+namespace VogsBingoMod
 {
     internal static class NetworkHandler
     {
@@ -68,7 +68,7 @@ namespace SilksongBingoMod
             try{
                 revealCardResponse.EnsureSuccessStatusCode();
             } catch (Exception e){
-                SilksongBingoModPlugin.LogError($"{e.Message}");
+                VogsBingoModPlugin.LogError($"{e.Message}");
                 Coroutiner.CreateCoroutine(UIHelper.TriggerErrorText_Main());
             }
             Task<string> readResponse = revealCardResponse.Content.ReadAsStringAsync();
@@ -96,7 +96,7 @@ namespace SilksongBingoMod
             try{
             switchColorResponse.EnsureSuccessStatusCode();
             } catch (Exception e){
-                SilksongBingoModPlugin.LogError($"{e.Message}");
+                VogsBingoModPlugin.LogError($"{e.Message}");
                 Coroutiner.CreateCoroutine(UIHelper.TriggerErrorText_Main());
             }
             Task<string> readResponse = switchColorResponse.Content.ReadAsStringAsync();
@@ -118,7 +118,7 @@ namespace SilksongBingoMod
                     }
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace SilksongBingoMod
                 Coroutiner.CreateCoroutine(UIHelper.TriggerErrorText_Main());
             } else if (failedToMark)
             {
-                SilksongBingoModPlugin.LogInfo("Mark was blocked by lockout.");
+                VogsBingoModPlugin.LogInfo("Mark was blocked by lockout.");
             }
         }
 
@@ -161,21 +161,21 @@ namespace SilksongBingoMod
             if (connectState == ConnectionState.NotConnected) {
                 if (roomUrl.Length > startOfBingosyncRoomLink.Length && roomUrl.Substring(0, startOfBingosyncRoomLink.Length).Equals(startOfBingosyncRoomLink))
                 {
-                    SilksongBingoModPlugin.LogInfo("Attempting to connect to bingosync room...");
+                    VogsBingoModPlugin.LogInfo("Attempting to connect to bingosync room...");
                     roomCode = roomUrl.Substring(startOfBingosyncRoomLink.Length);
                     domainName = "www.bingosync";
                     socketDomainName = "bingosync";
                     roomType = RoomType.Bingosync;
                 } else if (roomUrl.Length > startOfCaravanRoomLink.Length && roomUrl.Substring(0, startOfCaravanRoomLink.Length).Equals(startOfCaravanRoomLink))
                 {
-                    SilksongBingoModPlugin.LogInfo("Attempting to connect to caravan room...");
+                    VogsBingoModPlugin.LogInfo("Attempting to connect to caravan room...");
                     roomCode = roomUrl.Substring(startOfCaravanRoomLink.Length);
                     domainName = "caravan.kobold60";
                     socketDomainName = "kobold60";
                     roomType = RoomType.Caravan;
                 } else
                 {
-                    SilksongBingoModPlugin.LogInfo("The room link that was entered could not be recognized.");
+                    VogsBingoModPlugin.LogInfo("The room link that was entered could not be recognized.");
                     return;
                 }
                 connectState = ConnectionState.Connecting;
@@ -191,7 +191,7 @@ namespace SilksongBingoMod
                     }
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
             }
         }
@@ -213,13 +213,13 @@ namespace SilksongBingoMod
             readSocketKeyTask.ContinueWith(StartWebSocket);
             }catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
             }
         }
 
         static void StartWebSocket(Task<string> readSocketKeyTask)
         {
-            SilksongBingoModPlugin.LogInfo("Starting WS...");
+            VogsBingoModPlugin.LogInfo("Starting WS...");
             socketKeyJson = readSocketKeyTask.Result;
             readSocketKeyTask.Dispose();
             webSocketClient = new ClientWebSocket();
@@ -229,7 +229,7 @@ namespace SilksongBingoMod
             wsConnectTask.ContinueWith(SendJoinViaWebSocket);
             } catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
                 Coroutiner.CreateCoroutine(UIHelper.NotifyOfConnectingToRoomCancel_Main(1));
             }
         }
@@ -243,7 +243,7 @@ namespace SilksongBingoMod
                     wsTask = webSocketClient.SendAsync(bytes, WebSocketMessageType.Text, true, cancellationTokenSource.Token);
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
                 socketKeyJson = string.Empty;
             }
@@ -267,7 +267,7 @@ namespace SilksongBingoMod
                 roomCode = string.Empty;
                 domainName = string.Empty;
                 socketDomainName = string.Empty;
-                SilksongBingoModPlugin.LogInfo("Starting the process of leaving the room...");
+                VogsBingoModPlugin.LogInfo("Starting the process of leaving the room...");
                 connectState = ConnectionState.Disconnecting;
                 try{
                     Task wsTask = webSocketClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "Exit Room button", CancellationToken.None);
@@ -275,7 +275,7 @@ namespace SilksongBingoMod
                     wsTask.ContinueWith(PostExit);
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                     ForceExitRoomWithDisconnectError(2);
                 }
             }
@@ -292,7 +292,7 @@ namespace SilksongBingoMod
             webSocketClient = null;
             connectState = ConnectionState.NotConnected;
             Coroutiner.CreateCoroutine(UIHelper.NotifyOfRoomExit_Main());
-            SilksongBingoModPlugin.LogInfo("The room has been exited.");
+            VogsBingoModPlugin.LogInfo("The room has been exited.");
         }
 
         internal static void RequestBoardViaHttp()
@@ -305,7 +305,7 @@ namespace SilksongBingoMod
                 }
             } catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
             }
         }
 
@@ -317,7 +317,7 @@ namespace SilksongBingoMod
                 boardResponse.EnsureSuccessStatusCode();
             } catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError($"Error requesting the board: {e.Message}");
+                VogsBingoModPlugin.LogError($"Error requesting the board: {e.Message}");
             }
             Task<string> readBoardTask = boardResponse.Content.ReadAsStringAsync();
             readBoardTask.ContinueWith(SendBoardToUI);
@@ -339,7 +339,7 @@ namespace SilksongBingoMod
                     wsReceiveTask.ContinueWith(ReceiveWSMessage);
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
             }
         }
@@ -370,7 +370,7 @@ namespace SilksongBingoMod
                     wsTask.ContinueWith(ReceiveWSMessage);
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
             } else
             {
@@ -387,7 +387,7 @@ namespace SilksongBingoMod
                 Coroutiner.CreateCoroutine(UIHelper.UpdateGoal_Main(colorID, remove, slotIndex));
             } catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
             }
         }
 
@@ -424,7 +424,7 @@ namespace SilksongBingoMod
                     return newTask;
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
             }
             ForceExitRoomWithDisconnectError(3);
@@ -435,7 +435,7 @@ namespace SilksongBingoMod
         {
             cancellationTokenSource.Dispose();
             cancellationTokenSource = new CancellationTokenSource();
-            SilksongBingoModPlugin.LogInfo("Forcing disconnect");
+            VogsBingoModPlugin.LogInfo("Forcing disconnect");
             if (webSocketClient != null){
                 webSocketClient.Dispose();
                 webSocketClient = null;
@@ -464,7 +464,7 @@ namespace SilksongBingoMod
                     return httpTask;
                 } catch (Exception e)
                 {
-                    SilksongBingoModPlugin.LogError(e);
+                    VogsBingoModPlugin.LogError(e);
                 }
             }
             ForceExitRoomWithDisconnectError(4);
@@ -530,7 +530,7 @@ namespace SilksongBingoMod
                 }
                 if (flag)
                 {
-                    SilksongBingoModPlugin.LogInfo("CANCEL REQUESTED");
+                    VogsBingoModPlugin.LogInfo("CANCEL REQUESTED");
                     ForceExitRoomWithDisconnectError(1);
                 }
             }

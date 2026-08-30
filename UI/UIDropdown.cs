@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal class UIDropdown : Dropdown
     {

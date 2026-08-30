@@ -2,7 +2,7 @@
 /// © 2026 AtlasOfSouls
 using UnityEngine;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal enum GoalColorID
     {

@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal class UIGoal : MonoBehaviour
     {

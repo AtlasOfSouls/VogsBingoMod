@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using System;
 using GlobalEnums;
 
-namespace SilksongBingoMod.Automarking
+namespace VogsBingoMod.Automarking
 {
     [HarmonyPatch]
     internal class AutomarkPatches
@@ -854,7 +854,7 @@ namespace SilksongBingoMod.Automarking
         [HarmonyPatch(typeof(GameManager),nameof(GameManager.SaveGame),[typeof(int),typeof(Action<bool>),typeof(bool),typeof(AutoSaveName)])]
         static void SaveDataPatch(int saveSlot)
         {
-            SilksongBingoModPlugin.LogInfo("Saving Automarker Data...   Don't turn off the power.");
+            VogsBingoModPlugin.LogInfo("Saving Automarker Data...   Don't turn off the power.");
             AutomarkerData.SaveData(saveSlot);
         }
 

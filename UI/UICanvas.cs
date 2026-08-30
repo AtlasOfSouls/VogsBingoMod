@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal class UICanvas : MonoBehaviour
     {
@@ -138,7 +138,7 @@ namespace SilksongBingoMod.UI
 
         internal void JoinRoomButtonClicked()
         {
-            SilksongBingoModPlugin.LogInfo($"The room link that was entered was: {roomUrlInputField?.GetText()}");
+            VogsBingoModPlugin.LogInfo($"The room link that was entered was: {roomUrlInputField?.GetText()}");
             if (NetworkHandler.CanConnectToRoom && roomUrlInputField != null && nicknameInputField != null && passwordInputField != null)
             {
                 NetworkHandler.JoinRoom(roomUrlInputField.GetText(), nicknameInputField.GetText(), passwordInputField.GetText());
@@ -202,7 +202,7 @@ namespace SilksongBingoMod.UI
                 newColorID+=11;
             }
             GoalColors.myColorID = newColorID;
-            SilksongBingoModPlugin.LogInfo($"Switched color to {newColorID}, AKA {GoalColors.IDToName(newColorID)}");
+            VogsBingoModPlugin.LogInfo($"Switched color to {newColorID}, AKA {GoalColors.IDToName(newColorID)}");
             NetworkHandler.SetMyColor(newColorID);
         }
 
@@ -289,12 +289,12 @@ namespace SilksongBingoMod.UI
             currentScale = scale;
         }
 
-        float GetUIScaleFromConfig() =>(SilksongBingoModPlugin.UIScaleOptions)SilksongBingoModPlugin.instance.uiScaleConfig.BoxedValue
+        float GetUIScaleFromConfig() =>(VogsBingoModPlugin.UIScaleOptions)VogsBingoModPlugin.instance.uiScaleConfig.BoxedValue
         switch
         {
-            SilksongBingoModPlugin.UIScaleOptions.Default => defaultUIScale,
-            SilksongBingoModPlugin.UIScaleOptions.Small => smallUIScale,
-            SilksongBingoModPlugin.UIScaleOptions.Tiny => tinyUIScale,
+            VogsBingoModPlugin.UIScaleOptions.Default => defaultUIScale,
+            VogsBingoModPlugin.UIScaleOptions.Small => smallUIScale,
+            VogsBingoModPlugin.UIScaleOptions.Tiny => tinyUIScale,
             _ => 1.0f
         };
 

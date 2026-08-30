@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Reflection;
 using UnityEngine.UI;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal static class TextureHandler
     {
@@ -18,7 +18,7 @@ namespace SilksongBingoMod.UI
         static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         internal static Texture2D GetTexture(string imgName)
         {
-            imgName = $"SilksongBingoMod.Assets.{imgName}.png";
+            imgName = $"VogsBingoMod.Assets.{imgName}.png";
             if (textures.Count <= 0)
             {
                 LoadTextures();
@@ -26,7 +26,7 @@ namespace SilksongBingoMod.UI
 
             if (!textures.ContainsKey(imgName))
             {
-                SilksongBingoModPlugin.LogError($"could not find sprite \"{imgName}\"");
+                VogsBingoModPlugin.LogError($"could not find sprite \"{imgName}\"");
             }
             return textures[imgName];
         }
@@ -66,7 +66,7 @@ namespace SilksongBingoMod.UI
             Stream stream = executeAssembly.GetManifestResourceStream($"{imgName}");
             if (stream == null)
             {
-                SilksongBingoModPlugin.LogError($"Could not find resource: {imgName}");
+                VogsBingoModPlugin.LogError($"Could not find resource: {imgName}");
                 return new byte[0];
             }
             MemoryStream memoryStream = new MemoryStream();
@@ -81,7 +81,7 @@ namespace SilksongBingoMod.UI
         {
             foreach(string name in Assembly.GetExecutingAssembly().GetManifestResourceNames())
             {
-                if (name.StartsWith("SilksongBingoMod.Assets."))
+                if (name.StartsWith("VogsBingoMod.Assets."))
                 {
                     Texture2D texture = new Texture2D(1,1);
                     byte[] buf;

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SilksongBingoMod.Automarking
+namespace VogsBingoMod.Automarking
 {
     internal static class AutomarkerData
     {
@@ -141,14 +141,14 @@ namespace SilksongBingoMod.Automarking
             {
                 bitmaskData.ResetFlags();
             }
-            SilksongBingoModPlugin.LogInfo($"Automarker Data has been reset.");
+            VogsBingoModPlugin.LogInfo($"Automarker Data has been reset.");
         }
 
         internal static void SaveData(int saveSlotIndex)
         {
             foreach (AutomarkerDataBool dataBool in AutomarkerData.bools)
             {
-                string persistentSceneName = SilksongBingoModPlugin.PersistentName;
+                string persistentSceneName = VogsBingoModPlugin.PersistentName;
                 string persistentID = $"{saveSlotIndex}_{dataBool.Name}";
                 SceneData.instance.PersistentBools.SetValue(new PersistentItemData<bool>
                 {
@@ -160,7 +160,7 @@ namespace SilksongBingoMod.Automarking
             }
             foreach (AutomarkerDataInt dataInt in AutomarkerData.ints)
             {
-                string persistentSceneName = SilksongBingoModPlugin.PersistentName;
+                string persistentSceneName = VogsBingoModPlugin.PersistentName;
                 string persistentID = $"{saveSlotIndex}_{dataInt.Name}";
                 SceneData.instance.PersistentInts.SetValue(new PersistentItemData<int>
                 {
@@ -172,7 +172,7 @@ namespace SilksongBingoMod.Automarking
             }
             foreach (AutomarkerDataBitmask dataBitmask in AutomarkerData.bitmasks)
             {
-                string persistentSceneName = SilksongBingoModPlugin.PersistentName;
+                string persistentSceneName = VogsBingoModPlugin.PersistentName;
                 string persistentID = $"{saveSlotIndex}_{dataBitmask.Name}";
                 SceneData.instance.PersistentInts.SetValue(new PersistentItemData<int>
                 {
@@ -182,29 +182,29 @@ namespace SilksongBingoMod.Automarking
                     Value = (int)dataBitmask.bitmask
                 });
             }
-            SilksongBingoModPlugin.LogInfo($"Finished saving to saveSlot {saveSlotIndex}.");
+            VogsBingoModPlugin.LogInfo($"Finished saving to saveSlot {saveSlotIndex}.");
         }
 
         internal static void LoadData(int saveSlotIndex)
         {
-            SilksongBingoModPlugin.LogInfo($"Loading automarker data from saveSlot {saveSlotIndex}.");
+            VogsBingoModPlugin.LogInfo($"Loading automarker data from saveSlot {saveSlotIndex}.");
             foreach (AutomarkerDataBool dataBool in AutomarkerData.bools)
             {
-                string persistentSceneName = SilksongBingoModPlugin.PersistentName;
+                string persistentSceneName = VogsBingoModPlugin.PersistentName;
                 string persistentID = $"{saveSlotIndex}_{dataBool.Name}";
                 bool currentPersistentData = SceneData.instance.PersistentBools.GetValueOrDefault(persistentSceneName, persistentID);
                 dataBool.Value = currentPersistentData;
             }
             foreach (AutomarkerDataInt dataInt in AutomarkerData.ints)
             {
-                string persistentSceneName = SilksongBingoModPlugin.PersistentName;
+                string persistentSceneName = VogsBingoModPlugin.PersistentName;
                 string persistentID = $"{saveSlotIndex}_{dataInt.Name}";
                 int currentPersistentData = SceneData.instance.PersistentInts.GetValueOrDefault(persistentSceneName, persistentID);
                 dataInt.Value = currentPersistentData;
             }
             foreach (AutomarkerDataBitmask dataBitmask in AutomarkerData.bitmasks)
             {
-                string persistentSceneName = SilksongBingoModPlugin.PersistentName;
+                string persistentSceneName = VogsBingoModPlugin.PersistentName;
                 string persistentID = $"{saveSlotIndex}_{dataBitmask.Name}";
                 int currentPersistentData = SceneData.instance.PersistentInts.GetValueOrDefault(persistentSceneName, persistentID);
                 dataBitmask.bitmask = (uint)currentPersistentData;

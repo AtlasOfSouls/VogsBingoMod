@@ -1,6 +1,6 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
-namespace SilksongBingoMod
+namespace VogsBingoMod
 {
     internal enum ConnectionState
     {

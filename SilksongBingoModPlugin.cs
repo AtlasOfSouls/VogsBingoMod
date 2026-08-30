@@ -5,18 +5,18 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using SilksongBingoMod.Automarking;
-using SilksongBingoMod.UI;
+using VogsBingoMod.Automarking;
+using VogsBingoMod.UI;
 using UnityEngine;
 
-namespace SilksongBingoMod;
+namespace VogsBingoMod;
 
-[BepInAutoPlugin(id: "io.github.atlasofsouls.silksongbingomod")]
+[BepInAutoPlugin(id: "io.github.atlasofsouls.VogsBingoMod")]
 /// I apologize in advance if you are here to read through my code.
-public partial class SilksongBingoModPlugin : BaseUnityPlugin
+public partial class VogsBingoModPlugin : BaseUnityPlugin
 {
-    internal const string PersistentName = "SilksongBingoMod";
-    internal static SilksongBingoModPlugin instance;
+    internal const string PersistentName = "VogsBingoMod";
+    internal static VogsBingoModPlugin instance;
     ManualLogSource logger;
     ConfigEntry<KeyCode> toggleUIVisibility;
     ConfigEntry<KeyCode> toggleUIOpacity;
@@ -80,6 +80,7 @@ public partial class SilksongBingoModPlugin : BaseUnityPlugin
 
         UIHelper.uiCanvas.FirstAwake();
         Coroutiner.Initialize();
+        AutomarkRosaryStringHandler.Initialize();
     }
 
     void OnDisable()

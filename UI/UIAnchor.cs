@@ -1,6 +1,6 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal enum UIAnchor
     {

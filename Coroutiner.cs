@@ -3,7 +3,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace SilksongBingoMod
+namespace VogsBingoMod
 {
     internal class Coroutiner : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace SilksongBingoMod
                 coroutineComponent.StartCoroutine(enumerator);
             } else
             {
-                SilksongBingoModPlugin.LogError("Failed to start coroutine.");
+                VogsBingoModPlugin.LogError("Failed to start coroutine.");
             }
         }
 

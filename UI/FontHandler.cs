@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal static class FontHandler
     {

@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal class UIButton : MonoBehaviour, IPointerClickHandler
     {

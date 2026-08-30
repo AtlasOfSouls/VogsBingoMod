@@ -1,6 +1,6 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
-namespace SilksongBingoMod.Automarking
+namespace VogsBingoMod.Automarking
 {
     internal static class AutomarkRosaryStringHandler
     {
@@ -9,6 +9,11 @@ namespace SilksongBingoMod.Automarking
         static AutomarkerDataInt PurchasedStringsCurrentlyHeld = new([], "PurchasedStringsCurrentlyHeld");
         static AutomarkerDataInt NonPurchasedStringsCurrentlyHeld = new([], "NonPurchasedStringsCurrentlyHeld");
         static AutomarkerDataInt NonPurchasedStringsBroken = new([], "NonPurchasedStringsBroken");
+
+        internal static void Initialize()
+        {
+            
+        }
 
         internal static int GetFrayedStringsCurrentlyHeld()
         {

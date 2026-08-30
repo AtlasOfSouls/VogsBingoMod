@@ -2,9 +2,9 @@
 /// © 2026 AtlasOfSouls
 using System;
 using System.Collections.Generic;
-using SilksongBingoMod.UI;
+using VogsBingoMod.UI;
 
-namespace SilksongBingoMod
+namespace VogsBingoMod
 {
     internal static class JsonHelper
     {
@@ -148,7 +148,7 @@ namespace SilksongBingoMod
         {
             Dictionary<string, bool> goals = new Dictionary<string, bool>();
             string[] jsonObjs = json.Split("},");
-            for (int i = 0; i < jsonObjs.Length-1; i++)
+            for (int i = 0; i < jsonObjs.Length; i++)
             {
                 string name = GetStringValueOfKey("name", jsonObjs[i]).ToLower();
                 goals.Add(name, GetBoolValueOfKey("automarking_support", jsonObjs[i]));

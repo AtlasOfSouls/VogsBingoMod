@@ -3,12 +3,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SilksongBingoMod.Automarking;
+using VogsBingoMod.Automarking;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace SilksongBingoMod.UI
+namespace VogsBingoMod.UI
 {
     internal static class UIHelper
     {
@@ -53,7 +53,7 @@ namespace SilksongBingoMod.UI
                 Texture2D texture = new Texture2D(1, 1);
             } catch (Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
             }
             uiCanvas.SetBoardColors(JsonHelper.GetColorsFromBoard(boardJson));
             uiCanvas.HideGoals();
@@ -200,7 +200,7 @@ namespace SilksongBingoMod.UI
                 textComponent.resizeTextMinSize = defaultMinTextResize;
             } catch(Exception e)
             {
-                SilksongBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e);
             }
             newObj.AddComponent<UIButton>().SetupCallbacks(uiGoal.OnLeftClick, uiGoal.OnRightClick);
             return uiGoal;
