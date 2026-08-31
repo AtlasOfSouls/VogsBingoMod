@@ -98,6 +98,7 @@ namespace VogsBingoMod.Automarking
 
         internal static void UpdateTools(IEnumerable<ToolItem> tools)
         {
+            VogsBingoModPlugin.LogInfo("updating tools");
             int redToolCount = 0;
             int blueToolCount = 0;
             int yellowToolCount = 0;

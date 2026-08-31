@@ -132,14 +132,17 @@ namespace VogsBingoMod.Automarking
             foreach (AutomarkerDataBool boolData in AutomarkerData.bools)
             {
                 boolData.ResetToDefault();
+                VogsBingoModPlugin.LogInfo($"data reset: {boolData.Name}, {boolData.Value}");
             }
             foreach (AutomarkerDataInt intData in AutomarkerData.ints)
             {
                 intData.ResetToDefault();
+                VogsBingoModPlugin.LogInfo($"data reset: {intData.Name}, {intData.Value}");
             }
             foreach (AutomarkerDataBitmask bitmaskData in AutomarkerData.bitmasks)
             {
                 bitmaskData.ResetFlags();
+                VogsBingoModPlugin.LogInfo($"data reset: {bitmaskData.Name}, {bitmaskData.bitmask}");
             }
             VogsBingoModPlugin.LogInfo($"Automarker Data has been reset.");
         }
@@ -157,6 +160,7 @@ namespace VogsBingoMod.Automarking
                     IsSemiPersistent = false,
                     Value = dataBool.Value
                 });
+                VogsBingoModPlugin.LogInfo($"Saving data: {persistentID}, {dataBool.Value}");
             }
             foreach (AutomarkerDataInt dataInt in AutomarkerData.ints)
             {
@@ -169,6 +173,7 @@ namespace VogsBingoMod.Automarking
                     IsSemiPersistent = false,
                     Value = dataInt.Value
                 });
+                VogsBingoModPlugin.LogInfo($"Saving data: {persistentID}, {dataInt.Value}");
             }
             foreach (AutomarkerDataBitmask dataBitmask in AutomarkerData.bitmasks)
             {
@@ -181,6 +186,7 @@ namespace VogsBingoMod.Automarking
                     IsSemiPersistent = false,
                     Value = (int)dataBitmask.bitmask
                 });
+                VogsBingoModPlugin.LogInfo($"Saving data: {persistentID}, {(int)dataBitmask.bitmask}");
             }
             VogsBingoModPlugin.LogInfo($"Finished saving to saveSlot {saveSlotIndex}.");
         }
@@ -194,6 +200,7 @@ namespace VogsBingoMod.Automarking
                 string persistentID = $"{saveSlotIndex}_{dataBool.Name}";
                 bool currentPersistentData = SceneData.instance.PersistentBools.GetValueOrDefault(persistentSceneName, persistentID);
                 dataBool.Value = currentPersistentData;
+                VogsBingoModPlugin.LogInfo($"Loading data {persistentID}, {currentPersistentData}, {dataBool.Value}");
             }
             foreach (AutomarkerDataInt dataInt in AutomarkerData.ints)
             {
@@ -201,6 +208,7 @@ namespace VogsBingoMod.Automarking
                 string persistentID = $"{saveSlotIndex}_{dataInt.Name}";
                 int currentPersistentData = SceneData.instance.PersistentInts.GetValueOrDefault(persistentSceneName, persistentID);
                 dataInt.Value = currentPersistentData;
+                VogsBingoModPlugin.LogInfo($"Loading data {persistentID}, {currentPersistentData}, {dataInt.Value}");
             }
             foreach (AutomarkerDataBitmask dataBitmask in AutomarkerData.bitmasks)
             {
@@ -208,6 +216,7 @@ namespace VogsBingoMod.Automarking
                 string persistentID = $"{saveSlotIndex}_{dataBitmask.Name}";
                 int currentPersistentData = SceneData.instance.PersistentInts.GetValueOrDefault(persistentSceneName, persistentID);
                 dataBitmask.bitmask = (uint)currentPersistentData;
+                VogsBingoModPlugin.LogInfo($"Loading data {persistentID}, {currentPersistentData}, {dataBitmask.bitmask}");
             }
         }
     }
