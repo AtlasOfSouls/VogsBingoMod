@@ -255,13 +255,17 @@ namespace VogsBingoMod.UI
             return buttonComponent;
         }
 
-        internal static UITextInput CreateUITextInput(Transform parent, string objName, string textWhenEmpty, float xOffset = 0, float yOffset = 0)
+        internal static UITextInput CreateUITextInput(Transform parent, string objName, string textWhenEmpty, float xOffset = 0, float yOffset = 0, bool isPassword = false)
         {
             GameObject newObj = CreateUIObject(parent, objName, xOffset, yOffset);
             SetupImageComponent(newObj, TextureHandler.standardBackgroundName, defaultTextInputWidth, defaultTextInputHeight);
             CreateUIText(newObj.transform, $"{objName}Text", string.Empty, defaultTextInputFontSize, width: newObj.GetComponent<RectTransform>().rect.width);
             UITextInput uiTextInput = newObj.AddComponent<UITextInput>();
             InputField inputComponent = newObj.AddComponent<InputField>();
+            if (isPassword)
+            {
+                inputComponent.contentType = InputField.ContentType.Password;
+            }
             inputComponent.textComponent = newObj.GetComponentInChildren<Text>(true);
             inputComponent.onValueChanged.AddListener(uiTextInput.UpdatePlaceholder);
             uiTextInput.placeholderObj = CreateUIText(newObj.transform, $"{objName}Placeholder", textWhenEmpty, defaultTextInputFontSize, width: defaultTextInputWidth, height: defaultTextInputHeight, color: Color.grey).gameObject;
