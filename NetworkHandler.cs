@@ -40,7 +40,7 @@ namespace VogsBingoMod
             if (timer <= 0)
             {
                 timer = WSCheckInterval;
-                CurrentHttpTasks.CheckForTimeouts();
+                CurrentHttpTasks.CheckForTimeout();
             } else
             {
                 timer -= Time.unscaledDeltaTime;
@@ -418,7 +418,10 @@ namespace VogsBingoMod
             {
                 try{
                     CancellationTokenSource tokenSource = new CancellationTokenSource();
-                    tokenSource.CancelAfter(defaultTimeout);
+                    if (!requiresWS)
+                    {
+                        tokenSource.CancelAfter(defaultTimeout);
+                    }
                     Task<HttpResponseMessage> newTask = httpClient.PostAsync(uri, content, tokenSource.Token);
                     CurrentHttpTasks.Add(newTask, tokenSource);
                     return newTask;
@@ -458,7 +461,10 @@ namespace VogsBingoMod
             {
                 try{
                     CancellationTokenSource tokenSource = new CancellationTokenSource();
-                    tokenSource.CancelAfter(defaultTimeout);
+                    if (!requiresWS)
+                    {
+                        tokenSource.CancelAfter(defaultTimeout);
+                    }
                     Task<HttpResponseMessage> httpTask = httpClient.GetAsync(uri, tokenSource.Token);
                     CurrentHttpTasks.Add(httpTask, tokenSource);
                     return httpTask;
@@ -518,7 +524,7 @@ namespace VogsBingoMod
                 }
             }
 
-            internal void CheckForTimeouts()
+            internal void CheckForTimeout()
             {
                 bool flag = false;
                 foreach (CancellationTokenSource tokenSource in this.Values)
@@ -528,7 +534,7 @@ namespace VogsBingoMod
                         flag = true;
                     }
                 }
-                if (flag)
+                if (flag || (webSocketClient != null && connectState == ConnectionState.Connected && webSocketClient.State != WebSocketState.Open))
                 {
                     VogsBingoModPlugin.LogInfo("CANCEL REQUESTED");
                     ForceExitRoomWithDisconnectError(1);
