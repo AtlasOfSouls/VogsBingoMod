@@ -157,25 +157,25 @@ namespace VogsBingoMod.Automarking
             switch (toolName)
             {
                 case "Straight Pin":
-                    AutomarkerData.StraightPin.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.StraightPin.Value = true;
                     break;
                 case "Tri Pin":
-                    AutomarkerData.ThreefoldPin.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.ThreefoldPin.Value = true;
                     break;
                 case "Sting Shard":
-                    AutomarkerData.StingShard.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.StingShard.Value = true;
                     break;
                 case "Tack":
                     MarkIfAvailable(GoalID.Tacks);
                     break;
                 case "Harpoon":
-                    AutomarkerData.Longpin.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Longpin.Value = true;
                     break;
                 case "Curve Claws":
-                    AutomarkerData.Curveclaw.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Curveclaw.Value = true;
                     break;
                 case "Pimpilo":
-                    AutomarkerData.Pimpillo.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Pimpillo.Value = true;
                     break;
                 case "Conch Drill":
                     MarkIfAvailable(GoalID.Conchcutter);
@@ -199,7 +199,7 @@ namespace VogsBingoMod.Automarking
                     MarkIfAvailable(GoalID.RosaryCannon);
                     break;
                 case "Lightning Rod":
-                    AutomarkerData.Voltvessels.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Voltvessels.Value = true;
                     break;
                 case "Flintstone":
                     MarkIfAvailable(GoalID.Flintslate);
@@ -214,32 +214,32 @@ namespace VogsBingoMod.Automarking
                     MarkIfAvailable(GoalID.UpgradeDruidsEye);
                     break;
                 case "Lava Charm":
-                    AutomarkerData.MagmaBell.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.MagmaBell.Value = true;
                     break;
                 case "Bell Bind":
-                    AutomarkerData.WardingBell.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.WardingBell.Value = true;
                     break;
                 case "Poison Pouch":
-                    AutomarkerData.PollipPouch.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.PollipPouch.Value = true;
                     MarkIfAvailable(GoalID.PollipPouch);
                     break;
                 case "Fractured Mask":
-                    AutomarkerData.FracturedMask.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.FracturedMask.Value = true;
                     break;
                 case "Multibind":
                     MarkIfAvailable(GoalID.Multibinder);
                     break;
                 case "White Ring":
-                    AutomarkerData.Weavelight.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Weavelight.Value = true;
                     break;
                 case "Brolly Spike":
-                    AutomarkerData.SawtoothCirclet.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.SawtoothCirclet.Value = true;
                     break;
                 case "Quickbind":
-                    AutomarkerData.InjectorBand.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.InjectorBand.Value = true;
                     break;
                 case "Dazzle Bind":
-                    AutomarkerData.ClawMirror.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.ClawMirror.Value = true;
                     break;
                 case "Revenge Crystal":
                     MarkIfAvailable(GoalID.MemoryCrystal);
@@ -254,34 +254,34 @@ namespace VogsBingoMod.Automarking
                     MarkIfAvailable(GoalID.PinBadge);
                     break;
                 case "Compass":
-                    AutomarkerData.Compass.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Compass.Value = true;
                     break;
                 case "Bone Necklace":
-                    AutomarkerData.ShardPendant.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.ShardPendant.Value = true;
                     break;
                 case "Rosary Magnet":
-                    AutomarkerData.MagnetiteBrooch.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.MagnetiteBrooch.Value = true;
                     break;
                 case "Weighted Anklet":
-                    AutomarkerData.WeightedBelt.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.WeightedBelt.Value = true;
                     break;
                 case "Barbed Wire":
-                    AutomarkerData.BarbedBracelet.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.BarbedBracelet.Value = true;
                     break;
                 case "Dead Mans Purse":
-                    AutomarkerData.DeadBugsPurse.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.DeadBugsPurse.Value = true;
                     break;
                 case "Magnetite Dice":
-                    AutomarkerData.MagnetiteDice.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.MagnetiteDice.Value = true;
                     break;
                 case "Scuttlebrace":
-                    AutomarkerData.Scuttlebrace.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Scuttlebrace.Value = true;
                     break;
                 case "Wallcling":
-                    AutomarkerData.AscendantsGrip.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.AscendantsGrip.Value = true;
                     break;
                 case "Sprintmaster":
-                    AutomarkerData.SilkspeedAnklets.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.SilkspeedAnklets.Value = true;
                     break;
                 default:
                     break;
@@ -319,7 +319,7 @@ namespace VogsBingoMod.Automarking
                 MarkIfAvailable(GoalID.PaleNails);
             }
             
-            AutomarkerData.SilkSkills.Value = skillCount;
+            VogsBingoModPlugin.instance.SaveData.SilkSkills.Value = skillCount;
         }
 
         internal static void CheckIfGoalCompleted(GoalID goalID)
@@ -328,124 +328,124 @@ namespace VogsBingoMod.Automarking
             switch (goalID)
             {
                 case GoalID.CompassPendantBrooch:
-                    goalCompleted = AutomarkerData.ShardPendant && AutomarkerData.Compass && AutomarkerData.MagnetiteBrooch;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.ShardPendant && VogsBingoModPlugin.instance.SaveData.Compass && VogsBingoModPlugin.instance.SaveData.MagnetiteBrooch;
                     break;
                 case GoalID.StraightThreefoldandLongPin:
-                    goalCompleted = AutomarkerData.StraightPin && AutomarkerData.ThreefoldPin && AutomarkerData.Longpin;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.StraightPin && VogsBingoModPlugin.instance.SaveData.ThreefoldPin && VogsBingoModPlugin.instance.SaveData.Longpin;
                     break;
                 case GoalID.DeadBugsPurseaSilkeater:
-                    goalCompleted = AutomarkerData.DeadBugsPurse && AutomarkerData.Silkeaters >= 1;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.DeadBugsPurse && VogsBingoModPlugin.instance.SaveData.Silkeaters >= 1;
                     break;
                 case GoalID.BarbedBraceletFracturedMask:
-                    goalCompleted = AutomarkerData.BarbedBracelet && AutomarkerData.FracturedMask;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.BarbedBracelet && VogsBingoModPlugin.instance.SaveData.FracturedMask;
                     break;
                 case GoalID.MagnetiteDiceMagnetiteBrooch:
-                    goalCompleted = AutomarkerData.MagnetiteDice && AutomarkerData.MagnetiteBrooch;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.MagnetiteDice && VogsBingoModPlugin.instance.SaveData.MagnetiteBrooch;
                     break;
                 case GoalID.WardingBellClawMirror:
-                    goalCompleted = AutomarkerData.WardingBell && AutomarkerData.ClawMirror;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.WardingBell && VogsBingoModPlugin.instance.SaveData.ClawMirror;
                     break;
                 case GoalID.WardingBellSawtoothCirclet:
-                    goalCompleted = AutomarkerData.WardingBell && AutomarkerData.SawtoothCirclet;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.WardingBell && VogsBingoModPlugin.instance.SaveData.SawtoothCirclet;
                     break;
                 case GoalID.MagmaBellCurveclaw:
-                    goalCompleted = AutomarkerData.MagmaBell && AutomarkerData.Curveclaw;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.MagmaBell && VogsBingoModPlugin.instance.SaveData.Curveclaw;
                     break;
                 case GoalID.WeightedBeltAscendantsGrip:
-                    goalCompleted = AutomarkerData.WeightedBelt && AutomarkerData.AscendantsGrip;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.WeightedBelt && VogsBingoModPlugin.instance.SaveData.AscendantsGrip;
                     break;
                 case GoalID.ScuttlebraceSilkspeed:
-                    goalCompleted = AutomarkerData.Scuttlebrace && AutomarkerData.SilkspeedAnklets;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.Scuttlebrace && VogsBingoModPlugin.instance.SaveData.SilkspeedAnklets;
                     break;
                 case GoalID.PimpilloVoltvessels:
-                    goalCompleted = AutomarkerData.Pimpillo && AutomarkerData.Voltvessels;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.Pimpillo && VogsBingoModPlugin.instance.SaveData.Voltvessels;
                     break;
                 case GoalID.PollipPouchStingShard:
-                    goalCompleted = AutomarkerData.PollipPouch && AutomarkerData.StingShard;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.PollipPouch && VogsBingoModPlugin.instance.SaveData.StingShard;
                     break;
                 case GoalID.WeavelightInjectorBand:
-                    goalCompleted = AutomarkerData.Weavelight && AutomarkerData.InjectorBand;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.Weavelight && VogsBingoModPlugin.instance.SaveData.InjectorBand;
                     break;
                 case GoalID.BlastedStepsSilkeaterCraftmetal:
-                    goalCompleted = AutomarkerData.BlastedSilkeater && AutomarkerData.BlastedCraftmetal;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.BlastedSilkeater && VogsBingoModPlugin.instance.SaveData.BlastedCraftmetal;
                     break;
                 case GoalID.BothFreeSimpleKeys:
-                    goalCompleted = AutomarkerData.SinnersKey && AutomarkerData.KarakKey;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.SinnersKey && VogsBingoModPlugin.instance.SaveData.KarakKey;
                     break;
                 case GoalID.ShellwoodVaultsMaskShards:
-                    goalCompleted = AutomarkerData.ShellwoodMaskShard && AutomarkerData.VaultsMaskShard;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.ShellwoodMaskShard && VogsBingoModPlugin.instance.SaveData.VaultsMaskShard;
                     break;
                 case GoalID.CogworkClapperJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.CogworkClapperKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.CogworkClapperKilled;
                     break;
                 case GoalID.ImobaJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.ImobaKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.ImobaKilled;
                     break;
                 case GoalID.SquirrmJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.SquirrmKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.SquirrmKilled;
                     break;
                 case GoalID.GromlingJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.GromlingKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.GromlingKilled;
                     break;
                 case GoalID.CraggliteJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.CraggliteKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.CraggliteKilled;
                     break;
                 case GoalID.DeepDiverJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.DeepDiverKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.DeepDiverKilled;
                     break;
                 case GoalID.SkullwingJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.SkullwingKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.SkullwingKilled;
                     break;
                 case GoalID.MiteMotherJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.MiteMotherKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.MiteMotherKilled;
                     break;
                 case GoalID.UnravelledJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.UnravelledKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.UnravelledKilled;
                     break;
                 case GoalID.ShadowChargerJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.ShadowChargerKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.ShadowChargerKilled;
                     break;
                 case GoalID.MassiveMossgrubJournalEntry:
-                    goalCompleted = AutomarkerData.HasJournal && AutomarkerData.MassiveMossgrubKilled;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HasJournal && VogsBingoModPlugin.instance.SaveData.MassiveMossgrubKilled;
                     break;
                 case GoalID.TalktoStyxHuntress:
-                    goalCompleted = AutomarkerData.HuntressSpokenTo && AutomarkerData.StyxSpokenTo;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.HuntressSpokenTo && VogsBingoModPlugin.instance.SaveData.StyxSpokenTo;
                     break;
                 case GoalID.TalktoForgeDaughterandTwelfthArchitect:
-                    goalCompleted = AutomarkerData.TwelfthArchitectSpokenTo && AutomarkerData.ForgeDaughterSpokenTo;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.TwelfthArchitectSpokenTo && VogsBingoModPlugin.instance.SaveData.ForgeDaughterSpokenTo;
                     break;
                 case GoalID.BreakBothofStyxsOneways:
-                    goalCompleted = AutomarkerData.SinnersStyxWallBroken && AutomarkerData.GreymoorStyxWallBroken;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.SinnersStyxWallBroken && VogsBingoModPlugin.instance.SaveData.GreymoorStyxWallBroken;
                     break;
                 case GoalID.BothVendorSimpleKeys:
-                    goalCompleted = AutomarkerData.JubilanaKeyBought && AutomarkerData.PebbKeyBought;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.JubilanaKeyBought && VogsBingoModPlugin.instance.SaveData.PebbKeyBought;
                     break;
                 case GoalID.GreymoorFleasTwoKratt:
-                    goalCompleted = AutomarkerData.FleaCrawLake && AutomarkerData.FleaGreymoorTower && AutomarkerData.FleaKratt;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaCrawLake && VogsBingoModPlugin.instance.SaveData.FleaGreymoorTower && VogsBingoModPlugin.instance.SaveData.FleaKratt;
                     break;
                 case GoalID.FarFieldsFleasTwo:
-                    goalCompleted = AutomarkerData.FleaFarFieldsCage && AutomarkerData.FleaPilgrimsRest;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaFarFieldsCage && VogsBingoModPlugin.instance.SaveData.FleaPilgrimsRest;
                     break;
                 case GoalID.ShellwoodBellhartFleasTwo:
-                    goalCompleted = AutomarkerData.FleaShellwood && AutomarkerData.FleaBellvein;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaShellwood && VogsBingoModPlugin.instance.SaveData.FleaBellvein;
                     break;
                 case GoalID.DeepDocksFleasThree:
-                    goalCompleted = AutomarkerData.FleaSwiftStep && AutomarkerData.FleaDeeperDocks && AutomarkerData.FleaDeepDocksBellway;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaSwiftStep && VogsBingoModPlugin.instance.SaveData.FleaDeeperDocks && VogsBingoModPlugin.instance.SaveData.FleaDeepDocksBellway;
                     break;
                 case GoalID.WormwaysBlastedStepsFleasTwo:
-                    goalCompleted = AutomarkerData.FleaWormways && AutomarkerData.FleaBlastedSteps;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaWormways && VogsBingoModPlugin.instance.SaveData.FleaBlastedSteps;
                     break;
                 case GoalID.UnderworksFleasTwo:
-                    goalCompleted = AutomarkerData.FleaUnderworksCauldron && AutomarkerData.FleaUnderworksWispThicket;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaUnderworksCauldron && VogsBingoModPlugin.instance.SaveData.FleaUnderworksWispThicket;
                     break;
                 case GoalID.LowerBilewaterHuntersMarchFleasTwo:
-                    goalCompleted = AutomarkerData.FleaBilewaterThieves && AutomarkerData.FleaHuntersMarch;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaBilewaterThieves && VogsBingoModPlugin.instance.SaveData.FleaHuntersMarch;
                     break;
                 case GoalID.SinnersRoadVaultsFleasTwo:
-                    goalCompleted = AutomarkerData.FleaSinnersRoad && AutomarkerData.FleaVaults;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.FleaSinnersRoad && VogsBingoModPlugin.instance.SaveData.FleaVaults;
                     break;
                 case GoalID.DeepDocksSpoolFragmentsTwo:
-                    goalCompleted = AutomarkerData.DeepDocksSpoolFragNearSpa && AutomarkerData.DeeperDocksSpoolFrag;
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.DeepDocksSpoolFragNearSpa && VogsBingoModPlugin.instance.SaveData.DeeperDocksSpoolFrag;
                     break;
                 case GoalID.HaveSixRosaryStringsnopurchasing:
                     goalCompleted = (AutomarkRosaryStringHandler.GetNonPurchasedStringsCurrentlyHeld() + AutomarkRosaryStringHandler.GetFrayedStringsCurrentlyHeld()) >= 6;
@@ -512,7 +512,7 @@ namespace VogsBingoMod.Automarking
                         MarkIfAvailable(GoalID.EnterActThree);
                     if (PlayerData.instance.mapBoolList != null)
                     {
-                        AutomarkerData.MapCount.Value = PlayerData.instance.mapBoolList.HasCount;
+                        VogsBingoModPlugin.instance.SaveData.MapCount.Value = PlayerData.instance.mapBoolList.HasCount;
                     }
                 }
             }
@@ -523,40 +523,40 @@ namespace VogsBingoMod.Automarking
             if (PlayerData.instance != null)
             {
                 int fleaCount =  PlayerData.instance.SavedFleasCount;
-                AutomarkerData.CitadelFleas.Value = 0;
+                VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value = 0;
                 if (PlayerData.instance.SavedFlea_Song_11)
-                    AutomarkerData.CitadelFleas.Value++;
+                    VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
                 if (PlayerData.instance.SavedFlea_Song_14)
-                    AutomarkerData.CitadelFleas.Value++;
+                    VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
                 if (PlayerData.instance.SavedFlea_Library_09)
-                    AutomarkerData.CitadelFleas.Value++;
+                    VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
                 if (PlayerData.instance.tamedGiantFlea)
                 {
-                    AutomarkerData.CitadelFleas.Value++;
+                    VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
                     MarkIfAvailable(GoalID.BeatBigFlea);
                     fleaCount++;
                 }
                 if (PlayerData.instance.SavedFlea_Library_01)
                 {
-                    AutomarkerData.CitadelFleas.Value++;
-                    AutomarkerData.FleaVaults.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
+                    VogsBingoModPlugin.instance.SaveData.FleaVaults.Value = true;
                 }
-                AutomarkerData.FleaBellvein.Value = PlayerData.instance.SavedFlea_Belltown_04;
-                AutomarkerData.FleaBilewaterThieves.Value = PlayerData.instance.SavedFlea_Shadow_28;
-                AutomarkerData.FleaBlastedSteps.Value = PlayerData.instance.SavedFlea_Coral_35;
-                AutomarkerData.FleaCrawLake.Value = PlayerData.instance.SavedFlea_Greymoor_15b;
-                AutomarkerData.FleaDeepDocksBellway.Value = PlayerData.instance.SavedFlea_Dock_16;
-                AutomarkerData.FleaDeeperDocks.Value = PlayerData.instance.SavedFlea_Dock_03d;
-                AutomarkerData.FleaFarFieldsCage.Value = PlayerData.instance.SavedFlea_Bone_East_17b;
-                AutomarkerData.FleaGreymoorTower.Value = PlayerData.instance.SavedFlea_Greymoor_06;
-                AutomarkerData.FleaHuntersMarch.Value = PlayerData.instance.SavedFlea_Ant_03;
-                AutomarkerData.FleaPilgrimsRest.Value = PlayerData.instance.SavedFlea_Bone_East_10_Church;
-                AutomarkerData.FleaShellwood.Value = PlayerData.instance.SavedFlea_Shellwood_03;
-                AutomarkerData.FleaSinnersRoad.Value = PlayerData.instance.SavedFlea_Dust_12;
-                AutomarkerData.FleaSwiftStep.Value = PlayerData.instance.SavedFlea_Bone_06;
-                AutomarkerData.FleaUnderworksCauldron.Value = PlayerData.instance.SavedFlea_Under_21;
-                AutomarkerData.FleaUnderworksWispThicket.Value = PlayerData.instance.SavedFlea_Under_23;
-                AutomarkerData.FleaWormways.Value = PlayerData.instance.SavedFlea_Crawl_06;
+                VogsBingoModPlugin.instance.SaveData.FleaBellvein.Value = PlayerData.instance.SavedFlea_Belltown_04;
+                VogsBingoModPlugin.instance.SaveData.FleaBilewaterThieves.Value = PlayerData.instance.SavedFlea_Shadow_28;
+                VogsBingoModPlugin.instance.SaveData.FleaBlastedSteps.Value = PlayerData.instance.SavedFlea_Coral_35;
+                VogsBingoModPlugin.instance.SaveData.FleaCrawLake.Value = PlayerData.instance.SavedFlea_Greymoor_15b;
+                VogsBingoModPlugin.instance.SaveData.FleaDeepDocksBellway.Value = PlayerData.instance.SavedFlea_Dock_16;
+                VogsBingoModPlugin.instance.SaveData.FleaDeeperDocks.Value = PlayerData.instance.SavedFlea_Dock_03d;
+                VogsBingoModPlugin.instance.SaveData.FleaFarFieldsCage.Value = PlayerData.instance.SavedFlea_Bone_East_17b;
+                VogsBingoModPlugin.instance.SaveData.FleaGreymoorTower.Value = PlayerData.instance.SavedFlea_Greymoor_06;
+                VogsBingoModPlugin.instance.SaveData.FleaHuntersMarch.Value = PlayerData.instance.SavedFlea_Ant_03;
+                VogsBingoModPlugin.instance.SaveData.FleaPilgrimsRest.Value = PlayerData.instance.SavedFlea_Bone_East_10_Church;
+                VogsBingoModPlugin.instance.SaveData.FleaShellwood.Value = PlayerData.instance.SavedFlea_Shellwood_03;
+                VogsBingoModPlugin.instance.SaveData.FleaSinnersRoad.Value = PlayerData.instance.SavedFlea_Dust_12;
+                VogsBingoModPlugin.instance.SaveData.FleaSwiftStep.Value = PlayerData.instance.SavedFlea_Bone_06;
+                VogsBingoModPlugin.instance.SaveData.FleaUnderworksCauldron.Value = PlayerData.instance.SavedFlea_Under_21;
+                VogsBingoModPlugin.instance.SaveData.FleaUnderworksWispThicket.Value = PlayerData.instance.SavedFlea_Under_23;
+                VogsBingoModPlugin.instance.SaveData.FleaWormways.Value = PlayerData.instance.SavedFlea_Crawl_06;
                 if(PlayerData.instance.SavedFlea_Dust_09)
                     MarkIfAvailable(GoalID.ExhaustOrganFleaOne);
                 if(PlayerData.instance.SavedFlea_Peak_05c)
@@ -565,7 +565,7 @@ namespace VogsBingoMod.Automarking
                     MarkIfAvailable(GoalID.SandsofKarakFleaOne);
                 if (PlayerData.instance.CaravanLechSaved)
                 {
-                    AutomarkerData.FleaKratt.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.FleaKratt.Value = true;
                     fleaCount++;
                 }
                 if (PlayerData.instance.MetTroupeHunterWild)
@@ -573,7 +573,7 @@ namespace VogsBingoMod.Automarking
                     MarkIfAvailable(GoalID.TalktoVog);
                     fleaCount++;
                 }
-                AutomarkerData.FleasSaved.Value = fleaCount;
+                VogsBingoModPlugin.instance.SaveData.FleasSaved.Value = fleaCount;
             }
         }
     }

@@ -4,11 +4,11 @@ namespace VogsBingoMod.Automarking
 {
     internal static class AutomarkRosaryStringHandler
     {
-        static AutomarkerDataInt FrayedStringsCurrentlyHeld = new([], "FrayedStringsCurrentlyHeld");
-        static AutomarkerDataInt FrayedStringsBroken = new([], "FrayedStringsBroken");
-        static AutomarkerDataInt PurchasedStringsCurrentlyHeld = new([], "PurchasedStringsCurrentlyHeld");
-        static AutomarkerDataInt NonPurchasedStringsCurrentlyHeld = new([], "NonPurchasedStringsCurrentlyHeld");
-        static AutomarkerDataInt NonPurchasedStringsBroken = new([], "NonPurchasedStringsBroken");
+        static SaveDataInt FrayedStringsCurrentlyHeld = new([], "FrayedStringsCurrentlyHeld");
+        static SaveDataInt FrayedStringsBroken = new([], "FrayedStringsBroken");
+        static SaveDataInt PurchasedStringsCurrentlyHeld = new([], "PurchasedStringsCurrentlyHeld");
+        static SaveDataInt NonPurchasedStringsCurrentlyHeld = new([], "NonPurchasedStringsCurrentlyHeld");
+        static SaveDataInt NonPurchasedStringsBroken = new([], "NonPurchasedStringsBroken");
 
         internal static void Initialize()
         {

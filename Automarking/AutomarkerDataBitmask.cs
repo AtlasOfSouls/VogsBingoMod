@@ -2,7 +2,7 @@
 /// © 2026 AtlasOfSouls
 namespace VogsBingoMod.Automarking
 {
-    internal class AutomarkerDataBitmask
+    internal class SaveDataBitmask
     {
         internal string Name;
         internal uint bitmask = 0;
@@ -12,11 +12,10 @@ namespace VogsBingoMod.Automarking
             bitmask = bitmask | flag;
             this.CheckForAutomarks();
         }
-        internal AutomarkerDataBitmask(AutomarkIntValue[] automarkValues, string name)
+        internal SaveDataBitmask(AutomarkIntValue[] automarkValues, string name)
         {
             this.Name = name;
             this.AutomarkValues = automarkValues;
-            AutomarkerData.bitmasks.Add(this);
         }
         internal void ResetFlags()
         {

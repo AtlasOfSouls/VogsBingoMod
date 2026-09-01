@@ -8,12 +8,15 @@ using HarmonyLib;
 using VogsBingoMod.Automarking;
 using VogsBingoMod.UI;
 using UnityEngine;
+using Silksong.DataManager;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VogsBingoMod;
 
 [BepInAutoPlugin(id: "io.github.atlasofsouls.VogsBingoMod")]
+[BepInDependency(Silksong.DataManager.DataManagerPlugin.Id)]
 /// I apologize in advance if you are here to read through my code.
-public partial class VogsBingoModPlugin : BaseUnityPlugin
+public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData>
 {
     internal const string PersistentName = "VogsBingoMod";
     internal static VogsBingoModPlugin instance;
@@ -22,6 +25,15 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     ConfigEntry<KeyCode> toggleUIOpacity;
     ConfigEntry<KeyCode> revealBoardKeybind;
     internal ConfigEntry<UIScaleOptions> uiScaleConfig;
+    SaveData _saveData = new SaveData();
+
+    [AllowNull]
+    public SaveData SaveData
+    {
+        get => _saveData;
+        set => _saveData = value == null ? new SaveData() : value;
+    }
+
     internal enum UIScaleOptions
     {
         Default,
