@@ -150,7 +150,7 @@ namespace VogsBingoMod.UI
                     }
                     break;
                 case VisibilityState.JustBoard:
-                    uiCanvas.boardObj.gameObject.SetActive(false);
+                    uiCanvas.boardObj.SetActive(false);
                     visibilityState = VisibilityState.Nothing;
                     break;
                 case VisibilityState.Nothing:
@@ -334,8 +334,10 @@ namespace VogsBingoMod.UI
         {
             if (uiCanvas.revealCardButton == null)
             {
+                VogsBingoModPlugin.LogInfo("the reveal card button was null");
                 return;
             }
+            VogsBingoModPlugin.LogInfo($"Can mark: {!uiCanvas.revealCardButton.gameObject.activeSelf} and {!uiCanvas.HasColor(slotIndex, GoalColors.myColorID)}");
             if (!uiCanvas.revealCardButton.gameObject.activeSelf && !uiCanvas.HasColor(slotIndex, GoalColors.myColorID))
             {
                 UIHelper.MarkGoal(slotIndex, false);

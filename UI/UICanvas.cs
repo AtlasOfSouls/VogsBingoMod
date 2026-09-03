@@ -283,7 +283,7 @@ namespace VogsBingoMod.UI
         internal void UpdateUIScale()
         {
             float scale = GetUIScaleFromConfig();
-            boardObj.gameObject.transform.localScale = Vector3.one * scale;
+            boardObj.transform.localScale = Vector3.one * scale;
             joinRoomButton?.gameObject.transform.localScale = Vector3.one * scale;
             exitRoomButton?.gameObject.transform.localScale = Vector3.one * scale;
             currentScale = scale;

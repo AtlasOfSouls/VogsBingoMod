@@ -60,8 +60,10 @@ namespace VogsBingoMod.Automarking
 
         internal static void MarkIfAvailable(int goalID)
         {
+            VogsBingoModPlugin.LogInfo($"Checking if goal {(GoalID)goalID} is on the board");
             if (BoardHasGoal(goalID))
             {
+                VogsBingoModPlugin.LogInfo("the goal is on the board, checking if it is unmarked so far");
                 UIHelper.MarkIfUnmarkedGoal(currentGoals[goalID]);
             }
             return;
@@ -481,8 +483,10 @@ namespace VogsBingoMod.Automarking
 
         internal static void CheckIfGoalCompleted(AutomarkIntValue markValue, int currentValue)
         {
+            VogsBingoModPlugin.LogInfo($"Checking if goal {markValue.goalToMark} is finished");
             if (currentValue >= markValue.markValue)
             {
+                VogsBingoModPlugin.LogInfo($"Goal {markValue.goalToMark} is finished, checking if the goal is on the board...");
                 MarkIfAvailable(markValue.goalToMark);
             }
         }
@@ -510,7 +514,7 @@ namespace VogsBingoMod.Automarking
                         MarkIfAvailable(GoalID.VaultkeepersMelody);
                     if(PlayerData.instance.act3_wokeUp)
                         MarkIfAvailable(GoalID.EnterActThree);
-                    if (PlayerData.instance.mapBoolList != null)
+                    if (PlayerData.instance.mapBoolList != null && VogsBingoModPlugin.instance.SaveData.MapCount.Value != PlayerData.instance.mapBoolList.HasCount)
                     {
                         VogsBingoModPlugin.instance.SaveData.MapCount.Value = PlayerData.instance.mapBoolList.HasCount;
                     }

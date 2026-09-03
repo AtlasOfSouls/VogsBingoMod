@@ -45,7 +45,7 @@ namespace VogsBingoMod.UI
 
         internal bool HasColor(int colorID)
         {
-            return goalColors.HasColor(GoalColors.myColorID);
+            return goalColors.HasColor(colorID);
         }
 
         internal void OnLeftClick()

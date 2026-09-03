@@ -6,7 +6,7 @@ namespace VogsBingoMod.Automarking
     {
         internal const bool defaultValue = false;
         internal bool _value = defaultValue;
-        internal bool Value {get=>_value; set{_value = value; Automarker.CheckIfGoalsCompleted(this.GoalIDs);}}
+        internal bool Value {get=>_value; set{_value = value;VogsBingoModPlugin.LogInfo($"Updated value {Name} to {_value}."); Automarker.CheckIfGoalsCompleted(this.GoalIDs);}}
         internal GoalID[] GoalIDs;
         internal string Name {get; private set;}
         public static implicit operator bool(SaveDataBool data) => data.Value;
