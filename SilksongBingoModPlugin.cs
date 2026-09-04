@@ -92,7 +92,6 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData
 
         UIHelper.uiCanvas.FirstAwake();
         Coroutiner.Initialize();
-        AutomarkRosaryStringHandler.Initialize();
     }
 
     void OnDisable()

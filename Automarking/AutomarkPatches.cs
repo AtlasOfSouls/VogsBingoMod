@@ -222,14 +222,14 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.SpriteNameRosaryString:
                     if (IsScene("Greymoor_01") || IsScene("Shellwood_08c") || IsScene("Hang_06_bank"))
                     {
-                        AutomarkRosaryStringHandler.AddPurchasedString();
+                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
                     } else
                     {
-                        AutomarkRosaryStringHandler.AddNonPurchasedString();
+                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
                     }
                     break;
                 case GoalHelper.SpriteNameFrayedString:
-                    AutomarkRosaryStringHandler.AddFrayedString();
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddFrayedString();
                     break;
                 case GoalHelper.SpriteNameHerosMemento:
                     VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
@@ -276,10 +276,10 @@ namespace VogsBingoMod.Automarking
                     }
                     break;
                 case GoalHelper.ObjectNameRosaryString:
-                    AutomarkRosaryStringHandler.BreakString();
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.BreakString();
                     break;
                 case GoalHelper.ObjectNameFrayedString:
-                    AutomarkRosaryStringHandler.BreakFrayedString();
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.BreakFrayedString();
                     break;
                 default:
                     break;
@@ -664,7 +664,7 @@ namespace VogsBingoMod.Automarking
                         VogsBingoModPlugin.instance.SaveData.CurrentPurchasedRosaryNecklaces.Value++;
                         break;
                     case "Rosary_Set_Small":
-                        AutomarkRosaryStringHandler.AddPurchasedString();
+                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
                         break;
                     case "Crest Socket Unlocker":
                         VogsBingoModPlugin.instance.SaveData.MemoryLockets.Value++;

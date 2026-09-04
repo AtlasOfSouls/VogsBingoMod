@@ -123,6 +123,7 @@ namespace VogsBingoMod.Automarking
         internal SaveDataBitmask ShakraLocations = new([new(){markValue = 5, goalToMark = GoalID.TalktoShakraatFiveLocations}], "ShakraLocations");
         internal SaveDataBitmask RelicTypesObtained = new([new(){markValue = 4, goalToMark = GoalID.ObtainFourDifferentTypesofRelic}], "RelicTypesObtained");
         internal SaveDataBitmask RelicTypesCurrentlyHeld = new([new(){markValue = 3, goalToMark = GoalID.HaveThreeDifferentTypesofRelic}], "RelicTypesCurrentlyHeld");
+        internal AutomarkRosaryStringHandler automarkRosaryStringHandler = new AutomarkRosaryStringHandler();
         // internal static List<SaveDataBool> bools = new List<SaveDataBool>();
         // internal static List<SaveDataInt> ints = new List<SaveDataInt>();
         // internal static List<SaveDataBitmask> bitmasks = new List<SaveDataBitmask>();   

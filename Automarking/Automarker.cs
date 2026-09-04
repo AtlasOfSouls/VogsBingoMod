@@ -60,7 +60,10 @@ namespace VogsBingoMod.Automarking
 
         internal static void MarkIfAvailable(int goalID)
         {
-            VogsBingoModPlugin.LogInfo($"Checking if goal {(GoalID)goalID} is on the board");
+            if (goalID != (int)GoalID.MeetCaravanattheGrandGateTwelve && goalID != (int)GoalID.MeettheCaravaninGreymoor)
+            {
+                VogsBingoModPlugin.LogInfo($"Checking if goal {(GoalID)goalID} is on the board");
+            }
             if (BoardHasGoal(goalID))
             {
                 VogsBingoModPlugin.LogInfo("the goal is on the board, checking if it is unmarked so far");
@@ -450,10 +453,10 @@ namespace VogsBingoMod.Automarking
                     goalCompleted = VogsBingoModPlugin.instance.SaveData.DeepDocksSpoolFragNearSpa && VogsBingoModPlugin.instance.SaveData.DeeperDocksSpoolFrag;
                     break;
                 case GoalID.HaveSixRosaryStringsnopurchasing:
-                    goalCompleted = (AutomarkRosaryStringHandler.GetNonPurchasedStringsCurrentlyHeld() + AutomarkRosaryStringHandler.GetFrayedStringsCurrentlyHeld()) >= 6;
+                    goalCompleted = (VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetNonPurchasedStringsCurrentlyHeld() + VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetFrayedStringsCurrentlyHeld()) >= 6;
                     break;
                 case GoalID.BreakEightRosaryStringsnopurchasing:
-                    goalCompleted = (AutomarkRosaryStringHandler.GetNonPurchasedStringsBroken() + AutomarkRosaryStringHandler.GetFrayedStringsBroken()) >= 8;
+                    goalCompleted = (VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetNonPurchasedStringsBroken() + VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetFrayedStringsBroken()) >= 8;
                     break;
                 default:
                     VogsBingoModPlugin.LogError($"There isn't a check for goalID {goalID}");
@@ -557,7 +560,7 @@ namespace VogsBingoMod.Automarking
                 VogsBingoModPlugin.instance.SaveData.FleaPilgrimsRest.Value = PlayerData.instance.SavedFlea_Bone_East_10_Church;
                 VogsBingoModPlugin.instance.SaveData.FleaShellwood.Value = PlayerData.instance.SavedFlea_Shellwood_03;
                 VogsBingoModPlugin.instance.SaveData.FleaSinnersRoad.Value = PlayerData.instance.SavedFlea_Dust_12;
-                VogsBingoModPlugin.instance.SaveData.FleaSwiftStep.Value = PlayerData.instance.SavedFlea_Bone_06;
+                VogsBingoModPlugin.instance.SaveData.FleaSwiftStep.Value = PlayerData.instance.SavedFlea_Bone_East_05;
                 VogsBingoModPlugin.instance.SaveData.FleaUnderworksCauldron.Value = PlayerData.instance.SavedFlea_Under_21;
                 VogsBingoModPlugin.instance.SaveData.FleaUnderworksWispThicket.Value = PlayerData.instance.SavedFlea_Under_23;
                 VogsBingoModPlugin.instance.SaveData.FleaWormways.Value = PlayerData.instance.SavedFlea_Crawl_06;
