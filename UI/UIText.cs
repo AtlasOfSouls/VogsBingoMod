@@ -17,5 +17,13 @@ namespace VogsBingoMod.UI
             }
             textComponent.text = text;
         }
+
+        void Update()
+        {
+            if (textComponent != null && textComponent.font == null)
+            {
+                textComponent.font = FontHandler.GetFont("ARIAL");
+            }
+        }
     }
 }

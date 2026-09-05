@@ -212,7 +212,7 @@ namespace VogsBingoMod.UI
             newObj.AddComponent<CanvasRenderer>();
             Text textComponent = newObj.AddComponent<Text>();
             textComponent.text = text;
-            textComponent.font = FontHandler.GetFont("LegacyRuntime");
+            textComponent.font = FontHandler.GetFont("ARIAL");
             textComponent.alignment = anchor;
             textComponent.fontSize = fontSize;
             textComponent.supportRichText = supportRichText;

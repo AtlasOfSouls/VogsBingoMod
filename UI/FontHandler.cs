@@ -8,7 +8,7 @@ namespace VogsBingoMod.UI
     internal static class FontHandler
     {
         static Dictionary<string, Font> fonts = new Dictionary<string, Font>();
-        internal static Font GetFont(string fontName)
+        internal static Font? GetFont(string fontName)
         {
             if (!fonts.ContainsKey(fontName))
             {
@@ -18,9 +18,11 @@ namespace VogsBingoMod.UI
                     if (foundFonts[i].name.Equals(fontName))
                     {
                         fonts.Add(fontName, foundFonts[i]);
-                        break;
+                        return fonts[fontName];
                     }
                 }
+                VogsBingoModPlugin.LogError($"Could not find font \"{fontName}\".");
+                return null;
             }
             return fonts[fontName];
         }
