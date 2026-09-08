@@ -6,6 +6,7 @@ namespace VogsBingoMod.Automarking
 {
     public class SaveData
     {
+        internal static SaveData instance => VogsBingoModPlugin.instance.SaveData;
         internal SaveDataBool BlastedSilkeater = new([GoalID.BlastedStepsSilkeaterCraftmetal], "BlastedSilkeater");
         internal SaveDataBool BlastedCraftmetal = new([GoalID.BlastedStepsSilkeaterCraftmetal], "BlastedCraftmetal");
         internal SaveDataBool SinnersKey = new([GoalID.BothFreeSimpleKeys], "SinnersKey");
