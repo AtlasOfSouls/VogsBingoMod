@@ -25,7 +25,6 @@ namespace VogsBingoMod.Automarking
         internal const string SpriteNameBoneScroll = "Hornet_icon_0002_R_bone_record";
         internal const string SpriteNameChoralCommandment = "Hornet_icon_0000_R_seal_chit";
         internal const string SpriteNameWeaverEffigy = "Hornet_icon_0005_R_saint_locket";
-        internal const string SpriteNameBeastShard = "Icon_Beast_Shard";
         internal const string SpriteNameCogheartPiece0 = "cog_heart__0001_left";
         internal const string SpriteNameCogheartPiece1 = "cog_heart__0002_right";
         internal const string SpriteNameCogheartPiece2 = "cog_heart__0003_back";
@@ -116,7 +115,7 @@ namespace VogsBingoMod.Automarking
         internal const string ItemNamePollenHeart = "Flower Heart";
         internal const string ItemNameConjoinedHeart = "Clover Heart";
         internal const string ItemNameHuntersHeart = "Hunter Heart";
-        internal const string ItemNameEncrustedHeart = "";
+        internal const string ItemNameEncrustedHeart = "Coral Heart";
         static string[] idToName = GetEmbeddedGoals();
         static Dictionary<string, int> nameToID = GenerateNameToIDs();
         internal static int NameToID(string goalName)

@@ -1,37 +1,11 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
 using System;
-using System.Collections.Generic;
 
 namespace VogsBingoMod.Automarking
 {
     public class SaveData
     {
-        internal SaveDataBool StraightPin = new([GoalID.StraightThreefoldandLongPin], "StraightPin"); 
-        internal SaveDataBool Longpin = new([GoalID.StraightThreefoldandLongPin], "Longpin");
-        internal SaveDataBool ThreefoldPin = new([GoalID.StraightThreefoldandLongPin], "ThreefoldPin");
-        internal SaveDataBool DeadBugsPurse = new([GoalID.DeadBugsPurseaSilkeater], "DeadBugsPurse");
-        internal SaveDataBool BarbedBracelet = new([GoalID.BarbedBraceletFracturedMask], "BarbedBracelet");
-        internal SaveDataBool FracturedMask = new([GoalID.BarbedBraceletFracturedMask], "FracturedMask");
-        internal SaveDataBool MagnetiteDice = new([GoalID.MagnetiteDiceMagnetiteBrooch], "MagnetiteDice");
-        internal SaveDataBool MagnetiteBrooch = new([GoalID.CompassPendantBrooch, GoalID.MagnetiteDiceMagnetiteBrooch], "MagnetiteBrooch");
-        internal SaveDataBool Compass = new([GoalID.CompassPendantBrooch], "Compass");
-        internal SaveDataBool ShardPendant = new([GoalID.CompassPendantBrooch], "ShardPendant");
-        internal SaveDataBool WardingBell = new([GoalID.WardingBellClawMirror, GoalID.WardingBellSawtoothCirclet], "WardingBell");
-        internal SaveDataBool ClawMirror = new([GoalID.WardingBellClawMirror], "ClawMirror");
-        internal SaveDataBool SawtoothCirclet = new([GoalID.WardingBellSawtoothCirclet], "SawtoothCirclet");
-        internal SaveDataBool MagmaBell = new([GoalID.MagmaBellCurveclaw], "MagmaBell");
-        internal SaveDataBool Curveclaw = new([GoalID.MagmaBellCurveclaw], "Curveclaw");
-        internal SaveDataBool WeightedBelt = new([GoalID.WeightedBeltAscendantsGrip], "WeightedBelt");
-        internal SaveDataBool AscendantsGrip = new([GoalID.WeightedBeltAscendantsGrip], "AscendantsGrip");
-        internal SaveDataBool Scuttlebrace = new([GoalID.ScuttlebraceSilkspeed], "Scuttlebrace");
-        internal SaveDataBool SilkspeedAnklets = new([GoalID.ScuttlebraceSilkspeed], "SilkspeedAnklets");
-        internal SaveDataBool Pimpillo = new([GoalID.PimpilloVoltvessels], "Pimpillo");
-        internal SaveDataBool Voltvessels = new([GoalID.PimpilloVoltvessels], "Voltvessels");
-        internal SaveDataBool PollipPouch = new([GoalID.PollipPouchStingShard], "PollipPouch");
-        internal SaveDataBool StingShard = new([GoalID.PollipPouchStingShard], "StingShard");
-        internal SaveDataBool Weavelight = new([GoalID.WeavelightInjectorBand], "Weavelight");
-        internal SaveDataBool InjectorBand = new([GoalID.WeavelightInjectorBand], "InjectorBand");
         internal SaveDataBool BlastedSilkeater = new([GoalID.BlastedStepsSilkeaterCraftmetal], "BlastedSilkeater");
         internal SaveDataBool BlastedCraftmetal = new([GoalID.BlastedStepsSilkeaterCraftmetal], "BlastedCraftmetal");
         internal SaveDataBool SinnersKey = new([GoalID.BothFreeSimpleKeys], "SinnersKey");
@@ -91,7 +65,6 @@ namespace VogsBingoMod.Automarking
         internal SaveDataBool FleaVaults = new([GoalID.SinnersRoadVaultsFleasTwo], "FleaVaults");
         internal SaveDataBool DeepDocksSpoolFragNearSpa = new([GoalID.DeepDocksSpoolFragmentsTwo], "DeepDocksSpoolFragNearSpa");
         internal SaveDataBool DeeperDocksSpoolFrag = new([GoalID.DeepDocksSpoolFragmentsTwo], "DeeperDocksSpoolFrag");
-        internal SaveDataInt SilkSkills = new([new(){markValue = 3, goalToMark = GoalID.ThreeSilkSkills}, new(){markValue = 4, goalToMark = GoalID.FourSilkSkills}], "SilkSkills");
         internal SaveDataInt Crests = new([new(){markValue = 3, goalToMark = GoalID.ThreeNonHunterCrests}], "Crests");
         internal SaveDataInt ExtraMasks = new([new(){markValue = 1, goalToMark = GoalID.OneExtraMask}, new(){markValue = 2, goalToMark = GoalID.TwoExtraMasks}], "ExtraMasks");
         internal SaveDataInt SpoolFragments = new([new(){markValue = 2, goalToMark = GoalID.OneSpoolUpgrade}, new(){markValue = 4, goalToMark = GoalID.TwoSpoolUpgrades}, new(){markValue = 6, goalToMark = GoalID.ThreeSpoolUpgrades}], "SpoolFragments");
