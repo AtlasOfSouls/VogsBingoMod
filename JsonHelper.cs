@@ -1,7 +1,8 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 using VogsBingoMod.UI;
 
 namespace VogsBingoMod
@@ -10,26 +11,34 @@ namespace VogsBingoMod
     {
         internal static string[] GetNamesFromBoard(string boardJson)
         {
-            string[] jsonObjects = boardJson.Split("}, {");
-            string[] goalNames = new string[jsonObjects.Length];
-            for (int i = 0; i < jsonObjects.Length; i++)
+            JsonGoal[]? goals = JsonConvert.DeserializeObject<JsonGoal[]>(boardJson);
+            if (goals == null)
             {
-                int slotIndex = int.Parse(GetStringValueOfKey("slot", jsonObjects[i]).Substring(4)) - 1;
-                goalNames[slotIndex] = GetStringValueOfKey("name", jsonObjects[i]);
+                return [];
+            }
+            string[] goalNames = new string[goals.Length];
+            for (int i = 0; i < goals.Length; i++)
+            {
+                int slotIndex = int.Parse(goals[i].slot.Substring(4)) - 1;
+                goalNames[slotIndex] = goals[i].name;
             }
             return goalNames;
         }
 
         internal static int[][] GetColorsFromBoard(string boardJson)
         {
-            string[] jsonObjects = boardJson.Split("}, {");
-            int[][] colorIDs = new int[jsonObjects.Length][];
-            for (int i = 0; i < jsonObjects.Length; i++)
+            JsonGoal[]? goals = JsonConvert.DeserializeObject<JsonGoal[]>(boardJson);
+            if (goals == null)
             {
-                string[] currentColors = GetStringValueOfKey("colors", jsonObjects[i]).Split(" ");
+                return [];
+            }
+            int[][] colorIDs = new int[goals.Length][];
+            for (int i = 0; i < goals.Length; i++)
+            {
+                string[] currentColors = goals[i].colors.Split(" ");
                 if (currentColors.Length == 1 && currentColors[0].Equals("blank"))
                 {
-                    colorIDs[i] = new int[0];
+                    colorIDs[i] = [];
                 } else {
                     colorIDs[i] = new int[currentColors.Length];
                 }
@@ -41,87 +50,9 @@ namespace VogsBingoMod
             return colorIDs;
         }
 
-        internal static string GetStringValueOfKey(string key, string jsonObj)
-        {
-            int keyIndex = jsonObj.IndexOf(key);
-            int valueStartIndex = keyIndex + key.Length + 4;
-            int valueEndIndex = jsonObj.IndexOf("\"", valueStartIndex);
-            int valueLength = valueEndIndex - valueStartIndex;
-            string value = jsonObj.Substring(valueStartIndex, valueLength);
-            return value;
-        }
-
-        internal static bool GetBoolValueOfKey(string key, string jsonObj)
-        {
-            int keyIndex = jsonObj.IndexOf(key);
-            int valueStartIndex = keyIndex + key.Length + 3;
-            if (jsonObj.Substring(valueStartIndex, 4).Equals("true"))
-            {
-                return true;
-            } else if (jsonObj.Substring(valueStartIndex, 5).Equals("false"))
-            {
-                return false;
-            } else
-            {
-                throw new Exception($"The value of the key you requested ({key}) was not a boolean.");
-            }
-        }
-
-        internal static string GetObjectValueOfKey(string key, string jsonObj)
-        {
-            int keyIndex = jsonObj.IndexOf(key);
-            int valueStartIndex = keyIndex + key.Length + 4;
-            int valueEndIndex = 0;
-            int numLeftBraces = 1;
-            int crtIndex = valueStartIndex;
-            while (crtIndex < jsonObj.Length)
-            {
-                if (jsonObj[crtIndex] == '{')
-                {
-                    numLeftBraces++;
-                } else if (jsonObj[crtIndex] == '}')
-                {
-                    numLeftBraces--;
-                    if (numLeftBraces <= 0)
-                    {
-                        valueEndIndex = crtIndex;
-                        break;
-                    }
-                }
-                crtIndex++;
-            }
-            int valueLength = valueEndIndex - valueStartIndex;
-            string value = jsonObj.Substring(valueStartIndex, valueLength);
-            return value;
-        }
-
-        internal static double GetDoubleValueFromKey(string key, string jsonObj)
-        {
-            int keyIndex = jsonObj.IndexOf(key);
-            int valueStartIndex = keyIndex + key.Length + 3;
-            int valueEndIndex = valueStartIndex;
-            for (int i = valueStartIndex; i < jsonObj.Length; i++)
-            {
-                if ((jsonObj[i] < '0' || jsonObj[i] > '9') && jsonObj[i] != '.')
-                {
-                    valueEndIndex = i;
-                    break;
-                }
-            }
-            int valueLength = valueEndIndex - valueStartIndex;
-            double value = double.Parse(jsonObj.Substring(valueStartIndex, valueLength));
-            return value;
-        }
-
         internal static string CreateGoalMarkJson(int slotIndex, string roomCode, string color, bool remove, RoomType roomType)
         {
-            if (roomType == RoomType.Bingosync)
-            {
-                return $"{{\"slot\": {slotIndex}, \"color\": \"{color}\", \"remove_color\": {remove.ToString().ToLower()}, \"room\": \"{roomCode}\"}}";
-            } else
-            {
-                return $"{{\"slot\": {slotIndex}, \"color\": \"{color}\", \"remove_color\": {remove.ToString().ToLower()}, \"room\": \"{roomCode}\"}}";
-            }
+            return $"{{\"slot\": {slotIndex}, \"color\": \"{color}\", \"remove_color\": {remove.ToString().ToLower()}, \"room\": \"{roomCode}\"}}";
         }
 
         internal static string CreateColorSwitchJson(int colorID, string roomCode, RoomType roomType)
@@ -134,26 +65,71 @@ namespace VogsBingoMod
             return $"{{\"room\": \"{roomCode}\"}}";
         }
 
-        internal static string[] GetGoalNamesFromList(string json)
+        internal static string[] GetGoalNamesFromJson(string json)
         {
-            string[] goals = json.Split("},");
-            for (int i = 0; i < goals.Length; i++)
+            string[] goalNames = GetSupportedGoals(json).Keys.ToArray();
+            for (int i = 0; i < goalNames.Length; i++)
             {
-                goals[i] = GetStringValueOfKey("name", goals[i]).ToLower();
+                goalNames[i] = goalNames[i].ToLower();
             }
-            return goals;
+            return goalNames;
         }
 
         internal static Dictionary<string, bool> GetSupportedGoals(string json)
         {
             Dictionary<string, bool> goals = new Dictionary<string, bool>();
-            string[] jsonObjs = json.Split("},");
-            for (int i = 0; i < jsonObjs.Length; i++)
+            JsonSupportedGoal[]? jsonSupportedGoals = JsonConvert.DeserializeObject<JsonSupportedGoal[]>(json);
+            for (int i = 0; i < jsonSupportedGoals?.Length; i++)
             {
-                string name = GetStringValueOfKey("name", jsonObjs[i]).ToLower();
-                goals.Add(name, GetBoolValueOfKey("automarking_support", jsonObjs[i]));
+                string name = jsonSupportedGoals[i].name.ToLower();
+                goals.Add(name, jsonSupportedGoals[i].automarking_support);
             }
             return goals;
         }
+    }
+
+    internal class JsonGoalMarkedMessage
+    {
+        public string type = "";
+        public JsonPlayer player = new();
+        public JsonSquare square = new();
+        public string player_color = "";
+        public string color = "";
+        public bool remove = default;
+        public double timestamp = default;
+        public string room = "";
+    }
+
+    internal class JsonPlayer
+    {
+        public string uuid = "";
+        public string name = "";
+        public string color = "";
+        public bool is_spectator = default;
+    }
+
+    internal class JsonSquare
+    {
+        public string name = "";
+        public string slot = "";
+        public string colors = "";
+    }
+
+    internal class JsonSupportedGoal
+    {
+        public string name = "";
+        public bool automarking_support = default;
+    }
+
+    internal class JsonMessageType
+    {
+        public string type = "";
+    }
+
+    internal class JsonGoal
+    {
+        public string name = "";
+        public string slot = "";
+        public string colors = "";
     }
 }

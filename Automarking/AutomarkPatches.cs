@@ -105,12 +105,6 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.SpriteNameBellhomeKey:
                     Automarker.MarkIfAvailable(GoalID.BellhomeKey);
                     break;
-                case GoalHelper.SpriteNameSilkeater:
-                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value++;
-                    VogsBingoModPlugin.instance.SaveData.SilkeaterBool.Value = true;
-                    if (IsScene("Coral_37"))
-                        VogsBingoModPlugin.instance.SaveData.BlastedSilkeater.Value = true;
-                    break;
                 case GoalHelper.SpriteNameCraftmetal:
                     VogsBingoModPlugin.instance.SaveData.Craftmetal.Value++;
                     switch (GetSceneName())
@@ -215,15 +209,6 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.SpriteNameRosaryNecklace: case GoalHelper.SpriteNameHeavyRosaryNecklace: case GoalHelper.SpriteNamePaleRosaryNecklace:
                     VogsBingoModPlugin.instance.SaveData.NonPurchasedRosaryNecklaces.Value++;
-                    break;
-                case GoalHelper.SpriteNameRosaryString:
-                    if (IsScene("Greymoor_01") || IsScene("Shellwood_08c") || IsScene("Hang_06_bank"))
-                    {
-                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
-                    } else
-                    {
-                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
-                    }
                     break;
                 case GoalHelper.SpriteNameHerosMemento:
                     VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
@@ -879,10 +864,11 @@ namespace VogsBingoMod.Automarking
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(CollectableItemPickup),nameof(CollectableItemPickup.EndInteraction))]
-        static void ItemPickupPatch(CollectableItemPickup __instance, bool didPickup)
+        [HarmonyPatch(typeof(CollectableItemPickup),nameof(CollectableItemPickup.DoPickupAction))]
+        static void ItemPickupPatch(CollectableItemPickup __instance, bool __result)
         {
-            if (!didPickup)
+            VogsBingoModPlugin.LogInfo($"item pickup occured: {__instance.Item.name}");
+            if (!__result)
             {
                 return;
             }
@@ -911,6 +897,12 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.ItemNameEncrustedHeart when PlayerData.instance.CollectedHeartClover && PlayerData.instance.CollectedHeartCoral && PlayerData.instance.CollectedHeartFlower:
                     VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    break;
+                case "Rosary_Set_Frayed":
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddFrayedString();
+                    break;
+                case "Rosary_Set_Small":
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
                     break;
                 default:
                     break;
@@ -1122,8 +1114,25 @@ namespace VogsBingoMod.Automarking
                 case "Great Shard":
                     VogsBingoModPlugin.instance.SaveData.BeastShards.Value += amount;
                     break;
-                case "Rosary_Set_Frayed":
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddFrayedString();
+                case "Silk Grub":
+                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value++;
+                    VogsBingoModPlugin.instance.SaveData.SilkeaterBool.Value = true;
+                    if (IsScene("Coral_37"))
+                        VogsBingoModPlugin.instance.SaveData.BlastedSilkeater.Value = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(CollectableItemCollect),nameof(CollectableItemCollect.DoAction))]
+        static void RosaryStringDispenserPatch(CollectableItem item)
+        {
+            switch (item.name)
+            {
+                case "Rosary_Set_Small":
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
                     break;
                 default:
                     break;

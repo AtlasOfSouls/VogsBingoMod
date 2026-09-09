@@ -149,7 +149,7 @@ namespace VogsBingoMod.Automarking
                 VogsBingoModPlugin.LogError(e);
                 json = "";
             }
-            return JsonHelper.GetGoalNamesFromList(json);
+            return JsonHelper.GetGoalNamesFromJson(json);
         }
     }
 }
