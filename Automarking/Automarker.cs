@@ -344,7 +344,7 @@ namespace VogsBingoMod.Automarking
             }
         }
 
-        internal static void UpdateFleas()
+        internal static void UpdateFleas(bool bigFleaBeaten = false)
         {
             if (PlayerData.instance != null)
             {
@@ -356,10 +356,9 @@ namespace VogsBingoMod.Automarking
                     VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
                 if (PlayerData.instance.SavedFlea_Library_09)
                     VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
-                if (PlayerData.instance.tamedGiantFlea)
+                if (bigFleaBeaten || PlayerData.instance.tamedGiantFlea)
                 {
                     VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
-                    MarkIfAvailable(GoalID.BeatBigFlea);
                     fleaCount++;
                 }
                 if (PlayerData.instance.SavedFlea_Library_01)

@@ -4,8 +4,6 @@ using HutongGames.PlayMaker.Actions;
 using UnityEngine;
 using HarmonyLib;
 using UnityEngine.SceneManagement;
-using System;
-using GlobalEnums;
 
 namespace VogsBingoMod.Automarking
 {
@@ -443,7 +441,7 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.EnemyNameBigFlea:
                     Automarker.MarkIfAvailable(GoalID.BeatBigFlea);
-                    Automarker.UpdateFleas();
+                    Automarker.UpdateFleas(bigFleaBeaten: true);
                     break;
                 case GoalHelper.EnemyNameSeth:
                     Automarker.MarkIfAvailable(GoalID.FightSeth);

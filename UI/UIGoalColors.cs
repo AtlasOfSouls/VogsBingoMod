@@ -49,12 +49,6 @@ namespace VogsBingoMod.UI
             TextureHandler.ClearTexture(Texture);
         }
 
-        internal void SetOpacity(float opacity)
-        {
-            Image image = this.gameObject.GetComponent<Image>();
-            image.color = new Color(image.color.r, image.color.g, image.color.b, opacity);
-        }
-
         void RefreshColors()
         {
             if (currentColorIDs.Count <= 0)

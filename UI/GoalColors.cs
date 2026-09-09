@@ -33,7 +33,8 @@ namespace VogsBingoMod.UI
     {
         internal const int BingosyncColorsFirstID = 1;
         internal const int CaravanColorsFirstID = 11;
-        internal static int myColorID = (int)GoalColorID.red;
+        internal static int _myColorID = (int)GoalColorID.red;
+        internal static int myColorID {get => _myColorID; set {_myColorID = value; UIHelper.UpdateGoalTextColor();}}
         internal static string MyColorName => IDToName(myColorID);
         internal static string[] ColorOptions => new string[]
         {
