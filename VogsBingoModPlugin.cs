@@ -43,7 +43,9 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData
 
     internal static void LogInfo(string str)
     {
+        try{
         instance.logger.LogInfo(str);
+        } catch (Exception){}
     }
 
     internal static void LogError(string str)

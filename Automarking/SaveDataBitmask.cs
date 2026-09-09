@@ -1,22 +1,33 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
+using Newtonsoft.Json;
+
 namespace VogsBingoMod.Automarking
 {
-    internal class SaveDataBitmask
+    public class SaveDataBitmask
     {
-        internal string Name;
-        internal uint bitmask = 0;
-        internal AutomarkIntValue[] AutomarkValues {get; private set;}
+        public string Name;
+        public uint bitmask = 0;
+        public AutomarkIntValue[] AutomarkValues {get; private set;}
         internal void AddFlag(uint flag)
         {
             bitmask = bitmask | flag;
             this.CheckForAutomarks();
         }
-        internal SaveDataBitmask(AutomarkIntValue[] automarkValues, string name)
+        public SaveDataBitmask(AutomarkIntValue[] AutomarkValues, string Name)
         {
-            this.Name = name;
-            this.AutomarkValues = automarkValues;
+            this.Name = Name;
+            this.AutomarkValues = AutomarkValues;
         }
+
+        [JsonConstructor]
+        public SaveDataBitmask(AutomarkIntValue[] AutomarkValues, string Name, uint bitmask)
+        {
+            this.Name = Name;
+            this.AutomarkValues = AutomarkValues;
+            this.bitmask = bitmask;
+        }
+
         internal void ResetFlags()
         {
             this.bitmask = 0;

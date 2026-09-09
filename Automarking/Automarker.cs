@@ -155,7 +155,7 @@ namespace VogsBingoMod.Automarking
                     goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Straight Pin", "Tri Pin", "Harpoon");
                     break;
                 case GoalID.DeadBugsPurseaSilkeater:
-                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Dead Mans Purse") && VogsBingoModPlugin.instance.SaveData.SilkeaterBool;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Dead Mans Purse") && VogsBingoModPlugin.instance.SaveData.Silkeaters > 0;
                     break;
                 case GoalID.BarbedBraceletFracturedMask:
                     goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Fractured Mask", "Barbed Wire");
@@ -188,7 +188,10 @@ namespace VogsBingoMod.Automarking
                     goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "White Ring", "Quickbind");
                     break;
                 case GoalID.BlastedStepsSilkeaterCraftmetal:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.BlastedSilkeater && VogsBingoModPlugin.instance.SaveData.BlastedCraftmetal;
+                    try
+                    {
+                        goalCompleted = VogsBingoModPlugin.instance.SaveData.BlastedSilkeater && SceneData.instance.persistentBools.scenes["Coral_32"]["Collectable Item Pickup - Tool Metal"].Value;
+                    } catch (Exception){}
                     break;
                 case GoalID.BothFreeSimpleKeys:
                     goalCompleted = VogsBingoModPlugin.instance.SaveData.SinnersKey && VogsBingoModPlugin.instance.SaveData.KarakKey;

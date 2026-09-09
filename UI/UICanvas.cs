@@ -90,6 +90,7 @@ namespace VogsBingoMod.UI
             this.roomUrlInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "RoomLinkInput", "Enter the room link...", 0, -100);
             this.nicknameInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "NicknameInput", "Enter your nickname...", 0, -180);
             this.passwordInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "PasswordInput", "Enter the room password...", 0, -260, true);
+            UIHelper.SetupJoinRoomFieldNavigation();
             bingosyncColorOptions = new List<Dropdown.OptionData>();
             caravanColorOptions = new List<Dropdown.OptionData>();
             for (int i = 0; i < defaultcolorOptions; i++)

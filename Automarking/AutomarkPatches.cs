@@ -110,7 +110,7 @@ namespace VogsBingoMod.Automarking
                     switch (GetSceneName())
                     {
                         case "Coral_32":
-                            VogsBingoModPlugin.instance.SaveData.BlastedCraftmetal.Value = true;
+                            Automarker.CheckIfGoalCompleted(GoalID.BlastedStepsSilkeaterCraftmetal);
                             break;
                         case "Aqueduct_05":
                             Automarker.MarkIfAvailable(GoalID.PaleLakeCraftmetal);
@@ -1115,8 +1115,8 @@ namespace VogsBingoMod.Automarking
                     VogsBingoModPlugin.instance.SaveData.BeastShards.Value += amount;
                     break;
                 case "Silk Grub":
-                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value++;
-                    VogsBingoModPlugin.instance.SaveData.SilkeaterBool.Value = true;
+                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value += amount;
+                    Automarker.CheckIfGoalCompleted(GoalID.DeadBugsPurseaSilkeater);
                     if (IsScene("Coral_37"))
                         VogsBingoModPlugin.instance.SaveData.BlastedSilkeater.Value = true;
                     break;

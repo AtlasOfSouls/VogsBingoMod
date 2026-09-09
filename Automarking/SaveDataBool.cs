@@ -2,19 +2,24 @@
 /// © 2026 AtlasOfSouls
 namespace VogsBingoMod.Automarking
 {
-    internal class SaveDataBool
+    public class SaveDataBool
     {
         internal const bool defaultValue = false;
         internal bool _value = defaultValue;
-        internal bool Value {get=>_value; set{_value = value;VogsBingoModPlugin.LogInfo($"Updated value {Name} to {_value}."); Automarker.CheckIfGoalsCompleted(this.GoalIDs);}}
-        internal GoalID[] GoalIDs;
-        internal string Name {get; private set;}
+        public bool Value {get=>_value; set{_value = value;VogsBingoModPlugin.LogInfo($"Updated value {Name} to {_value}."); Automarker.CheckIfGoalsCompleted(this.GoalIDs);}}
+        public GoalID[] GoalIDs;
+        public string Name {get; private set;}
         public static implicit operator bool(SaveDataBool data) => data.Value;
-        internal SaveDataBool(GoalID[] goalIDs, string name, bool value = false)
+        internal SaveDataBool(GoalID[] GoalIDs, string Name)
         {
-            this._value = value;
-            this.GoalIDs = goalIDs;
-            this.Name = name;
+            this.GoalIDs = GoalIDs;
+            this.Name = Name;
+        }
+        public SaveDataBool(GoalID[] GoalIDs, string Name, bool Value)
+        {
+            this._value = Value;
+            this.GoalIDs = GoalIDs;
+            this.Name = Name;
         }
         internal void ResetToDefault()
         {

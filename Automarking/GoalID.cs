@@ -2,7 +2,7 @@
 /// © 2026 AtlasOfSouls
 namespace VogsBingoMod.Automarking
 {
-    internal enum GoalID
+    public enum GoalID
     {
         TwoDonationWishes = 0,
         ThreeDonationWishes = 1,

@@ -272,6 +272,16 @@ namespace VogsBingoMod.UI
             return uiTextInput;
         }
 
+        internal static void SetupJoinRoomFieldNavigation()
+        {
+            if (uiCanvas.roomUrlInputField != null && uiCanvas.nicknameInputField != null && uiCanvas.passwordInputField != null && uiCanvas.joinRoomButton != null)
+            {
+                uiCanvas.roomUrlInputField.InputComponent.onSubmit.AddListener(uiCanvas.nicknameInputField.Select);
+                uiCanvas.nicknameInputField.InputComponent.onSubmit.AddListener(uiCanvas.passwordInputField.Select);
+                uiCanvas.passwordInputField.InputComponent.onSubmit.AddListener(uiCanvas.joinRoomButton.LeftClick);
+            }
+        }
+
         internal static UIDropdown CreateUIDropdown(Transform parent, string objName, UnityAction<int> callbackOnValueChanged, List<Dropdown.OptionData> optionData, float xOffset = 0, float yOffset = 0)
         {
             int numOptions = optionData.Count;
