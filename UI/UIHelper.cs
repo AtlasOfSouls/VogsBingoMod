@@ -26,6 +26,7 @@ namespace VogsBingoMod.UI
         const int defaultGoalWidth = 100;
         const int defaultGoalHeight = 100;
         internal static UICanvas uiCanvas = UICanvas.GetInstance();
+        internal static bool CanPlayGoalMarkSounds => uiCanvas.revealCardButton != null && !uiCanvas.revealCardButton.gameObject.activeSelf;
         static VisibilityState visibilityState = VisibilityState.Everything;
         internal enum VisibilityState
         {
@@ -350,7 +351,7 @@ namespace VogsBingoMod.UI
                 return;
             }
             VogsBingoModPlugin.LogInfo($"Can mark: {!uiCanvas.revealCardButton.gameObject.activeSelf} and {!uiCanvas.HasColor(slotIndex, GoalColors.myColorID)}");
-            if (!uiCanvas.revealCardButton.gameObject.activeSelf && !uiCanvas.HasColor(slotIndex, GoalColors.myColorID))
+            if (uiCanvas.CanMarkGoals && !uiCanvas.HasColor(slotIndex, GoalColors.myColorID))
             {
                 UIHelper.MarkGoal(slotIndex, false);
             }

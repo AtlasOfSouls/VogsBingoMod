@@ -2,6 +2,7 @@
 /// © 2026 AtlasOfSouls
 using System;
 using UnityEngine;
+using VogsBingoMod.UI;
 
 namespace VogsBingoMod
 {
@@ -39,7 +40,7 @@ namespace VogsBingoMod
                     if (isOneShot)
                     {
                         audioSource.PlayOneShot(TeamMarkClip);
-                    } else if (!audioSource.isPlaying || audioSource.clip != TeamMarkClip)
+                    } else if ((!audioSource.isPlaying || audioSource.clip != TeamMarkClip) && UIHelper.CanPlayGoalMarkSounds)
                     {
                         audioSource.clip = TeamMarkClip;
                         audioSource.Play();
@@ -60,7 +61,7 @@ namespace VogsBingoMod
                     if (isOneShot)
                     {
                         audioSource.PlayOneShot(OpponentMarkClip);
-                    } else if (!audioSource.isPlaying || audioSource.clip != OpponentMarkClip)
+                    } else if ((!audioSource.isPlaying || audioSource.clip != OpponentMarkClip) && UIHelper.CanPlayGoalMarkSounds)
                     {
                         audioSource.clip = OpponentMarkClip;
                         audioSource.Play();

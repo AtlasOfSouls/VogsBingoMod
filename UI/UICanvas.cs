@@ -37,6 +37,7 @@ namespace VogsBingoMod.UI
         internal float currentScale {get; private set;}
         internal float CurrentOpacity {get => opacityOptions[currentOpacityIndex];}
         internal float CurrentTextOpacity {get => textOpacityOptions[currentOpacityIndex];}
+        internal bool CanMarkGoals => (revealCardButton != null && !revealCardButton.gameObject.activeSelf) || (revealHandModeButton != null && !revealHandModeButton.gameObject.activeSelf);
         static UICanvas? instance;
         float[] opacityOptions = {1, 0.8f, 0.5f, 0.3f, 0.1f};
         float[] textOpacityOptions = {1, 1, 0.9f, 0.7f, 0.5f};
@@ -218,9 +219,7 @@ namespace VogsBingoMod.UI
 
         internal void RevealCardInHandMode()
         {
-            NetworkHandler.SendRevealCardMessage();
-            this.HideRevealCardButton();
-            this.ShowGoals();
+            this.revealHandModeButton?.gameObject.SetActive(false);
             UIHelper.CycleVisibility(UIHelper.VisibilityState.Nothing);
         }
 
@@ -233,6 +232,7 @@ namespace VogsBingoMod.UI
         internal void ShowRevealCardButton()
         {
             this.revealCardButton?.gameObject.SetActive(true);
+            this.revealHandModeButton?.gameObject.SetActive(true);
         }
 
         internal void HideRevealCardButton()
