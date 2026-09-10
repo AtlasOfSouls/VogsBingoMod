@@ -993,6 +993,7 @@ namespace VogsBingoMod.Automarking
                 return;
             }
             VogsBingoModPlugin.LogInfo($"Unlocked a tool: \"{__instance.name}\"");
+            
             switch (__instance.name)
             {
                 case "Straight Pin": case "Tri Pin": case "Harpoon":
@@ -1099,6 +1100,62 @@ namespace VogsBingoMod.Automarking
                     break;
                 default:
                     break;
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(ToolItem),nameof(ToolItem.Unlock))]
+        static void ToolCountPatch()
+        {
+            int redToolCount = 0;
+            int blueToolCount = 0;
+            int yellowToolCount = 0;
+            foreach (ToolItem tool in ToolItemManager.GetUnlockedTools())
+            {
+                switch (tool.type)
+                {
+                    case ToolItemType.Red:
+                        redToolCount++;
+                        break;
+                    case ToolItemType.Blue:
+                        blueToolCount++;
+                        break;
+                    case ToolItemType.Yellow:
+                        yellowToolCount++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            switch (redToolCount)
+            {
+                case >= 5:
+                    Automarker.MarkIfAvailable(GoalID.FiveRedTools);
+                    break;
+                case >= 3:
+                    Automarker.MarkIfAvailable(GoalID.ThreeRedTools);
+                    break;
+                default:
+                    break;
+            }
+            if (blueToolCount >= 3)
+            {
+                Automarker.MarkIfAvailable(GoalID.ThreeBlueTools);
+            }
+            switch (yellowToolCount)
+            {
+                case >= 5:
+                    Automarker.MarkIfAvailable(GoalID.FiveYellowTools);
+                    break;
+                case >= 3:
+                    Automarker.MarkIfAvailable(GoalID.ThreeYellowTools);
+                    break;
+                default:
+                    break;
+            }
+            if (redToolCount >= 2 && blueToolCount >= 2 && yellowToolCount >= 2)
+            {
+                Automarker.MarkIfAvailable(GoalID.Twoofeachtooltype);
             }
         }
 
