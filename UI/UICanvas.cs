@@ -35,10 +35,12 @@ namespace VogsBingoMod.UI
         internal List<Dropdown.OptionData> bingosyncColorOptions;
         internal List<Dropdown.OptionData> caravanColorOptions;
         internal float currentScale {get; private set;}
+        internal float CurrentOpacity {get => opacityOptions[currentOpacityIndex];}
+        internal float CurrentTextOpacity {get => textOpacityOptions[currentOpacityIndex];}
         static UICanvas? instance;
-        float[] opacityOptions = {1, 0.8f, 0.5f, 0.3f};
+        float[] opacityOptions = {1, 0.8f, 0.5f, 0.3f, 0.1f};
+        float[] textOpacityOptions = {1, 1, 0.9f, 0.7f, 0.5f};
         int currentOpacityIndex = 0;
-        // int boardSize;
         UIGoal[] uiGoals;
 
         internal static UICanvas GetInstance()
@@ -88,8 +90,9 @@ namespace VogsBingoMod.UI
             this.exitRoomButton = UIHelper.CreateUIButton(this.transform, "ExitRoomButton", ExitRoomButtonClicked, null, "Exit Room", -20, -675, UIAnchor.TopRight);
             this.exitRoomButton.gameObject.SetActive(false);
             this.roomUrlInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "RoomLinkInput", "Enter the room link...", 0, -100);
-            this.nicknameInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "NicknameInput", "Enter your nickname...", 0, -180);
-            this.passwordInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "PasswordInput", "Enter the room password...", 0, -260, true);
+            this.nicknameInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "NicknameInput", "Enter your nickname...", 0, -180, startingText: VogsBingoModPlugin.instance.nameAutofill.Value);
+            this.passwordInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "PasswordInput", "Enter the room password...", 0, -260, true, VogsBingoModPlugin.instance.passwordAutofill.Value);
+            UIHelper.SetupJoinRoomFieldNavigation();
             bingosyncColorOptions = new List<Dropdown.OptionData>();
             caravanColorOptions = new List<Dropdown.OptionData>();
             for (int i = 0; i < defaultcolorOptions; i++)
@@ -259,8 +262,13 @@ namespace VogsBingoMod.UI
             {
                 if (image.gameObject.name != "Blocker")
                 {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, opacityOptions[currentOpacityIndex]);
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, this.CurrentOpacity);
                 }
+            }
+            Text[] textArr = gameObject.GetComponentsInChildren<Text>(true);
+            foreach (Text textComp in textArr)
+            {
+                textComp.color = new Color(textComp.color.r, textComp.color.g, textComp.color.b, this.CurrentTextOpacity);
             }
         }
 
@@ -287,6 +295,14 @@ namespace VogsBingoMod.UI
             joinRoomButton?.gameObject.transform.localScale = Vector3.one * scale;
             exitRoomButton?.gameObject.transform.localScale = Vector3.one * scale;
             currentScale = scale;
+        }
+
+        internal void UpdateGoalTextColor()
+        {
+            foreach (UIGoal goal in uiGoals)
+            {
+                goal.UpdateTextColor();
+            }
         }
 
         float GetUIScaleFromConfig() =>(VogsBingoModPlugin.UIScaleOptions)VogsBingoModPlugin.instance.uiScaleConfig.BoxedValue
@@ -317,7 +333,6 @@ namespace VogsBingoMod.UI
                 int xPos = i%boardSize * goalSpacing + goalsXOffset - goalSpacing*boardSize;
                 int yPos = i/boardSize * -goalSpacing + goalsYOffset;
                 newGoals[i] = UIHelper.CreateUIGoal(this.boardObj.transform, $"Goal{i}", xPos, yPos, i);
-                newGoals[i].SetOpacity(opacityOptions[currentOpacityIndex]);
             }
             uiGoals = newGoals;
             this.connectionPendingIcon?.GetComponent<RectTransform>().anchoredPosition = Vector2.right * (-goalSpacing * boardSize) + Vector2.up * 25;

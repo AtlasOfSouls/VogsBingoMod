@@ -25,22 +25,33 @@ namespace VogsBingoMod.UI
 
         internal void MarkGoal(int colorID)
         {
+            if (colorID == GoalColors.myColorID)
+            {
+                AudioHelper.Instance.PlayTeamMarkSound();
+            } else
+            {
+                AudioHelper.Instance.PlayOpponentMarkSound();
+            }
             goalColors.AddColor(colorID);
+            this.UpdateTextColor();
         }
 
         internal void UnmarkGoal(int colorID)
         {
             goalColors.RemoveColor(colorID);
+            this.UpdateTextColor();
         }
 
         internal void SetColors(int[] colorIDs)
         {
             goalColors.SetColors(colorIDs);
+            this.UpdateTextColor();
         }
 
         internal void ResetColors()
         {
             goalColors.ResetColors();
+            this.UpdateTextColor();
         }
 
         internal bool HasColor(int colorID)
@@ -74,11 +85,21 @@ namespace VogsBingoMod.UI
             this.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.right * xPos + Vector2.up * yPos;
         }
 
-        internal void SetOpacity(float opacity)
+        internal void UpdateTextColor()
         {
-            Image image = this.gameObject.GetComponent<Image>();
-            image.color = new Color(image.color.r, image.color.g, image.color.b, opacity);
-            goalColors.SetOpacity(opacity);
+            if (goalText == null)
+            {
+                return;
+            }
+            Color textColor;
+            if (this.HasColor(GoalColors.myColorID))
+            {
+                textColor = new(0, 1, 0);
+            } else
+            {
+                textColor = Color.white;
+            }
+            goalText.textComponent.color = new Color(textColor.r, textColor.g, textColor.b, UICanvas.GetInstance().CurrentTextOpacity);
         }
     }
 }

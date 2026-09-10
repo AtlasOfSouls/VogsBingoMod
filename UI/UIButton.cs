@@ -28,7 +28,7 @@ namespace VogsBingoMod.UI
             rightClickCallback = rightClickAction;
         }
 
-        internal void LeftClick()
+        internal void LeftClick(string value = "")
         {
             if (leftClickCallback != null)
             {

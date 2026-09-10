@@ -60,23 +60,6 @@ namespace VogsBingoMod.UI
             return imgName.Equals(standardBackgroundName) || imgName.Equals(standardBackgroundHighlightName);
         }
 
-        static byte[] LoadEmbeddedImage(string imgName)
-        {
-            Assembly executeAssembly = Assembly.GetExecutingAssembly();
-            Stream stream = executeAssembly.GetManifestResourceStream($"{imgName}");
-            if (stream == null)
-            {
-                VogsBingoModPlugin.LogError($"Could not find resource: {imgName}");
-                return new byte[0];
-            }
-            MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
-            byte[] bytes = memoryStream.ToArray();
-            stream.Dispose();
-            memoryStream.Dispose();
-            return bytes;
-        }
-
         internal static void LoadTextures()
         {
             foreach(string name in Assembly.GetExecutingAssembly().GetManifestResourceNames())
@@ -84,8 +67,13 @@ namespace VogsBingoMod.UI
                 if (name.StartsWith("VogsBingoMod.Assets."))
                 {
                     Texture2D texture = new Texture2D(1,1);
-                    byte[] buf;
-                    buf = LoadEmbeddedImage(name);
+                    byte[]? buf;
+                    buf = Resources.GetResourceAsByteArray(name);
+                    if (buf == null)
+                    {
+                        VogsBingoModPlugin.LogError($"Could not load image \"{name}\"");
+                        continue;
+                    }
                     texture.LoadImage(buf);
                     textures.Add(name, texture);
                 }

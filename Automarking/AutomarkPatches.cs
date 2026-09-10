@@ -4,8 +4,6 @@ using HutongGames.PlayMaker.Actions;
 using UnityEngine;
 using HarmonyLib;
 using UnityEngine.SceneManagement;
-using System;
-using GlobalEnums;
 
 namespace VogsBingoMod.Automarking
 {
@@ -105,18 +103,12 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.SpriteNameBellhomeKey:
                     Automarker.MarkIfAvailable(GoalID.BellhomeKey);
                     break;
-                case GoalHelper.SpriteNameSilkeater:
-                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value++;
-                    VogsBingoModPlugin.instance.SaveData.SilkeaterBool.Value = true;
-                    if (IsScene("Coral_37"))
-                        VogsBingoModPlugin.instance.SaveData.BlastedSilkeater.Value = true;
-                    break;
                 case GoalHelper.SpriteNameCraftmetal:
                     VogsBingoModPlugin.instance.SaveData.Craftmetal.Value++;
                     switch (GetSceneName())
                     {
                         case "Coral_32":
-                            VogsBingoModPlugin.instance.SaveData.BlastedCraftmetal.Value = true;
+                            Automarker.CheckIfGoalCompleted(GoalID.BlastedStepsSilkeaterCraftmetal);
                             break;
                         case "Aqueduct_05":
                             Automarker.MarkIfAvailable(GoalID.PaleLakeCraftmetal);
@@ -172,9 +164,6 @@ namespace VogsBingoMod.Automarking
                     VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
                     VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
                     break;
-                case GoalHelper.SpriteNameBeastShard:
-                    VogsBingoModPlugin.instance.SaveData.BeastShards.Value++;
-                    break;
                 case GoalHelper.SpriteNameCogheartPiece0: case GoalHelper.SpriteNameCogheartPiece1: case GoalHelper.SpriteNameCogheartPiece2: 
                     VogsBingoModPlugin.instance.SaveData.CogheartPieces.Value++;
                     break;
@@ -218,18 +207,6 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.SpriteNameRosaryNecklace: case GoalHelper.SpriteNameHeavyRosaryNecklace: case GoalHelper.SpriteNamePaleRosaryNecklace:
                     VogsBingoModPlugin.instance.SaveData.NonPurchasedRosaryNecklaces.Value++;
-                    break;
-                case GoalHelper.SpriteNameRosaryString:
-                    if (IsScene("Greymoor_01") || IsScene("Shellwood_08c") || IsScene("Hang_06_bank"))
-                    {
-                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
-                    } else
-                    {
-                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
-                    }
-                    break;
-                case GoalHelper.SpriteNameFrayedString:
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddFrayedString();
                     break;
                 case GoalHelper.SpriteNameHerosMemento:
                     VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
@@ -464,7 +441,7 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.EnemyNameBigFlea:
                     Automarker.MarkIfAvailable(GoalID.BeatBigFlea);
-                    Automarker.UpdateFleas();
+                    Automarker.UpdateFleas(bigFleaBeaten: true);
                     break;
                 case GoalHelper.EnemyNameSeth:
                     Automarker.MarkIfAvailable(GoalID.FightSeth);
@@ -885,10 +862,11 @@ namespace VogsBingoMod.Automarking
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(CollectableItemPickup),nameof(CollectableItemPickup.EndInteraction))]
-        static void ItemPickupPatch(CollectableItemPickup __instance, bool didPickup)
+        [HarmonyPatch(typeof(CollectableItemPickup),nameof(CollectableItemPickup.DoPickupAction))]
+        static void ItemPickupPatch(CollectableItemPickup __instance, bool __result)
         {
-            if (!didPickup)
+            VogsBingoModPlugin.LogInfo($"item pickup occured: {__instance.Item.name}");
+            if (!__result)
             {
                 return;
             }
@@ -917,6 +895,12 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.ItemNameEncrustedHeart when PlayerData.instance.CollectedHeartClover && PlayerData.instance.CollectedHeartCoral && PlayerData.instance.CollectedHeartFlower:
                     VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    break;
+                case "Rosary_Set_Frayed":
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddFrayedString();
+                    break;
+                case "Rosary_Set_Small":
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
                     break;
                 default:
                     break;
@@ -986,20 +970,170 @@ namespace VogsBingoMod.Automarking
         {
             if (!__instance.IsUnlocked)
             {
+                VogsBingoModPlugin.LogInfo($"Crest unlocked: {__instance.name}");
                 VogsBingoModPlugin.instance.SaveData.Crests.Value++;
             }
         }
 
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(ToolItemManager),nameof(ToolItemManager.ReportToolUnlocked), [typeof(ToolItemType), typeof(bool)])]
-        static void ToolUnlockPatch(ToolItemType type)
+        static void SilkSkillUnlockPatch(ToolItemType type)
         {
-            if (type == ToolItemType.Skill)
-            {
+            if (type == ToolItemType.Skill){
                 Automarker.UpdateSilkSkills();
-            } else
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(ToolItem),nameof(ToolItem.Unlock))]
+        static void ToolUnlockPatch(ToolItem __instance)
+        {
+            if (__instance.IsUnlocked)
             {
-                Automarker.UpdateTools(ToolItemManager.GetUnlockedTools());
+                return;
+            }
+            VogsBingoModPlugin.LogInfo($"Unlocked a tool: \"{__instance.name}\"");
+            switch (__instance.name)
+            {
+                case "Straight Pin": case "Tri Pin": case "Harpoon":
+                    Automarker.CheckIfGoalCompleted(GoalID.StraightThreefoldandLongPin, __instance.name);
+                    break;
+                case "Sting Shard":
+                    Automarker.CheckIfGoalCompleted(GoalID.PollipPouchStingShard, __instance.name);
+                    break;
+                case "Tack":
+                    Automarker.MarkIfAvailable(GoalID.Tacks);
+                    break;
+                case "Lightning Rod": case "Pimpilo":
+                    Automarker.CheckIfGoalCompleted(GoalID.PimpilloVoltvessels, __instance.name);
+                    break;
+                case "Conch Drill":
+                    Automarker.MarkIfAvailable(GoalID.Conchcutter);
+                    break;
+                case "WebShot Forge":
+                    Automarker.MarkIfAvailable(GoalID.RepairSilkshot);
+                    break;
+                case "WebShot Architect":
+                    Automarker.MarkIfAvailable(GoalID.RepairSilkshot);
+                    break;
+                case "WebShot Weaver":
+                    Automarker.MarkIfAvailable(GoalID.RepairSilkshot);
+                    break;
+                case "Screw Attack":
+                    Automarker.MarkIfAvailable(GoalID.DelversDrill);
+                    break;
+                case "Cogwork Flier":
+                    Automarker.MarkIfAvailable(GoalID.Cogfly);
+                    break;
+                case "Rosary Cannon":
+                    Automarker.MarkIfAvailable(GoalID.RosaryCannon);
+                    break;
+                case "Flintstone":
+                    Automarker.MarkIfAvailable(GoalID.Flintslate);
+                    break;
+                case "Silk Snare":
+                    Automarker.MarkIfAvailable(GoalID.SnareSetter);
+                    break;
+                case "Lifeblood Syringe":
+                    Automarker.MarkIfAvailable(GoalID.PlasmiumPhial);
+                    break;
+                case "Mosscreep Tool 2":
+                    Automarker.MarkIfAvailable(GoalID.UpgradeDruidsEye);
+                    break;
+                case "Lava Charm": case "Curve Claws":
+                    Automarker.CheckIfGoalCompleted(GoalID.MagmaBellCurveclaw, __instance.name);
+                    break;
+                case "Bell Bind":
+                    Automarker.CheckIfGoalCompleted(GoalID.WardingBellClawMirror, __instance.name);
+                    Automarker.CheckIfGoalCompleted(GoalID.WardingBellSawtoothCirclet, __instance.name);
+                    break;
+                case "Poison Pouch":
+                    Automarker.CheckIfGoalCompleted(GoalID.PollipPouchStingShard, __instance.name);
+                    Automarker.MarkIfAvailable(GoalID.PollipPouch);
+                    break;
+                case "Fractured Mask": case "Barbed Wire":
+                    Automarker.CheckIfGoalCompleted(GoalID.BarbedBraceletFracturedMask, __instance.name);
+                    break;
+                case "Multibind":
+                    Automarker.MarkIfAvailable(GoalID.Multibinder);
+                    break;
+                case "White Ring": case "Quickbind":
+                    Automarker.CheckIfGoalCompleted(GoalID.WeavelightInjectorBand, __instance.name);
+                    break;
+                case "Brolly Spike":
+                    Automarker.CheckIfGoalCompleted(GoalID.WardingBellSawtoothCirclet, __instance.name);
+                    break;
+                case "Dazzle Bind":
+                    Automarker.CheckIfGoalCompleted(GoalID.WardingBellClawMirror, __instance.name);
+                    break;
+                case "Revenge Crystal":
+                    Automarker.MarkIfAvailable(GoalID.MemoryCrystal);
+                    break;
+                case "Quick Sling":
+                    Automarker.MarkIfAvailable(GoalID.QuickSling);
+                    break;
+                case "Maggot Charm":
+                    Automarker.MarkIfAvailable(GoalID.WreathofPurity);
+                    break;
+                case "Pinstress Tool":
+                    Automarker.MarkIfAvailable(GoalID.PinBadge);
+                    break;
+                case "Compass": case "Bone Necklace":
+                    Automarker.CheckIfGoalCompleted(GoalID.CompassPendantBrooch, __instance.name);
+                    break;
+                case "Rosary Magnet":
+                    Automarker.CheckIfGoalCompleted(GoalID.CompassPendantBrooch, __instance.name);
+                    Automarker.CheckIfGoalCompleted(GoalID.MagnetiteDiceMagnetiteBrooch, __instance.name);
+                    break;
+                case "Weighted Anklet": case "Wallcling":
+                    Automarker.CheckIfGoalCompleted(GoalID.WeightedBeltAscendantsGrip, __instance.name);
+                    break;
+                case "Dead Mans Purse":
+                    Automarker.CheckIfGoalCompleted(GoalID.DeadBugsPurseaSilkeater, __instance.name);
+                    break;
+                case "Magnetite Dice":
+                    Automarker.CheckIfGoalCompleted(GoalID.MagnetiteDiceMagnetiteBrooch, __instance.name);
+                    break;
+                case "Scuttlebrace": case "Sprintmaster":
+                    Automarker.CheckIfGoalCompleted(GoalID.ScuttlebraceSilkspeed, __instance.name);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(CollectableItemManager),nameof(CollectableItemManager.AddItem))]
+        static void ItemAddPatch(CollectableItem item, int amount)
+        {
+            VogsBingoModPlugin.LogInfo($"Item added: \"{item.name}\", amount added: {amount}");
+            switch (item.name)
+            {
+                case "Great Shard":
+                    VogsBingoModPlugin.instance.SaveData.BeastShards.Value += amount;
+                    break;
+                case "Silk Grub":
+                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value += amount;
+                    Automarker.CheckIfGoalCompleted(GoalID.DeadBugsPurseaSilkeater);
+                    if (IsScene("Coral_37"))
+                        VogsBingoModPlugin.instance.SaveData.BlastedSilkeater.Value = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(CollectableItemCollect),nameof(CollectableItemCollect.DoAction))]
+        static void RosaryStringDispenserPatch(CollectableItem item)
+        {
+            switch (item.name)
+            {
+                case "Rosary_Set_Small":
+                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
+                    break;
+                default:
+                    break;
             }
         }
         

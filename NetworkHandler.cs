@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VogsBingoMod.UI;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace VogsBingoMod
 {
@@ -350,7 +351,7 @@ namespace VogsBingoMod
             if (result.MessageType == WebSocketMessageType.Text)
             {
                 string jsonStr = Encoding.UTF8.GetString(receivedWebSocketMessage);
-                switch (JsonHelper.GetStringValueOfKey("type", jsonStr))
+                switch (JsonConvert.DeserializeObject<JsonMessageType>(jsonStr)?.type)
                 {
                     case "goal":
                         HandleGoalMessage(jsonStr);
@@ -380,9 +381,15 @@ namespace VogsBingoMod
 
         static void HandleGoalMessage(string jsonStr)
         {
-            int colorID = GoalColors.NameToID(JsonHelper.GetStringValueOfKey("color", jsonStr));
-            bool remove = JsonHelper.GetBoolValueOfKey("remove", jsonStr);
-            int slotIndex = int.Parse(JsonHelper.GetStringValueOfKey("slot", JsonHelper.GetObjectValueOfKey("square", jsonStr)).Substring(4)) - 1;
+            JsonGoalMarkedMessage? jsonGoalMark = JsonConvert.DeserializeObject<JsonGoalMarkedMessage>(jsonStr);
+            if (jsonGoalMark == null)
+            {
+                VogsBingoModPlugin.LogError("Could not read the JSON when receiving goal mark");
+                return;
+            }
+            int colorID = GoalColors.NameToID(jsonGoalMark.color);
+            bool remove = jsonGoalMark.remove;
+            int slotIndex = int.Parse(jsonGoalMark.square.slot.Substring(4)) - 1;
             try{
                 Coroutiner.CreateCoroutine(UIHelper.UpdateGoal_Main(colorID, remove, slotIndex));
             } catch (Exception e)

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using VogsBingoMod.UI;
 using UnityEngine;
+using System;
 
 namespace VogsBingoMod.Automarking
 {
@@ -80,18 +81,11 @@ namespace VogsBingoMod.Automarking
 
         internal static string GetGoalsJson()
         {
-            Assembly executeAssembly = Assembly.GetExecutingAssembly();
-            Stream stream = executeAssembly.GetManifestResourceStream($"VogsBingoMod.Automarking.Goals.json");
-            if (stream == null)
+            byte[]? bytes = Resources.GetResourceAsByteArray("VogsBingoMod.Automarking.Goals.json");
+            if (bytes == null)
             {
-                VogsBingoModPlugin.LogError($"Could not find the goals resource.");
-                return "";
+                VogsBingoModPlugin.LogError("Could not retrieve the goal support json.");
             }
-            MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
-            stream.Dispose();
-            byte[] bytes = memoryStream.ToArray();
-            memoryStream.Dispose();
             return Encoding.UTF8.GetString(bytes);
         }
 
@@ -99,198 +93,6 @@ namespace VogsBingoMod.Automarking
         {
             string json = GetGoalsJson();
             return JsonHelper.GetSupportedGoals(json);
-        }
-
-        internal static void UpdateTools(IEnumerable<ToolItem> tools)
-        {
-            VogsBingoModPlugin.LogInfo("updating tools");
-            int redToolCount = 0;
-            int blueToolCount = 0;
-            int yellowToolCount = 0;
-            foreach (ToolItem tool in tools)
-            {
-                UpdateTool(tool.name);
-                switch (tool.type)
-                {
-                    case ToolItemType.Red:
-                        redToolCount++;
-                        break;
-                    case ToolItemType.Blue:
-                        blueToolCount++;
-                        break;
-                    case ToolItemType.Yellow:
-                        yellowToolCount++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            switch (redToolCount)
-            {
-                case >= 5:
-                    MarkIfAvailable(GoalID.FiveRedTools);
-                    break;
-                case >= 3:
-                    MarkIfAvailable(GoalID.ThreeRedTools);
-                    break;
-                default:
-                    break;
-            }
-            if (blueToolCount >= 3)
-            {
-                MarkIfAvailable(GoalID.ThreeBlueTools);
-            }
-            switch (yellowToolCount)
-            {
-                case >= 5:
-                    MarkIfAvailable(GoalID.FiveYellowTools);
-                    break;
-                case >= 3:
-                    MarkIfAvailable(GoalID.ThreeYellowTools);
-                    break;
-                default:
-                    break;
-            }
-            if (redToolCount >= 2 && blueToolCount >= 2 && yellowToolCount >= 2)
-            {
-                MarkIfAvailable(GoalID.Twoofeachtooltype);
-            }
-        }
-
-        static void UpdateTool(string toolName)
-        {
-            switch (toolName)
-            {
-                case "Straight Pin":
-                    VogsBingoModPlugin.instance.SaveData.StraightPin.Value = true;
-                    break;
-                case "Tri Pin":
-                    VogsBingoModPlugin.instance.SaveData.ThreefoldPin.Value = true;
-                    break;
-                case "Sting Shard":
-                    VogsBingoModPlugin.instance.SaveData.StingShard.Value = true;
-                    break;
-                case "Tack":
-                    MarkIfAvailable(GoalID.Tacks);
-                    break;
-                case "Harpoon":
-                    VogsBingoModPlugin.instance.SaveData.Longpin.Value = true;
-                    break;
-                case "Curve Claws":
-                    VogsBingoModPlugin.instance.SaveData.Curveclaw.Value = true;
-                    break;
-                case "Pimpilo":
-                    VogsBingoModPlugin.instance.SaveData.Pimpillo.Value = true;
-                    break;
-                case "Conch Drill":
-                    MarkIfAvailable(GoalID.Conchcutter);
-                    break;
-                case "WebShot Forge":
-                    MarkIfAvailable(GoalID.RepairSilkshot);
-                    break;
-                case "WebShot Architect":
-                    MarkIfAvailable(GoalID.RepairSilkshot);
-                    break;
-                case "WebShot Weaver":
-                    MarkIfAvailable(GoalID.RepairSilkshot);
-                    break;
-                case "Screw Attack":
-                    MarkIfAvailable(GoalID.DelversDrill);
-                    break;
-                case "Cogwork Flier":
-                    MarkIfAvailable(GoalID.Cogfly);
-                    break;
-                case "Rosary Cannon":
-                    MarkIfAvailable(GoalID.RosaryCannon);
-                    break;
-                case "Lightning Rod":
-                    VogsBingoModPlugin.instance.SaveData.Voltvessels.Value = true;
-                    break;
-                case "Flintstone":
-                    MarkIfAvailable(GoalID.Flintslate);
-                    break;
-                case "Silk Snare":
-                    MarkIfAvailable(GoalID.SnareSetter);
-                    break;
-                case "Lifeblood Syringe":
-                    MarkIfAvailable(GoalID.PlasmiumPhial);
-                    break;
-                case "Mosscreep Tool 2":
-                    MarkIfAvailable(GoalID.UpgradeDruidsEye);
-                    break;
-                case "Lava Charm":
-                    VogsBingoModPlugin.instance.SaveData.MagmaBell.Value = true;
-                    break;
-                case "Bell Bind":
-                    VogsBingoModPlugin.instance.SaveData.WardingBell.Value = true;
-                    break;
-                case "Poison Pouch":
-                    VogsBingoModPlugin.instance.SaveData.PollipPouch.Value = true;
-                    MarkIfAvailable(GoalID.PollipPouch);
-                    break;
-                case "Fractured Mask":
-                    VogsBingoModPlugin.instance.SaveData.FracturedMask.Value = true;
-                    break;
-                case "Multibind":
-                    MarkIfAvailable(GoalID.Multibinder);
-                    break;
-                case "White Ring":
-                    VogsBingoModPlugin.instance.SaveData.Weavelight.Value = true;
-                    break;
-                case "Brolly Spike":
-                    VogsBingoModPlugin.instance.SaveData.SawtoothCirclet.Value = true;
-                    break;
-                case "Quickbind":
-                    VogsBingoModPlugin.instance.SaveData.InjectorBand.Value = true;
-                    break;
-                case "Dazzle Bind":
-                    VogsBingoModPlugin.instance.SaveData.ClawMirror.Value = true;
-                    break;
-                case "Revenge Crystal":
-                    MarkIfAvailable(GoalID.MemoryCrystal);
-                    break;
-                case "Quick Sling":
-                    MarkIfAvailable(GoalID.QuickSling);
-                    break;
-                case "Maggot Charm":
-                    MarkIfAvailable(GoalID.WreathofPurity);
-                    break;
-                case "Pinstress Tool":
-                    MarkIfAvailable(GoalID.PinBadge);
-                    break;
-                case "Compass":
-                    VogsBingoModPlugin.instance.SaveData.Compass.Value = true;
-                    break;
-                case "Bone Necklace":
-                    VogsBingoModPlugin.instance.SaveData.ShardPendant.Value = true;
-                    break;
-                case "Rosary Magnet":
-                    VogsBingoModPlugin.instance.SaveData.MagnetiteBrooch.Value = true;
-                    break;
-                case "Weighted Anklet":
-                    VogsBingoModPlugin.instance.SaveData.WeightedBelt.Value = true;
-                    break;
-                case "Barbed Wire":
-                    VogsBingoModPlugin.instance.SaveData.BarbedBracelet.Value = true;
-                    break;
-                case "Dead Mans Purse":
-                    VogsBingoModPlugin.instance.SaveData.DeadBugsPurse.Value = true;
-                    break;
-                case "Magnetite Dice":
-                    VogsBingoModPlugin.instance.SaveData.MagnetiteDice.Value = true;
-                    break;
-                case "Scuttlebrace":
-                    VogsBingoModPlugin.instance.SaveData.Scuttlebrace.Value = true;
-                    break;
-                case "Wallcling":
-                    VogsBingoModPlugin.instance.SaveData.AscendantsGrip.Value = true;
-                    break;
-                case "Sprintmaster":
-                    VogsBingoModPlugin.instance.SaveData.SilkspeedAnklets.Value = true;
-                    break;
-                default:
-                    break;
-            }
         }
 
         internal static void UpdateSilkSkills()
@@ -323,56 +125,66 @@ namespace VogsBingoMod.Automarking
                 skillCount++;
                 MarkIfAvailable(GoalID.PaleNails);
             }
-            
-            VogsBingoModPlugin.instance.SaveData.SilkSkills.Value = skillCount;
+
+            if (skillCount >= 3)
+            {
+                MarkIfAvailable(GoalID.ThreeSilkSkills);
+                if (skillCount >= 4)
+                {
+                    MarkIfAvailable(GoalID.FourSilkSkills);
+                }
+            }
         }
 
-        internal static void CheckIfGoalCompleted(GoalID goalID)
+        internal static void CheckIfGoalCompleted(GoalID goalID, string context = "")
         {
             bool goalCompleted = false;
             switch (goalID)
             {
                 case GoalID.CompassPendantBrooch:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.ShardPendant && VogsBingoModPlugin.instance.SaveData.Compass && VogsBingoModPlugin.instance.SaveData.MagnetiteBrooch;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Compass", "Bone Necklace", "Rosary Magnet");
                     break;
                 case GoalID.StraightThreefoldandLongPin:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.StraightPin && VogsBingoModPlugin.instance.SaveData.ThreefoldPin && VogsBingoModPlugin.instance.SaveData.Longpin;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Straight Pin", "Tri Pin", "Harpoon");
                     break;
                 case GoalID.DeadBugsPurseaSilkeater:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.DeadBugsPurse && VogsBingoModPlugin.instance.SaveData.Silkeaters >= 1;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Dead Mans Purse") && VogsBingoModPlugin.instance.SaveData.Silkeaters > 0;
                     break;
                 case GoalID.BarbedBraceletFracturedMask:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.BarbedBracelet && VogsBingoModPlugin.instance.SaveData.FracturedMask;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Fractured Mask", "Barbed Wire");
                     break;
                 case GoalID.MagnetiteDiceMagnetiteBrooch:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.MagnetiteDice && VogsBingoModPlugin.instance.SaveData.MagnetiteBrooch;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Rosary Magnet", "Magnetite Dice");
                     break;
                 case GoalID.WardingBellClawMirror:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.WardingBell && VogsBingoModPlugin.instance.SaveData.ClawMirror;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Bell Bind", "Dazzle Bind");
                     break;
                 case GoalID.WardingBellSawtoothCirclet:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.WardingBell && VogsBingoModPlugin.instance.SaveData.SawtoothCirclet;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Bell Bind", "Brolly Spike");
                     break;
                 case GoalID.MagmaBellCurveclaw:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.MagmaBell && VogsBingoModPlugin.instance.SaveData.Curveclaw;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Lava Charm", "Curve Claws");
                     break;
                 case GoalID.WeightedBeltAscendantsGrip:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.WeightedBelt && VogsBingoModPlugin.instance.SaveData.AscendantsGrip;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Weighted Anklet", "Wallcling");
                     break;
                 case GoalID.ScuttlebraceSilkspeed:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.Scuttlebrace && VogsBingoModPlugin.instance.SaveData.SilkspeedAnklets;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Scuttlebrace", "Sprintmaster");
                     break;
                 case GoalID.PimpilloVoltvessels:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.Pimpillo && VogsBingoModPlugin.instance.SaveData.Voltvessels;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Lightning Rod", "Pimpilo");
                     break;
                 case GoalID.PollipPouchStingShard:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.PollipPouch && VogsBingoModPlugin.instance.SaveData.StingShard;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "Sting Shard", "Poison Pouch");
                     break;
                 case GoalID.WeavelightInjectorBand:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.Weavelight && VogsBingoModPlugin.instance.SaveData.InjectorBand;
+                    goalCompleted = CheckIfToolsObtained(toolToIgnore: context, "White Ring", "Quickbind");
                     break;
                 case GoalID.BlastedStepsSilkeaterCraftmetal:
-                    goalCompleted = VogsBingoModPlugin.instance.SaveData.BlastedSilkeater && VogsBingoModPlugin.instance.SaveData.BlastedCraftmetal;
+                    try
+                    {
+                        goalCompleted = VogsBingoModPlugin.instance.SaveData.BlastedSilkeater && SceneData.instance.persistentBools.scenes["Coral_32"]["Collectable Item Pickup - Tool Metal"].Value;
+                    } catch (Exception){}
                     break;
                 case GoalID.BothFreeSimpleKeys:
                     goalCompleted = VogsBingoModPlugin.instance.SaveData.SinnersKey && VogsBingoModPlugin.instance.SaveData.KarakKey;
@@ -525,7 +337,7 @@ namespace VogsBingoMod.Automarking
             }
         }
 
-        internal static void UpdateFleas()
+        internal static void UpdateFleas(bool bigFleaBeaten = false)
         {
             if (PlayerData.instance != null)
             {
@@ -537,10 +349,9 @@ namespace VogsBingoMod.Automarking
                     VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
                 if (PlayerData.instance.SavedFlea_Library_09)
                     VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
-                if (PlayerData.instance.tamedGiantFlea)
+                if (bigFleaBeaten || PlayerData.instance.tamedGiantFlea)
                 {
                     VogsBingoModPlugin.instance.SaveData.CitadelFleas.Value++;
-                    MarkIfAvailable(GoalID.BeatBigFlea);
                     fleaCount++;
                 }
                 if (PlayerData.instance.SavedFlea_Library_01)
@@ -582,6 +393,24 @@ namespace VogsBingoMod.Automarking
                 }
                 VogsBingoModPlugin.instance.SaveData.FleasSaved.Value = fleaCount;
             }
+        }
+
+        static bool CheckIfToolsObtained(string toolToIgnore, params string[] toolNames)
+        {
+            foreach (string toolName in toolNames)
+            {
+                try
+                {
+                    if (!(toolName.Equals(toolToIgnore) || ToolItemManager.Instance.toolItems.GetByName(toolName).IsUnlocked))
+                    {
+                        return false;
+                    }
+                } catch (Exception)
+                {
+                    VogsBingoModPlugin.LogError($"Tool named \"{toolName}\" could not be found in the tool list.");
+                }
+            }
+            return true;
         }
     }
 }

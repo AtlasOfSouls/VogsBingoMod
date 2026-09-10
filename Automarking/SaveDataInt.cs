@@ -1,12 +1,14 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
+using Newtonsoft.Json;
+
 namespace VogsBingoMod.Automarking
 {
-    internal class SaveDataInt
+    public class SaveDataInt
     {
-        internal string Name;
+        public string Name;
         internal int _value;
-        internal int Value {get=>_value; set
+        public int Value {get=>_value; set
         {
             _value=value;
             VogsBingoModPlugin.LogInfo($"Updated value {Name} to {_value}.");
@@ -16,14 +18,22 @@ namespace VogsBingoMod.Automarking
             }
             Automarker.CheckIfGoalsCompleted(AutomarkValues, _value);
         }}
-        internal AutomarkIntValue[] AutomarkValues;
+        public AutomarkIntValue[] AutomarkValues;
         public static implicit operator int(SaveDataInt data) => data.Value;
-        internal SaveDataInt(AutomarkIntValue[] automarkValues, string name, int startValue = 0)
+        public SaveDataInt(AutomarkIntValue[] AutomarkValues, string Name)
         {
-            this._value = startValue;
-            this.AutomarkValues = automarkValues;
-            this.Name = name;
+            this.AutomarkValues = AutomarkValues;
+            this.Name = Name;
         }
+
+        [JsonConstructor]
+        public SaveDataInt(AutomarkIntValue[] AutomarkValues, string Name, int Value)
+        {
+            this._value = Value;
+            this.AutomarkValues = AutomarkValues;
+            this.Name = Name;
+        }
+
         internal void ResetToDefault()
         {
             this.Value = 0;

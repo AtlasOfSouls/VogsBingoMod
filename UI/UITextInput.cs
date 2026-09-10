@@ -9,7 +9,7 @@ namespace VogsBingoMod.UI
     {
         internal GameObject placeholderObj;
         InputField? inputComponent;
-        InputField InputComponent => inputComponent != null ? inputComponent : inputComponent = this.gameObject.GetComponent<InputField>();
+        internal InputField InputComponent => inputComponent != null ? inputComponent : inputComponent = this.gameObject.GetComponent<InputField>();
 
         internal string GetText()
         {
@@ -30,6 +30,11 @@ namespace VogsBingoMod.UI
         internal bool IsFocused()
         {
             return InputComponent.isFocused;
+        }
+
+        internal void Select(string value)
+        {
+            InputComponent.Select();
         }
     }
 }

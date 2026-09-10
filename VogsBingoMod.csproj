@@ -47,6 +47,8 @@
     <EmbeddedResource Include="Assets/StandardBackground.png"/>
     <EmbeddedResource Include="Assets/StandardBackgroundHighlight.png"/>
     <EmbeddedResource Include="Assets/ConnectionPendingIcon.png"/>
+    <EmbeddedResource Include="Assets/TeamMark.wav"/>
+    <EmbeddedResource Include="Assets/OpponentMark.wav"/>
   </ItemGroup>
 
   <Target Name="CopyAndPackageMod" AfterTargets="PostBuildEvent">

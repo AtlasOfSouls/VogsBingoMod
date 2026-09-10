@@ -24,7 +24,11 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData
     ConfigEntry<KeyCode> toggleUIVisibility;
     ConfigEntry<KeyCode> toggleUIOpacity;
     ConfigEntry<KeyCode> revealBoardKeybind;
+    internal ConfigEntry<string> nameAutofill;
+    internal ConfigEntry<string> passwordAutofill;
     internal ConfigEntry<UIScaleOptions> uiScaleConfig;
+    internal ConfigEntry<AudioVolume> teamMarkSoundsVolume;
+    internal ConfigEntry<AudioVolume> opponentMarkSoundsVolume;
     SaveData _saveData = new SaveData();
 
     [AllowNull]
@@ -43,7 +47,9 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData
 
     internal static void LogInfo(string str)
     {
+        try{
         instance.logger.LogInfo(str);
+        } catch (Exception){}
     }
 
     internal static void LogError(string str)
@@ -82,11 +88,17 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData
         instance = this;
         this.logger = Logger;
 
-        this.toggleUIVisibility = Config.Bind<KeyCode>("Keybinds","Toggle UI", KeyCode.B,"Cycles the currently active UI elements, allowing the user to show or hide the board as necessary.");
-        this.toggleUIOpacity = Config.Bind<KeyCode>("Keybinds","Toggle Opacity", KeyCode.O,"Changes how transparent the UI is over the game.");
-        this.revealBoardKeybind = Config.Bind<KeyCode>("Keybinds","Reveal Card", KeyCode.None,"Reveals the current bingo card.");
+        this.toggleUIVisibility = Config.Bind<KeyCode>("Keybinds","Keybind: Toggle UI", KeyCode.B,"Cycles the currently active UI elements, allowing the user to show or hide the board as necessary.");
+        this.toggleUIOpacity = Config.Bind<KeyCode>("Keybinds","Keybind: Toggle Opacity", KeyCode.O,"Changes how transparent the UI is over the game.");
+        this.revealBoardKeybind = Config.Bind<KeyCode>("Keybinds","Keybind: Reveal Card", KeyCode.None,"Reveals the current bingo card.");
         this.uiScaleConfig = Config.Bind<UIScaleOptions>("UI Settings","UI Scale",UIScaleOptions.Default,"Change the size of the UI, such as the Bingo board.");
+        this.nameAutofill = Config.Bind<string>("Autofill Options", "Default Name", "", "The nickname field for entering rooms will default to this value. Useful if you tend to use the same name repeatedly.");
+        this.passwordAutofill = Config.Bind<string>("Autofill Options", "Default Password", "fast", "The password field for entering rooms will default to this value. Useful if you tend to use the same password repeatedly. The default is \"fast\".");
+        this.teamMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "Team Mark Sound Volume", AudioVolume.Medium, "Plays a sound when your color marks a goal.");
+        this.opponentMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "Opponent Mark Sound Volume", AudioVolume.Medium, "Plays a sound when any color other than yours marks a goal.");
         uiScaleConfig.SettingChanged += UIScaleChanged;
+        nameAutofill.SettingChanged += NameAutofillChanged;
+        passwordAutofill.SettingChanged += PasswordAutofillChanged;
         Harmony harmony = new Harmony(Id);
         harmony.PatchAll();
 
@@ -99,8 +111,26 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin, ISaveDataMod<SaveData
         NetworkHandler.Dispose();
     }
 
-    void UIScaleChanged(object? sender, EventArgs args)
+    void UIScaleChanged(object sender, EventArgs args)
     {
         UIHelper.UpdateUIScale();
+    }
+
+    void NameAutofillChanged(object sender, EventArgs args)
+    {
+        UICanvas instance = UICanvas.GetInstance();
+        if (instance.nicknameInputField != null)
+        {
+            instance.nicknameInputField.InputComponent.text = nameAutofill.Value;
+        }
+    }
+
+    void PasswordAutofillChanged(object sender, EventArgs args)
+    {
+        UICanvas instance = UICanvas.GetInstance();
+        if (instance.passwordInputField != null)
+        {
+            instance.passwordInputField.InputComponent.text = passwordAutofill.Value;
+        }
     }
 }

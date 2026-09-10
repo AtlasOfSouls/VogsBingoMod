@@ -220,7 +220,8 @@ namespace VogsBingoMod.UI
             {
                 color = Color.white;
             }
-            textComponent.color = (Color)color;
+            Color colorToSet = (Color)color;
+            textComponent.color = new Color(colorToSet.r, colorToSet.g, colorToSet.b, uiCanvas.CurrentTextOpacity);
             UIText uiText = newObj.AddComponent<UIText>();
             uiText.textComponent = textComponent;
             return uiText;
@@ -255,7 +256,7 @@ namespace VogsBingoMod.UI
             return buttonComponent;
         }
 
-        internal static UITextInput CreateUITextInput(Transform parent, string objName, string textWhenEmpty, float xOffset = 0, float yOffset = 0, bool isPassword = false)
+        internal static UITextInput CreateUITextInput(Transform parent, string objName, string textWhenEmpty, float xOffset = 0, float yOffset = 0, bool isPassword = false, string startingText = "")
         {
             GameObject newObj = CreateUIObject(parent, objName, xOffset, yOffset);
             SetupImageComponent(newObj, TextureHandler.standardBackgroundName, defaultTextInputWidth, defaultTextInputHeight);
@@ -269,7 +270,18 @@ namespace VogsBingoMod.UI
             inputComponent.textComponent = newObj.GetComponentInChildren<Text>(true);
             inputComponent.onValueChanged.AddListener(uiTextInput.UpdatePlaceholder);
             uiTextInput.placeholderObj = CreateUIText(newObj.transform, $"{objName}Placeholder", textWhenEmpty, defaultTextInputFontSize, width: defaultTextInputWidth, height: defaultTextInputHeight, color: Color.grey).gameObject;
+            inputComponent.text = startingText;
             return uiTextInput;
+        }
+
+        internal static void SetupJoinRoomFieldNavigation()
+        {
+            if (uiCanvas.roomUrlInputField != null && uiCanvas.nicknameInputField != null && uiCanvas.passwordInputField != null && uiCanvas.joinRoomButton != null)
+            {
+                uiCanvas.roomUrlInputField.InputComponent.onSubmit.AddListener(uiCanvas.nicknameInputField.Select);
+                uiCanvas.nicknameInputField.InputComponent.onSubmit.AddListener(uiCanvas.passwordInputField.Select);
+                uiCanvas.passwordInputField.InputComponent.onSubmit.AddListener(uiCanvas.joinRoomButton.LeftClick);
+            }
         }
 
         internal static UIDropdown CreateUIDropdown(Transform parent, string objName, UnityAction<int> callbackOnValueChanged, List<Dropdown.OptionData> optionData, float xOffset = 0, float yOffset = 0)
@@ -371,6 +383,7 @@ namespace VogsBingoMod.UI
                 imageComponent.type = Image.Type.Sliced;
                 imageComponent.fillCenter = true;
             }
+            imageComponent.color = new Color(imageComponent.color.r, imageComponent.color.g, imageComponent.color.b, uiCanvas.CurrentOpacity);
             return imageComponent;
         }
 
@@ -401,6 +414,11 @@ namespace VogsBingoMod.UI
             errorText?.SetText(textToDisplay);
             errorText?.gameObject.SetActive(true);
             Coroutiner.CreateCoroutine(DisableErrorText(errorText?.gameObject));
+        }
+
+        internal static void UpdateGoalTextColor()
+        {
+            uiCanvas.UpdateGoalTextColor();
         }
     }
 }

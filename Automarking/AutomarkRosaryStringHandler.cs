@@ -2,13 +2,13 @@
 /// © 2026 AtlasOfSouls
 namespace VogsBingoMod.Automarking
 {
-    internal class AutomarkRosaryStringHandler
+    public class AutomarkRosaryStringHandler
     {
-        internal SaveDataInt FrayedStringsCurrentlyHeld = new([], "FrayedStringsCurrentlyHeld");
-        internal SaveDataInt FrayedStringsBroken = new([], "FrayedStringsBroken");
-        internal SaveDataInt PurchasedStringsCurrentlyHeld = new([], "PurchasedStringsCurrentlyHeld");
-        internal SaveDataInt NonPurchasedStringsCurrentlyHeld = new([], "NonPurchasedStringsCurrentlyHeld");
-        internal SaveDataInt NonPurchasedStringsBroken = new([], "NonPurchasedStringsBroken");
+        public SaveDataInt FrayedStringsCurrentlyHeld = new([], "FrayedStringsCurrentlyHeld");
+        public SaveDataInt FrayedStringsBroken = new([], "FrayedStringsBroken");
+        public SaveDataInt PurchasedStringsCurrentlyHeld = new([], "PurchasedStringsCurrentlyHeld");
+        public SaveDataInt NonPurchasedStringsCurrentlyHeld = new([], "NonPurchasedStringsCurrentlyHeld");
+        public SaveDataInt NonPurchasedStringsBroken = new([], "NonPurchasedStringsBroken");
 
         internal int GetFrayedStringsCurrentlyHeld()
         {
