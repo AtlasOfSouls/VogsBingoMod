@@ -30,14 +30,20 @@ namespace VogsBingoMod
             _instance = this;
         }
         
-        internal void PlayTeamMarkSound()
+        internal void PlayTeamMarkSound(bool isOneShot = false)
         {
             if (TeamMarkClip != null)
             {
-                if (VogsBingoModPlugin.instance.teamMarkSoundsVolume.Value != AudioVolume.Off && (!audioSource.isPlaying || audioSource.clip != TeamMarkClip)){
-                    audioSource.clip = TeamMarkClip;
+                if (VogsBingoModPlugin.instance.teamMarkSoundsVolume.Value != AudioVolume.Off){
                     audioSource.volume = (int)(VogsBingoModPlugin.instance.teamMarkSoundsVolume.Value) / 10f;
-                    audioSource.Play();
+                    if (isOneShot)
+                    {
+                        audioSource.PlayOneShot(TeamMarkClip);
+                    } else if (!audioSource.isPlaying || audioSource.clip != TeamMarkClip)
+                    {
+                        audioSource.clip = TeamMarkClip;
+                        audioSource.Play();
+                    }
                 }
             } else
             {
@@ -45,14 +51,20 @@ namespace VogsBingoMod
             }
         }
 
-        internal void PlayOpponentMarkSound()
+        internal void PlayOpponentMarkSound(bool isOneShot = false)
         {
             if (OpponentMarkClip != null)
             {
-                if (VogsBingoModPlugin.instance.opponentMarkSoundsVolume.Value != AudioVolume.Off && (!audioSource.isPlaying || audioSource.clip != OpponentMarkClip)){
-                    audioSource.clip = OpponentMarkClip;
+                if (VogsBingoModPlugin.instance.opponentMarkSoundsVolume.Value != AudioVolume.Off){
                     audioSource.volume = (int)(VogsBingoModPlugin.instance.opponentMarkSoundsVolume.Value) / 10f;
-                    audioSource.Play();
+                    if (isOneShot)
+                    {
+                        audioSource.PlayOneShot(OpponentMarkClip);
+                    } else if (!audioSource.isPlaying || audioSource.clip != OpponentMarkClip)
+                    {
+                        audioSource.clip = OpponentMarkClip;
+                        audioSource.Play();
+                    }
                 }
             } else
             {
