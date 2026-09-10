@@ -25,6 +25,13 @@ namespace VogsBingoMod.UI
 
         internal void MarkGoal(int colorID)
         {
+            if (colorID == GoalColors.myColorID)
+            {
+                AudioHelper.Instance.PlayTeamMarkSound();
+            } else
+            {
+                AudioHelper.Instance.PlayOpponentMarkSound();
+            }
             goalColors.AddColor(colorID);
             this.UpdateTextColor();
         }

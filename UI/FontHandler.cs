@@ -12,7 +12,7 @@ namespace VogsBingoMod.UI
         {
             if (!fonts.ContainsKey(fontName))
             {
-                Font[] foundFonts = Resources.FindObjectsOfTypeAll<Font>();
+                Font[] foundFonts = UnityEngine.Resources.FindObjectsOfTypeAll<Font>();
                 for (int i = 0; i < foundFonts.Length; i++)
                 {
                     if (foundFonts[i].name.Equals(fontName))

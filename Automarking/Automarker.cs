@@ -81,18 +81,11 @@ namespace VogsBingoMod.Automarking
 
         internal static string GetGoalsJson()
         {
-            Assembly executeAssembly = Assembly.GetExecutingAssembly();
-            Stream stream = executeAssembly.GetManifestResourceStream($"VogsBingoMod.Automarking.Goals.json");
-            if (stream == null)
+            byte[]? bytes = Resources.GetResourceAsByteArray("VogsBingoMod.Automarking.Goals.json");
+            if (bytes == null)
             {
-                VogsBingoModPlugin.LogError($"Could not find the goals resource.");
-                return "";
+                VogsBingoModPlugin.LogError("Could not retrieve the goal support json.");
             }
-            MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
-            stream.Dispose();
-            byte[] bytes = memoryStream.ToArray();
-            memoryStream.Dispose();
             return Encoding.UTF8.GetString(bytes);
         }
 
