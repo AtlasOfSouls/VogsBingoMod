@@ -81,7 +81,7 @@ namespace VogsBingoMod
                 floats[floatIndex] = BitConverter.ToSingle(temp);
                 floatIndex++;
             }
-            AudioClip clip = AudioClip.Create($"{fileName}AudioClip", wavSampleRate * wavLengthToPlayInSeconds, wavChannels, wavSampleRate, false);
+            AudioClip clip = AudioClip.Create($"{fileName}AudioClip", wavSampleRate, wavChannels, wavSampleRate, false);
             clip.SetData(floats, 0);
             return clip;
         }
