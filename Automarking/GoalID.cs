@@ -230,6 +230,21 @@ namespace VogsBingoMod.Automarking
         BrightveinMaskShard = 223,
         WinARace = 224,
         ShamanCrest = 225,
-        MeettheCaravaninGreymoor = 226
+        MeettheCaravaninGreymoor = 226,
+        TalktoOldPenitent = 227,
+        TwoWeaverEffigies = 228,
+        KillOneShardillard = 229,
+        BreakThreeWoodWaspNests = 230,
+        ListentoPiousIsamor = 231,
+        KeyofHeretic = 232,
+        InspectFlintstoneinDeepDocks = 233,
+        UnderworksSpoolFragmentsTwo = 234,
+        ThreePsalmCylinders = 235,
+        WormwaysMemoryLocket = 236,
+        FinePins = 237,
+        GarmondandZaza = 238,
+        KillPebb = 239,
+        UpperBilewaterFlea = 240,
+        TalktoGrishkinandGilly = 241
     }
 }

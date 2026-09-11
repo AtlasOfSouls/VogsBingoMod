@@ -61,13 +61,8 @@ namespace VogsBingoMod.Automarking
 
         internal static void MarkIfAvailable(int goalID)
         {
-            if (goalID != (int)GoalID.MeetCaravanattheGrandGateTwelve && goalID != (int)GoalID.MeettheCaravaninGreymoor)
-            {
-                VogsBingoModPlugin.LogInfo($"Checking if goal {(GoalID)goalID} is on the board");
-            }
             if (BoardHasGoal(goalID))
             {
-                VogsBingoModPlugin.LogInfo("the goal is on the board, checking if it is unmarked so far");
                 UIHelper.MarkIfUnmarkedGoal(currentGoals[goalID]);
             }
             return;
@@ -264,11 +259,17 @@ namespace VogsBingoMod.Automarking
                 case GoalID.DeepDocksSpoolFragmentsTwo:
                     goalCompleted = VogsBingoModPlugin.instance.SaveData.DeepDocksSpoolFragNearSpa && VogsBingoModPlugin.instance.SaveData.DeeperDocksSpoolFrag;
                     break;
+                case GoalID.UnderworksSpoolFragmentsTwo:
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.UnderworksArenaSpoolFrag && VogsBingoModPlugin.instance.SaveData.UnderworksLibrary_11bSpoolFrag;
+                    break;
                 case GoalID.HaveSixRosaryStringsnopurchasing:
                     goalCompleted = (VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetNonPurchasedStringsCurrentlyHeld() + VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetFrayedStringsCurrentlyHeld()) >= 6;
                     break;
                 case GoalID.BreakEightRosaryStringsnopurchasing:
                     goalCompleted = (VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetNonPurchasedStringsBroken() + VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.GetFrayedStringsBroken()) >= 8;
+                    break;
+                case GoalID.TalktoGrishkinandGilly:
+                    goalCompleted = VogsBingoModPlugin.instance.SaveData.GillySpokenTo && VogsBingoModPlugin.instance.SaveData.GrishkinSpokenTo;
                     break;
                 default:
                     VogsBingoModPlugin.LogError($"There isn't a check for goalID {goalID}");
@@ -375,12 +376,15 @@ namespace VogsBingoMod.Automarking
                 VogsBingoModPlugin.instance.SaveData.FleaUnderworksCauldron.Value = PlayerData.instance.SavedFlea_Under_21;
                 VogsBingoModPlugin.instance.SaveData.FleaUnderworksWispThicket.Value = PlayerData.instance.SavedFlea_Under_23;
                 VogsBingoModPlugin.instance.SaveData.FleaWormways.Value = PlayerData.instance.SavedFlea_Crawl_06;
+                
                 if(PlayerData.instance.SavedFlea_Dust_09)
                     MarkIfAvailable(GoalID.ExhaustOrganFleaOne);
                 if(PlayerData.instance.SavedFlea_Peak_05c)
                     MarkIfAvailable(GoalID.MtFayFleaOne);
                 if(PlayerData.instance.SavedFlea_Coral_24)
                     MarkIfAvailable(GoalID.SandsofKarakFleaOne);
+                if(PlayerData.instance.SavedFlea_Shadow_10)
+                    MarkIfAvailable(GoalID.UpperBilewaterFlea);
                 if (PlayerData.instance.CaravanLechSaved)
                 {
                     VogsBingoModPlugin.instance.SaveData.FleaKratt.Value = true;

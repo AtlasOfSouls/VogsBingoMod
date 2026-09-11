@@ -82,6 +82,9 @@ namespace VogsBingoMod.Automarking
         internal const string EnemyNamePaleStag = "Cloverstag White";
         internal const string EnemyNameTormentedTrobbio = "Tormented Trobbio";
         internal const string EnemyNameVoidMass = "Black Thread Core";
+        internal const string EnemyNameShardillard = "Shell Fossil Mimic";
+        internal const string EnemyNameGarmondZaza = "Garmond_Zaza";
+        internal const string EnemyNamePilgrimPouncer = "Pilgrim 01";
         internal const string NPCNameShakra = "Mapper NPC";
         internal const string NPCNameShakraSitting = "Mapper Sit NPC";
         internal const string NPCNameShakraDupe = "Mapper NPC (1)";
@@ -100,6 +103,13 @@ namespace VogsBingoMod.Automarking
         internal const string NPCNameMrMushroom = "Mr Mushroom NPC";
         internal const string NPCNameShermaSpa = "Sherma Citadel Spa NPC";
         internal const string NPCNamePlinneySave = "Plinney Outside";
+        internal const string NPCNameOldPenitent = "Slab Prisoner";
+        internal const string NPCNamePiousIsamor = "Library Statue NPC";
+        internal const string NPCNameGilly = "Gilly";
+        internal const string NPCNameGrishkinGreymoor = "Caravan Troup Member Short Greymoor";
+        internal const string NPCNameGrishkinMarrow = "Caravan Troup Member Short";
+        internal const string NPCNameGrishkinFleatopia = "Caravan Troup Member Short Fleatopia";
+        internal const string NPCNameGrishkinPot = "Caravan Troup Member Short Pot";
         internal const string ObjectNameVentrica = "tube_toll_machine";
         internal const string ObjectNameMaskShard = "Heart Piece";
         internal const string ObjectNameMaskShardDupe = "Heart Piece (1)";
@@ -111,11 +121,22 @@ namespace VogsBingoMod.Automarking
         internal const string ObjectNameHeavyNecklace = "Rosary_Set_Large";
         internal const string ObjectNamePaleNecklace = "Rosary_Set_Huge_White";
         internal const string ObjectNameShardBundle = "Shard Pouch";
+        internal const string ObjectNameWoodWaspNest = "Shellwood Hive";
+        internal const string ObjectNameWoodWaspNestOne = "Shellwood Hive (1)";
         internal const string ShopItemNameGrindleSpoolFrag = "Grindle Spool Piece";
         internal const string ItemNamePollenHeart = "Flower Heart";
         internal const string ItemNameConjoinedHeart = "Clover Heart";
         internal const string ItemNameHuntersHeart = "Hunter Heart";
         internal const string ItemNameEncrustedHeart = "Coral Heart";
+        internal const string ItemNameHereticKey = "Slab Key B";
+        internal const string ItemNameFlintstone = "Smeltstone";
+        internal const string ItemNamePsalmCylinderLibraryRoof = "Psalm Cylinder Library Roof";
+        internal const string ItemNamePsalmCylinderUnderworks = "Psalm Cylinder Ward";
+        internal const string ItemNamePsalmCylinderGrindle = "Psalm Cylinder Grindle";
+        internal const string ItemNamePsalmCylinderHighHalls = "Psalm Cylinder Hang";
+        internal const string ItemNamePsalmCylinderCardinius = "Psalm Cylinder Librarian";
+        internal const string ItemNameSacredCylinder = "Librarian Melody Cylinder";
+        internal const string ItemNameMemoryLocket = "Crest Socket Unlocker";
         static string[] idToName = GetEmbeddedGoals();
         static Dictionary<string, int> nameToID = GenerateNameToIDs();
         internal static int NameToID(string goalName)

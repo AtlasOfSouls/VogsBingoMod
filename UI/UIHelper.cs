@@ -350,7 +350,6 @@ namespace VogsBingoMod.UI
                 VogsBingoModPlugin.LogInfo("the reveal card button was null");
                 return;
             }
-            VogsBingoModPlugin.LogInfo($"Can mark: {!uiCanvas.revealCardButton.gameObject.activeSelf} and {!uiCanvas.HasColor(slotIndex, GoalColors.myColorID)}");
             if (uiCanvas.CanMarkGoals && !uiCanvas.HasColor(slotIndex, GoalColors.myColorID))
             {
                 UIHelper.MarkGoal(slotIndex, false);

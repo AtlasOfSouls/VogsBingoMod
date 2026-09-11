@@ -64,6 +64,10 @@ namespace VogsBingoMod.Automarking
         public SaveDataBool FleaVaults = new([GoalID.SinnersRoadVaultsFleasTwo], "FleaVaults");
         public SaveDataBool DeepDocksSpoolFragNearSpa = new([GoalID.DeepDocksSpoolFragmentsTwo], "DeepDocksSpoolFragNearSpa");
         public SaveDataBool DeeperDocksSpoolFrag = new([GoalID.DeepDocksSpoolFragmentsTwo], "DeeperDocksSpoolFrag");
+        public SaveDataBool UnderworksArenaSpoolFrag = new([GoalID.UnderworksSpoolFragmentsTwo], "UnderworksArenaSpoolFrag");
+        public SaveDataBool UnderworksLibrary_11bSpoolFrag = new([GoalID.UnderworksSpoolFragmentsTwo], "UnderworksLibrary_11bSpoolFrag");
+        public SaveDataBool GillySpokenTo = new([GoalID.TalktoGrishkinandGilly], "GillySpokenTo");
+        public SaveDataBool GrishkinSpokenTo = new([GoalID.TalktoGrishkinandGilly], "GrishkinSpokenTo");
         public SaveDataInt Crests = new([new(){markValue = 3, goalToMark = GoalID.ThreeNonHunterCrests}], "Crests");
         public SaveDataInt ExtraMasks = new([new(){markValue = 1, goalToMark = GoalID.OneExtraMask}, new(){markValue = 2, goalToMark = GoalID.TwoExtraMasks}], "ExtraMasks");
         public SaveDataInt SpoolFragments = new([new(){markValue = 2, goalToMark = GoalID.OneSpoolUpgrade}, new(){markValue = 4, goalToMark = GoalID.TwoSpoolUpgrades}, new(){markValue = 6, goalToMark = GoalID.ThreeSpoolUpgrades}], "SpoolFragments");
@@ -77,6 +81,8 @@ namespace VogsBingoMod.Automarking
         public SaveDataInt Craftmetal = new([new(){markValue = 3, goalToMark = GoalID.ObtainThreeCraftmetal}, new(){markValue = 5, goalToMark = GoalID.ObtainFiveCraftmetal}], "Craftmetal");
         public SaveDataInt RuneHarps = new([new(){markValue = 2, goalToMark = GoalID.ObtainTwoRuneHarps}], "RuneHarps");
         public SaveDataInt BoneScrolls = new([new(){markValue = 3, goalToMark = GoalID.ObtainThreeBoneScrolls}, new(){markValue = 4, goalToMark = GoalID.ObtainFourBoneScrolls}], "BoneScrolls");
+        public SaveDataInt WeaverEffigies = new([new(){markValue = 2, goalToMark = GoalID.TwoWeaverEffigies}], "WeaverEffigies");
+        public SaveDataInt PsalmCylinders = new([new(){markValue = 3, goalToMark = GoalID.ThreePsalmCylinders}], "PsalmCylinders");
         public SaveDataInt BeastShards = new([new(){markValue = 2, goalToMark = GoalID.ObtainTwoBeastShards}, new(){markValue = 3, goalToMark = GoalID.ObtainThreeBeastShards}, new(){markValue = 4, goalToMark = GoalID.ObtainFourBeastShards}, new(){markValue = 5, goalToMark = GoalID.ObtainFiveBeastShards}], "BeastShards");
         public SaveDataInt CogheartPieces = new([new(){markValue = 1, goalToMark = GoalID.OneCogheartPiece}, new(){markValue = 2, goalToMark = GoalID.TwoCogheartPieces}], "CogheartPieces");
         public SaveDataInt MapCount = new([new(){markValue = 5, goalToMark = GoalID.ObtainFiveMaps}, new(){markValue = 8, goalToMark = GoalID.ObtainEightMaps}], "MapCount");
@@ -92,106 +98,11 @@ namespace VogsBingoMod.Automarking
         public SaveDataInt DuoMossMothers = new([new(){markValue = 2, goalToMark = GoalID.MossMotherDuo}], "DuoMossMothers");
         public SaveDataInt VerdaniaFountainOrbs = new([new(){markValue = 5, goalToMark = GoalID.VerdaniaFountainOrbs}], "VerdaniaFountainOrbs");
         public SaveDataInt MementosObtained = new([new(){markValue = 2, goalToMark = GoalID.TwoMementos}], "MementosObtained");
+        public SaveDataInt WoodWaspNestsBroken = new([new(){markValue = 3, goalToMark = GoalID.BreakThreeWoodWaspNests}], "WoodWaspNestsBroken");
         public SaveDataBitmask ShakraLocations = new([new(){markValue = 5, goalToMark = GoalID.TalktoShakraatFiveLocations}], "ShakraLocations");
         public SaveDataBitmask RelicTypesObtained = new([new(){markValue = 4, goalToMark = GoalID.ObtainFourDifferentTypesofRelic}], "RelicTypesObtained");
         public SaveDataBitmask RelicTypesCurrentlyHeld = new([new(){markValue = 3, goalToMark = GoalID.HaveThreeDifferentTypesofRelic}], "RelicTypesCurrentlyHeld");
         public AutomarkRosaryStringHandler automarkRosaryStringHandler = new AutomarkRosaryStringHandler();
-        // internal static List<SaveDataBool> bools = new List<SaveDataBool>();
-        // internal static List<SaveDataInt> ints = new List<SaveDataInt>();
-        // internal static List<SaveDataBitmask> bitmasks = new List<SaveDataBitmask>();   
-    
-        // internal static void SetDefaultData()
-        // {
-        //     foreach (SaveDataBool boolData in SaveData.bools)
-        //     {
-        //         boolData.ResetToDefault();
-        //         VogsBingoModPlugin.LogInfo($"data reset: {boolData.Name}, {boolData.Value}");
-        //     }
-        //     foreach (SaveDataInt intData in SaveData.ints)
-        //     {
-        //         intData.ResetToDefault();
-        //         VogsBingoModPlugin.LogInfo($"data reset: {intData.Name}, {intData.Value}");
-        //     }
-        //     foreach (SaveDataBitmask bitmaskData in SaveData.bitmasks)
-        //     {
-        //         bitmaskData.ResetFlags();
-        //         VogsBingoModPlugin.LogInfo($"data reset: {bitmaskData.Name}, {bitmaskData.bitmask}");
-        //     }
-        //     VogsBingoModPlugin.LogInfo($"Automarker Data has been reset.");
-        // }
-
-        // internal static void SaveData(int saveSlotIndex)
-        // {
-        //     foreach (SaveDataBool dataBool in SaveData.bools)
-        //     {
-        //         string persistentSceneName = VogsBingoModPlugin.PersistentName;
-        //         string persistentID = $"{saveSlotIndex}_{dataBool.Name}";
-        //         SceneData.instance.PersistentBools.SetValue(new PersistentItemData<bool>
-        //         {
-        //             SceneName = persistentSceneName,
-        //             ID = persistentID,
-        //             IsSemiPersistent = false,
-        //             Value = dataBool.Value
-        //         });
-        //         VogsBingoModPlugin.LogInfo($"Saving data: {persistentID}, {dataBool.Value}");
-        //     }
-        //     foreach (SaveDataInt dataInt in SaveData.ints)
-        //     {
-        //         string persistentSceneName = VogsBingoModPlugin.PersistentName;
-        //         string persistentID = $"{saveSlotIndex}_{dataInt.Name}";
-        //         SceneData.instance.PersistentInts.SetValue(new PersistentItemData<int>
-        //         {
-        //             SceneName = persistentSceneName,
-        //             ID = persistentID,
-        //             IsSemiPersistent = false,
-        //             Value = dataInt.Value
-        //         });
-        //         VogsBingoModPlugin.LogInfo($"Saving data: {persistentID}, {dataInt.Value}");
-        //     }
-        //     foreach (SaveDataBitmask dataBitmask in SaveData.bitmasks)
-        //     {
-        //         string persistentSceneName = VogsBingoModPlugin.PersistentName;
-        //         string persistentID = $"{saveSlotIndex}_{dataBitmask.Name}";
-        //         SceneData.instance.PersistentInts.SetValue(new PersistentItemData<int>
-        //         {
-        //             SceneName = persistentSceneName,
-        //             ID = persistentID,
-        //             IsSemiPersistent = false,
-        //             Value = (int)dataBitmask.bitmask
-        //         });
-        //         VogsBingoModPlugin.LogInfo($"Saving data: {persistentID}, {(int)dataBitmask.bitmask}");
-        //     }
-        //     VogsBingoModPlugin.LogInfo($"Finished saving to saveSlot {saveSlotIndex}.");
-        // }
-
-        // internal static void LoadData(int saveSlotIndex)
-        // {
-        //     VogsBingoModPlugin.LogInfo($"Loading automarker data from saveSlot {saveSlotIndex}.");
-        //     foreach (SaveDataBool dataBool in SaveData.bools)
-        //     {
-        //         string persistentSceneName = VogsBingoModPlugin.PersistentName;
-        //         string persistentID = $"{saveSlotIndex}_{dataBool.Name}";
-        //         bool currentPersistentData = SceneData.instance.PersistentBools.GetValueOrDefault(persistentSceneName, persistentID);
-        //         dataBool.Value = currentPersistentData;
-        //         VogsBingoModPlugin.LogInfo($"Loading data {persistentID}, {currentPersistentData}, {dataBool.Value}");
-        //     }
-        //     foreach (SaveDataInt dataInt in SaveData.ints)
-        //     {
-        //         string persistentSceneName = VogsBingoModPlugin.PersistentName;
-        //         string persistentID = $"{saveSlotIndex}_{dataInt.Name}";
-        //         int currentPersistentData = SceneData.instance.PersistentInts.GetValueOrDefault(persistentSceneName, persistentID);
-        //         dataInt.Value = currentPersistentData;
-        //         VogsBingoModPlugin.LogInfo($"Loading data {persistentID}, {currentPersistentData}, {dataInt.Value}");
-        //     }
-        //     foreach (SaveDataBitmask dataBitmask in SaveData.bitmasks)
-        //     {
-        //         string persistentSceneName = VogsBingoModPlugin.PersistentName;
-        //         string persistentID = $"{saveSlotIndex}_{dataBitmask.Name}";
-        //         int currentPersistentData = SceneData.instance.PersistentInts.GetValueOrDefault(persistentSceneName, persistentID);
-        //         dataBitmask.bitmask = (uint)currentPersistentData;
-        //         VogsBingoModPlugin.LogInfo($"Loading data {persistentID}, {currentPersistentData}, {dataBitmask.bitmask}");
-        //     }
-        // }
     }
 
     [Flags]

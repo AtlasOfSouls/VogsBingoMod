@@ -65,6 +65,9 @@ namespace VogsBingoMod.Automarking
                 case "Wood Witch Curse":
                     Automarker.MarkIfAvailable(GoalID.GetCursed);
                     break;
+                case "Fine Pins":
+                    Automarker.MarkIfAvailable(GoalID.FinePins);
+                    break;
                 default:
                     break;
             }
@@ -157,6 +160,7 @@ namespace VogsBingoMod.Automarking
                     VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.BoneScroll);
                     break;
                 case GoalHelper.SpriteNameWeaverEffigy:
+                    VogsBingoModPlugin.instance.SaveData.WeaverEffigies.Value++;
                     VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.WeaverEffigy);
                     VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.WeaverEffigy);
                     break;
@@ -464,6 +468,15 @@ namespace VogsBingoMod.Automarking
                 case "Lost Lace":
                     Automarker.MarkIfAvailable(GoalID.DefeataBlackthreadedBoss);
                     break;
+                case GoalHelper.EnemyNameShardillard:
+                    Automarker.MarkIfAvailable(GoalID.KillOneShardillard);
+                    break;
+                case GoalHelper.EnemyNameGarmondZaza:
+                    Automarker.MarkIfAvailable(GoalID.GarmondandZaza);
+                    break;
+                case GoalHelper.EnemyNamePilgrimPouncer when IsScene("Bone_09"):
+                    Automarker.MarkIfAvailable(GoalID.KillPebb);
+                    break;
                 default:
                     break;
             }
@@ -582,6 +595,32 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.NPCNamePlinneySave:
                     Automarker.MarkIfAvailable(GoalID.SavePinmasterPlinney);
                     break;
+                case GoalHelper.NPCNameOldPenitent:
+                    Automarker.MarkIfAvailable(GoalID.TalktoOldPenitent);
+                    break;
+                case GoalHelper.NPCNamePiousIsamor when PlayerData.instance.libraryStatueWoken:
+                    Automarker.MarkIfAvailable(GoalID.ListentoPiousIsamor);
+                    break;
+                case GoalHelper.NPCNameGilly:
+                    VogsBingoModPlugin.instance.SaveData.GillySpokenTo.Value = true;
+                    break;
+                case GoalHelper.NPCNameGrishkinGreymoor: case GoalHelper.NPCNameGrishkinPot:
+                    VogsBingoModPlugin.instance.SaveData.GrishkinSpokenTo.Value = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(NPCControlBase),nameof(NPCControlBase.OnStartingDialogue))]
+        static void BasicNPCDialogueStartPatch(NPCControlBase __instance)
+        {
+            switch (__instance.name)
+            {
+                case GoalHelper.NPCNameGrishkinMarrow: case GoalHelper.NPCNameGrishkinFleatopia:
+                    VogsBingoModPlugin.instance.SaveData.GrishkinSpokenTo.Value = true;
+                    break;
                 default:
                     break;
             }
@@ -615,6 +654,10 @@ namespace VogsBingoMod.Automarking
             if (IsScene("Coral_42") && !__instance.Item.name.Equals("Rosary_Set_Small"))
             {
                 Automarker.MarkIfAvailable(GoalID.BuyFromGrindleNoString);
+                if (__instance.Item.name == GoalHelper.ShopItemNameGrindleSpoolFrag)
+                {
+                    VogsBingoModPlugin.instance.SaveData.PsalmCylinders.Value++;
+                }
             }
             switch (__instance.name)
             {
@@ -730,6 +773,7 @@ namespace VogsBingoMod.Automarking
         [HarmonyPatch(typeof(SetBoolValue),nameof(SetBoolValue.OnEnter))]
         static void BoolValuePatch(SetBoolValue __instance)
         {
+            VogsBingoModPlugin.LogInfo($"bool set by: {__instance.owner.name}");
             switch (__instance.owner.name)
             {
                 case GoalHelper.ObjectNameMaskShard: case GoalHelper.ObjectNameMaskShardDupe:
@@ -791,9 +835,18 @@ namespace VogsBingoMod.Automarking
                         case "Hang_03_top":
                             Automarker.MarkIfAvailable(GoalID.HighHallsSpoolFragment);
                             break;
+                        case "Under_10":
+                            VogsBingoModPlugin.instance.SaveData.UnderworksArenaSpoolFrag.Value = true;
+                            break;
+                        case "Library_11b":
+                            VogsBingoModPlugin.instance.SaveData.UnderworksLibrary_11bSpoolFrag.Value = true;
+                            break;
                         default:
                             break;
                     }
+                    break;
+                case GoalHelper.ObjectNameWoodWaspNest: case GoalHelper.ObjectNameWoodWaspNestOne:
+                    VogsBingoModPlugin.instance.SaveData.WoodWaspNestsBroken.Value++;
                     break;
                 default:
                     break;
@@ -865,7 +918,6 @@ namespace VogsBingoMod.Automarking
         [HarmonyPatch(typeof(CollectableItemPickup),nameof(CollectableItemPickup.DoPickupAction))]
         static void ItemPickupPatch(CollectableItemPickup __instance, bool __result)
         {
-            VogsBingoModPlugin.LogInfo($"item pickup occured: {__instance.Item.name}");
             if (!__result)
             {
                 return;
@@ -902,6 +954,15 @@ namespace VogsBingoMod.Automarking
                 case "Rosary_Set_Small":
                     VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
                     break;
+                case GoalHelper.ItemNameHereticKey:
+                    Automarker.MarkIfAvailable(GoalID.KeyofHeretic);
+                    break;
+                case GoalHelper.ItemNamePsalmCylinderLibraryRoof: case GoalHelper.ItemNamePsalmCylinderCardinius: case GoalHelper.ItemNamePsalmCylinderHighHalls: case GoalHelper.ItemNamePsalmCylinderUnderworks:
+                    VogsBingoModPlugin.instance.SaveData.PsalmCylinders.Value++;
+                    break;
+                case GoalHelper.ItemNameMemoryLocket when IsScene("Crawl_09"):
+                    Automarker.MarkIfAvailable(GoalID.WormwaysMemoryLocket);
+                    break;
                 default:
                     break;
             }
@@ -913,9 +974,15 @@ namespace VogsBingoMod.Automarking
         {
             foreach (SavedItem item in __instance.giveOnFirstTalkItems)
             {
-                if (item.name.Equals("Magnetite"))
-                {
-                    Automarker.MarkIfAvailable(GoalID.InspectMagnetiteinBrightvein);
+                switch(item.name){
+                    case "Magnetite":
+                        Automarker.MarkIfAvailable(GoalID.InspectMagnetiteinBrightvein);
+                        break;
+                    case GoalHelper.ItemNameFlintstone:
+                        Automarker.MarkIfAvailable(GoalID.InspectFlintstoneinDeepDocks);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
