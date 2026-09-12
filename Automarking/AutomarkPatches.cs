@@ -429,6 +429,7 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.EnemyNameCovetousPilgrim:
                     Automarker.MarkIfAvailable(GoalID.DefeataCovetousPilgrim);
+                    SaveData.CovetousPilgrimKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameSisterSplinter:
                     Automarker.MarkIfAvailable(GoalID.SisterSplinter);
@@ -1257,6 +1258,19 @@ namespace VogsBingoMod.Automarking
                     break;
                 default:
                     break;
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Lever),nameof(Lever.Hit))]
+        static void LeverPatch(IHitResponder.HitResponse __result, Lever __instance)
+        {
+            if (__result != IHitResponder.Response.None)
+            {
+                if (__instance.playerDataBool.Equals("openedCitadelSpaRight"))
+                {
+                    Automarker.MarkIfAvailable(GoalID.OpentheCitadelSpaEastDoor);
+                }
             }
         }
         

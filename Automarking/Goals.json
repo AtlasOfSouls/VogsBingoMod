@@ -231,14 +231,16 @@
     {"name": "Kill 1 Shardillard", "automarking_support": true},
     {"name": "Break 3 Wood Wasp Nests", "automarking_support": true},
     {"name": "Listen to Pious Isamor", "automarking_support": true},
-    {"name": "Key of Heretic", "automarking_support": true},
+    {"name": "Heretic Key", "automarking_support": true},
     {"name": "Inspect Flintstone in Deep Docks", "automarking_support": true},
     {"name": "Underworks Spool Fragments (2)", "automarking_support": true},
     {"name": "3 Psalm Cylinders", "automarking_support": true},
     {"name": "Wormways Memory Locket", "automarking_support": true},
     {"name": "Fine Pins", "automarking_support": true},
-    {"name": "Garmond and Zaza", "automarking_support": true},
+    {"name": "Beat Garmond and Zaza", "automarking_support": true},
     {"name": "Kill Pebb", "automarking_support": true},
     {"name": "Upper Bilewater Flea", "automarking_support": true},
-    {"name": "Talk to Grishkin and Gilly", "automarking_support": true}
+    {"name": "Talk to Grishkin and Gilly", "automarking_support": true},
+    {"name": "Covetous Pilgrim Journal Entry", "automarking_support": true},
+    {"name": "Open the Citadel Spa East Door", "automarking_support": true}
 ]

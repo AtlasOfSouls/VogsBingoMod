@@ -245,6 +245,8 @@ namespace VogsBingoMod.Automarking
         GarmondandZaza = 238,
         KillPebb = 239,
         UpperBilewaterFlea = 240,
-        TalktoGrishkinandGilly = 241
+        TalktoGrishkinandGilly = 241,
+        CovetousPilgrimJournalEntry = 242,
+        OpentheCitadelSpaEastDoor = 243
     }
 }

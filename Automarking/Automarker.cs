@@ -215,6 +215,9 @@ namespace VogsBingoMod.Automarking
                 case GoalID.ShadowChargerJournalEntry:
                     goalCompleted = SaveData.HasJournal && SaveData.ShadowChargerKilled;
                     break;
+                case GoalID.CovetousPilgrimJournalEntry:
+                    goalCompleted = SaveData.HasJournal && SaveData.CovetousPilgrimKilled;
+                    break;
                 case GoalID.MassiveMossgrubJournalEntry:
                     goalCompleted = SaveData.HasJournal && SaveData.MassiveMossgrubKilled;
                     break;

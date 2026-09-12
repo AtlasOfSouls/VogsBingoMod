@@ -22,7 +22,8 @@ namespace VogsBingoMod.Automarking
             GoalID.UnravelledJournalEntry,
             GoalID.ShadowChargerJournalEntry,
             GoalID.CogworkClapperJournalEntry,
-            GoalID.MassiveMossgrubJournalEntry
+            GoalID.MassiveMossgrubJournalEntry,
+            GoalID.CovetousPilgrimJournalEntry
             ], "HasJournal");
         internal static SaveDataBool CogworkClapperKilled = new([GoalID.CogworkClapperJournalEntry], "CogworkClapperKilled");
         internal static SaveDataBool SquirrmKilled = new([GoalID.SquirrmJournalEntry], "SquirrmKilled");
@@ -34,6 +35,7 @@ namespace VogsBingoMod.Automarking
         internal static SaveDataBool DeepDiverKilled = new([GoalID.DeepDiverJournalEntry], "DeepDiverKilled");
         internal static SaveDataBool UnravelledKilled = new([GoalID.UnravelledJournalEntry], "UnravelledKilled");
         internal static SaveDataBool ShadowChargerKilled = new([GoalID.ShadowChargerJournalEntry], "ShadowChargerKilled");
+        internal static SaveDataBool CovetousPilgrimKilled = new([GoalID.CovetousPilgrimJournalEntry], "CovetousPilgrimKilled");
         internal static SaveDataBool ImobaKilled = new([GoalID.ImobaJournalEntry], "ImobaKilled");
         internal static SaveDataBool HuntressSpokenTo = new([GoalID.TalktoStyxHuntress], "HuntressSpokenTo");
         internal static SaveDataBool StyxSpokenTo = new([GoalID.TalktoStyxHuntress], "StyxSpokenTo");
