@@ -146,7 +146,7 @@ namespace VogsBingoMod.Automarking
             } catch (Exception)
             {
                 VogsBingoModPlugin.LogError($"Could not find a goal ID for goal: \"{goalName}\"");
-                return 0;
+                return -1;
             }
         }
 

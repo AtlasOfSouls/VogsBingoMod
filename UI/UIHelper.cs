@@ -213,7 +213,7 @@ namespace VogsBingoMod.UI
             newObj.AddComponent<CanvasRenderer>();
             Text textComponent = newObj.AddComponent<Text>();
             textComponent.text = text;
-            textComponent.font = FontHandler.GetFont("ARIAL");
+            textComponent.font = FontHandler.GetFont("LegacyRuntime");
             textComponent.alignment = anchor;
             textComponent.fontSize = fontSize;
             textComponent.supportRichText = supportRichText;
@@ -393,6 +393,7 @@ namespace VogsBingoMod.UI
             newObj.AddComponent<CanvasRenderer>();
             Image imageComponent = newObj.AddComponent<Image>();
             Sprite colorsSprite = TextureHandler.CreateGoalColorsSprite();
+            imageComponent.color = new Color(imageComponent.color.r, imageComponent.color.g, imageComponent.color.b, uiCanvas.CurrentOpacity);
             imageComponent.sprite = colorsSprite;
             RectTransform rectTransform = newObj.GetComponent<RectTransform>();
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colorsSprite.rect.width);

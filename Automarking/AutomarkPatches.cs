@@ -74,23 +74,23 @@ namespace VogsBingoMod.Automarking
             switch (__instance.QuestType.name.ToLower())
             {
                 case "hunt": case "grand hunt":
-                    VogsBingoModPlugin.instance.SaveData.HuntWishes.Value++;
-                    VogsBingoModPlugin.instance.SaveData.WishesCompleted.Value++;
+                    SaveData.HuntWishes.Value++;
+                    SaveData.WishesCompleted.Value++;
                     break;
                 case "gather":
-                VogsBingoModPlugin.instance.SaveData.GatherWishes.Value++;
-                    VogsBingoModPlugin.instance.SaveData.WishesCompleted.Value++;
+                SaveData.GatherWishes.Value++;
+                    SaveData.WishesCompleted.Value++;
                     break;
                 case "wayfarer":
-                    VogsBingoModPlugin.instance.SaveData.WayfarerWishes.Value++;
-                    VogsBingoModPlugin.instance.SaveData.WishesCompleted.Value++;
+                    SaveData.WayfarerWishes.Value++;
+                    SaveData.WishesCompleted.Value++;
                     break;
                 case "donate":
-                    VogsBingoModPlugin.instance.SaveData.DonationWishes.Value++;
-                    VogsBingoModPlugin.instance.SaveData.WishesCompleted.Value++;
+                    SaveData.DonationWishes.Value++;
+                    SaveData.WishesCompleted.Value++;
                     break;
                 case "delivery": case "learn": case "sprint": case "witness": case "steel":
-                    VogsBingoModPlugin.instance.SaveData.WishesCompleted.Value++;
+                    SaveData.WishesCompleted.Value++;
                     break;
                 default:
                     break;
@@ -107,11 +107,11 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.BellhomeKey);
                     break;
                 case GoalHelper.SpriteNameCraftmetal:
-                    VogsBingoModPlugin.instance.SaveData.Craftmetal.Value++;
+                    SaveData.Craftmetal.Value++;
                     switch (GetSceneName())
                     {
                         case "Coral_32":
-                            Automarker.CheckIfGoalCompleted(GoalID.BlastedStepsSilkeaterCraftmetal);
+                            Automarker.CheckIfGoalCompleted(GoalID.BlastedStepsSilkeaterCraftmetal, "craftmetal");
                             break;
                         case "Aqueduct_05":
                             Automarker.MarkIfAvailable(GoalID.PaleLakeCraftmetal);
@@ -142,34 +142,34 @@ namespace VogsBingoMod.Automarking
                     switch (GetSceneName())
                     {
                         case "Dust_06":
-                            VogsBingoModPlugin.instance.SaveData.SinnersKey.Value = true;
+                            SaveData.SinnersKey.Value = true;
                             break;
                         case "Bellshrine_Coral":
-                            VogsBingoModPlugin.instance.SaveData.KarakKey.Value = true;
+                            SaveData.KarakKey.Value = true;
                             break;
                     }
                     break;
                 case GoalHelper.SpriteNameRuneHarp:
-                    VogsBingoModPlugin.instance.SaveData.RuneHarps.Value++;
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.RuneHarp);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.RuneHarp);
+                    SaveData.RuneHarps.Value++;
+                    SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.RuneHarp);
+                    SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.RuneHarp);
                     break;
                 case GoalHelper.SpriteNameBoneScroll:
-                    VogsBingoModPlugin.instance.SaveData.BoneScrolls.Value++;
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.BoneScroll);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.BoneScroll);
+                    SaveData.BoneScrolls.Value++;
+                    SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.BoneScroll);
+                    SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.BoneScroll);
                     break;
                 case GoalHelper.SpriteNameWeaverEffigy:
-                    VogsBingoModPlugin.instance.SaveData.WeaverEffigies.Value++;
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.WeaverEffigy);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.WeaverEffigy);
+                    SaveData.WeaverEffigies.Value++;
+                    SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.WeaverEffigy);
+                    SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.WeaverEffigy);
                     break;
                 case GoalHelper.SpriteNameChoralCommandment:
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
+                    SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
+                    SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
                     break;
                 case GoalHelper.SpriteNameCogheartPiece0: case GoalHelper.SpriteNameCogheartPiece1: case GoalHelper.SpriteNameCogheartPiece2: 
-                    VogsBingoModPlugin.instance.SaveData.CogheartPieces.Value++;
+                    SaveData.CogheartPieces.Value++;
                     break;
                 case GoalHelper.SpriteNameCradleMap:
                     Automarker.MarkIfAvailable(GoalID.CradleMap);
@@ -182,50 +182,50 @@ namespace VogsBingoMod.Automarking
                     break;
                 case GoalHelper.SpriteNameArcaneEgg:
                     Automarker.MarkIfAvailable(GoalID.OneArcaneEgg);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ArcaneEgg);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ArcaneEgg);
+                    SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ArcaneEgg);
+                    SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ArcaneEgg);
                     break;
                 case GoalHelper.SpriteNameSurfaceMemento:
                     Automarker.MarkIfAvailable(GoalID.SurfaceMemento);
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case GoalHelper.SpriteNameGreyMemento:
                     Automarker.MarkIfAvailable(GoalID.GreyMemento);
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case GoalHelper.SpriteNameToolPouch:
                     if (PlayerData.instance.pinGalleriesCompleted >= 1)
                         Automarker.MarkIfAvailable(GoalID.WinaLoddieMinigame);
-                    VogsBingoModPlugin.instance.SaveData.CraftKitToolPouchCount.Value++;
+                    SaveData.CraftKitToolPouchCount.Value++;
                     Automarker.MarkIfAvailable(GoalID.OneToolPouchUpgrade);
                     break;
                 case GoalHelper.SpriteNameCraftingKit:
-                    VogsBingoModPlugin.instance.SaveData.CraftKitToolPouchCount.Value++;
+                    SaveData.CraftKitToolPouchCount.Value++;
                     Automarker.MarkIfAvailable(GoalID.OneCraftingKit);
                     break;
                 case GoalHelper.SpriteNameMemoryLocket:
-                    VogsBingoModPlugin.instance.SaveData.MemoryLockets.Value++;
+                    SaveData.MemoryLockets.Value++;
                     break;
                 case GoalHelper.SpriteNameShardBundle:
-                    VogsBingoModPlugin.instance.SaveData.NonPurchasedShardBundles.Value++;
+                    SaveData.NonPurchasedShardBundles.Value++;
                     break;
                 case GoalHelper.SpriteNameRosaryNecklace: case GoalHelper.SpriteNameHeavyRosaryNecklace: case GoalHelper.SpriteNamePaleRosaryNecklace:
-                    VogsBingoModPlugin.instance.SaveData.NonPurchasedRosaryNecklaces.Value++;
+                    SaveData.NonPurchasedRosaryNecklaces.Value++;
                     break;
                 case GoalHelper.SpriteNameHerosMemento:
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case GoalHelper.SpriteNameCrawMemento:
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case GoalHelper.SpriteNameHuntersMemento:
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case GoalHelper.SpriteNameSprintmasterMemento:
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case GoalHelper.SpriteNameSethMemento:
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 default:
                     break;
@@ -239,28 +239,28 @@ namespace VogsBingoMod.Automarking
             switch(__instance.name)
             {
                 case GoalHelper.ObjectNameRosaryNecklace:
-                    if (VogsBingoModPlugin.instance.SaveData.CurrentPurchasedRosaryNecklaces > 0)
+                    if (SaveData.CurrentPurchasedRosaryNecklaces > 0)
                     {
-                        VogsBingoModPlugin.instance.SaveData.CurrentPurchasedRosaryNecklaces.Value--;
+                        SaveData.CurrentPurchasedRosaryNecklaces.Value--;
                     } else
                     {
-                        VogsBingoModPlugin.instance.SaveData.NonPurchasedRosaryNecklaces.Value--;
+                        SaveData.NonPurchasedRosaryNecklaces.Value--;
                     }
                     break;
                 case GoalHelper.ObjectNameHeavyNecklace: case GoalHelper.ObjectNamePaleNecklace:
-                    VogsBingoModPlugin.instance.SaveData.NonPurchasedRosaryNecklaces.Value--;
+                    SaveData.NonPurchasedRosaryNecklaces.Value--;
                     break;
                 case GoalHelper.ObjectNameShardBundle:
-                    if (VogsBingoModPlugin.instance.SaveData.NonPurchasedShardBundles > VogsBingoModPlugin.instance.SaveData.NonPurchasedBrokenShardBundles)
+                    if (SaveData.NonPurchasedShardBundles > SaveData.NonPurchasedBrokenShardBundles)
                     {
-                        VogsBingoModPlugin.instance.SaveData.NonPurchasedBrokenShardBundles.Value++;
+                        SaveData.NonPurchasedBrokenShardBundles.Value++;
                     }
                     break;
                 case GoalHelper.ObjectNameRosaryString:
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.BreakString();
+                    SaveData.automarkRosaryStringHandler.BreakString();
                     break;
                 case GoalHelper.ObjectNameFrayedString:
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.BreakFrayedString();
+                    SaveData.automarkRosaryStringHandler.BreakFrayedString();
                     break;
                 default:
                     break;
@@ -290,7 +290,7 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.FaydownCloak);
                     break;
                 case "Halfway_01":
-                    VogsBingoModPlugin.instance.SaveData.HasJournal.Value = true;
+                    SaveData.HasJournal.Value = true;
                     break;
                 case "Bellway_Centipede_Arena":
                     Automarker.MarkIfAvailable(GoalID.BeastlingCall);
@@ -324,37 +324,37 @@ namespace VogsBingoMod.Automarking
             switch (journalRecord.name)
             {
                 case GoalHelper.EnemyNameCogworkClapper:
-                    VogsBingoModPlugin.instance.SaveData.CogworkClapperKilled.Value = true;
+                    SaveData.CogworkClapperKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameSkullwing:
-                    VogsBingoModPlugin.instance.SaveData.SkullwingKilled.Value = true;
+                    SaveData.SkullwingKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameCragglite:
-                    VogsBingoModPlugin.instance.SaveData.CraggliteKilled.Value = true;
+                    SaveData.CraggliteKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameGromling:
-                    VogsBingoModPlugin.instance.SaveData.GromlingKilled.Value = true;
+                    SaveData.GromlingKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameMiteMother:
-                    VogsBingoModPlugin.instance.SaveData.MiteMotherKilled.Value = true;
+                    SaveData.MiteMotherKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameMassiveMossgrub:
-                    VogsBingoModPlugin.instance.SaveData.MassiveMossgrubKilled.Value = true;
+                    SaveData.MassiveMossgrubKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameDeepDiver:
-                    VogsBingoModPlugin.instance.SaveData.DeepDiverKilled.Value = true;
+                    SaveData.DeepDiverKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameUnravelled:
-                    VogsBingoModPlugin.instance.SaveData.UnravelledKilled.Value = true;
+                    SaveData.UnravelledKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameShadowCharger:
-                    VogsBingoModPlugin.instance.SaveData.ShadowChargerKilled.Value = true;
+                    SaveData.ShadowChargerKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameImoba:
-                    VogsBingoModPlugin.instance.SaveData.ImobaKilled.Value = true;
+                    SaveData.ImobaKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameSquirrm:
-                    VogsBingoModPlugin.instance.SaveData.SquirrmKilled.Value = true;
+                    SaveData.SquirrmKilled.Value = true;
                     break;
                 case GoalHelper.EnemyNameGreatConchfly:
                     switch (GetSceneName())
@@ -372,7 +372,7 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.EnemyNameMossMother:
                     if (IsScene("Weave_03"))
                     {
-                        VogsBingoModPlugin.instance.SaveData.DuoMossMothers.Value++;
+                        SaveData.DuoMossMothers.Value++;
                     }
                     if (PlayerData.instance.act3_wokeUp)
                     {
@@ -457,7 +457,7 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.TormentedTrobbio);
                     break;
                 case GoalHelper.EnemyNameVoidMass:
-                    VogsBingoModPlugin.instance.SaveData.VoidMassesKilled.Value++;
+                    SaveData.VoidMassesKilled.Value++;
                     break;
                 case "Garmond" when PlayerData.instance.act3_wokeUp:
                     Automarker.MarkIfAvailable(GoalID.DefeataBlackthreadedBoss);
@@ -502,80 +502,80 @@ namespace VogsBingoMod.Automarking
                     switch (GetSceneName())
                     {
                         case "Bonetown":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.BoneBottom);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.BoneBottom);
                             break;
                         case "Bone_04":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Marrow);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Marrow);
                             break;
                         case "Bone_East_01":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.DeepDocks);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.DeepDocks);
                             break;
                         case "Ant_04_mid": case "Ant_20":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.HuntersMarch);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.HuntersMarch);
                             break;
                         case "Bone_East_21":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.FarFields);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.FarFields);
                             break;
                         case "Greymoor_02":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.GreymoorBell);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.GreymoorBell);
                             break;
                         case "Greymoor_08" when PlayerData.instance.mapperLocationAct3 == 3:
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.GreymoorAct3);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.GreymoorAct3);
                             break;
                         case "Belltown":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Bellhart);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Bellhart);
                             break;
                         case "Shellwood_16":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.ShellwoodNormal);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.ShellwoodNormal);
                             break;
                         case "Shellwood_01" when PlayerData.instance.mapperLocationAct3 == 1:
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.ShellwoodAct3);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.ShellwoodAct3);
                             break;
                         case "Crawl_01":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Wormways);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Wormways);
                             break;
                         case "Coral_12":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.BlastedSteps);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.BlastedSteps);
                             break;
                         case "Dust_10":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.SinnersRoad);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.SinnersRoad);
                             break;
                         case "Peak_02":
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.MountFay);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.MountFay);
                             break;
                         case "Coral_40":
                             Automarker.MarkIfAvailable(GoalID.TalktoShakrainSandsofKarak);
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.SandsOfKarak);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.SandsOfKarak);
                             break;
                         case "Shadow_23":
                             Automarker.MarkIfAvailable(GoalID.TalktoShakrainBilewater);
-                            VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Bilewater);
+                            SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.Bilewater);
                             break;
                         default:
                             break;
                     }
                     break;
                 case GoalHelper.NPCNameShakraDuel:
-                    VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.GreymoorDuel);
+                    SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.GreymoorDuel);
                     break;
                 case GoalHelper.NPCNameShakraTrailsEnd:
-                    VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.TrailsEnd);
+                    SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.TrailsEnd);
                     break;
                 case GoalHelper.NPCNameShakraAid: case GoalHelper.NPCNameShakraHHAWin:
-                    VogsBingoModPlugin.instance.SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.HighHallsArena);
+                    SaveData.ShakraLocations.AddFlag((uint)ShakraLocationFlags.HighHallsArena);
                     break;
                 case GoalHelper.NPCNameHuntress:
-                    VogsBingoModPlugin.instance.SaveData.HuntressSpokenTo.Value = true;
+                    SaveData.HuntressSpokenTo.Value = true;
                     Automarker.MarkIfAvailable(GoalID.TalktoHuntress);
                     break;
                 case GoalHelper.NPCNameStyx:
-                    VogsBingoModPlugin.instance.SaveData.StyxSpokenTo.Value = true;
+                    SaveData.StyxSpokenTo.Value = true;
                     break;
                 case GoalHelper.NPCNameForgeDaughter when IsScene("Room_Forge"):
-                    VogsBingoModPlugin.instance.SaveData.ForgeDaughterSpokenTo.Value = true;
+                    SaveData.ForgeDaughterSpokenTo.Value = true;
                     break;
                 case GoalHelper.NPCNameTwelfthArchitect:
-                    VogsBingoModPlugin.instance.SaveData.TwelfthArchitectSpokenTo.Value = true;
+                    SaveData.TwelfthArchitectSpokenTo.Value = true;
                     break;
                 case GoalHelper.NPCNameLoam:
                     Automarker.MarkIfAvailable(GoalID.TalktoLoam);
@@ -602,10 +602,10 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.ListentoPiousIsamor);
                     break;
                 case GoalHelper.NPCNameGilly:
-                    VogsBingoModPlugin.instance.SaveData.GillySpokenTo.Value = true;
+                    SaveData.GillySpokenTo.Value = true;
                     break;
                 case GoalHelper.NPCNameGrishkinGreymoor: case GoalHelper.NPCNameGrishkinPot:
-                    VogsBingoModPlugin.instance.SaveData.GrishkinSpokenTo.Value = true;
+                    SaveData.GrishkinSpokenTo.Value = true;
                     break;
                 default:
                     break;
@@ -619,7 +619,7 @@ namespace VogsBingoMod.Automarking
             switch (__instance.name)
             {
                 case GoalHelper.NPCNameGrishkinMarrow: case GoalHelper.NPCNameGrishkinFleatopia:
-                    VogsBingoModPlugin.instance.SaveData.GrishkinSpokenTo.Value = true;
+                    SaveData.GrishkinSpokenTo.Value = true;
                     break;
                 default:
                     break;
@@ -637,10 +637,10 @@ namespace VogsBingoMod.Automarking
             switch (__instance.Fsm.GetOwnerDefaultTarget(__instance.gameObject).name)
             {
                 case "One Way Wall (1)":
-                    VogsBingoModPlugin.instance.SaveData.GreymoorStyxWallBroken.Value = true;
+                    SaveData.GreymoorStyxWallBroken.Value = true;
                     break;
                 case "One Way Wall (2)":
-                    VogsBingoModPlugin.instance.SaveData.SinnersStyxWallBroken.Value = true;
+                    SaveData.SinnersStyxWallBroken.Value = true;
                     break;
                 default:
                     break;
@@ -656,16 +656,16 @@ namespace VogsBingoMod.Automarking
                 Automarker.MarkIfAvailable(GoalID.BuyFromGrindleNoString);
                 if (__instance.Item.name == GoalHelper.ShopItemNameGrindleSpoolFrag)
                 {
-                    VogsBingoModPlugin.instance.SaveData.PsalmCylinders.Value++;
+                    SaveData.PsalmCylinders.Value++;
                 }
             }
             switch (__instance.name)
             {
                 case "Bonebottom Faith Token":
-                    VogsBingoModPlugin.instance.SaveData.PebbKeyBought.Value = true;
+                    SaveData.PebbKeyBought.Value = true;
                     break;
                 case "City Merchant Simple Key":
-                    VogsBingoModPlugin.instance.SaveData.JubilanaKeyBought.Value = true;
+                    SaveData.JubilanaKeyBought.Value = true;
                     break;
                 case "Belltown Spool Segment":
                     Automarker.MarkIfAvailable(GoalID.FreysSpoolFragment);
@@ -677,23 +677,23 @@ namespace VogsBingoMod.Automarking
                 switch (__instance.Item.name)
                 {
                     case "Seal Chit City Merchant":
-                        VogsBingoModPlugin.instance.SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
+                        SaveData.RelicTypesObtained.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
+                    SaveData.RelicTypesCurrentlyHeld.AddFlag((uint)RelicTypeFlags.ChoralCommandment);
                         break;
                     case "Rosary_Set_Medium":
-                        VogsBingoModPlugin.instance.SaveData.CurrentPurchasedRosaryNecklaces.Value++;
+                        SaveData.CurrentPurchasedRosaryNecklaces.Value++;
                         break;
                     case "Rosary_Set_Small":
-                        VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
+                        SaveData.automarkRosaryStringHandler.AddPurchasedString();
                         break;
                     case "Crest Socket Unlocker":
-                        VogsBingoModPlugin.instance.SaveData.MemoryLockets.Value++;
+                        SaveData.MemoryLockets.Value++;
                         break;
                     case "Tool Metal":
-                        VogsBingoModPlugin.instance.SaveData.Craftmetal.Value++;
+                        SaveData.Craftmetal.Value++;
                         break;
                     case GoalHelper.ObjectNameSilkSpool:
-                        VogsBingoModPlugin.instance.SaveData.SpoolFragments.Value++;
+                        SaveData.SpoolFragments.Value++;
                         break;
                     default:
                         break;
@@ -730,7 +730,7 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.ActivateSecondSentinel);
                     break;
                 case "Belltown_Room_Relic":
-                    VogsBingoModPlugin.instance.SaveData.RelicTypesCurrentlyHeld.ResetFlags();
+                    SaveData.RelicTypesCurrentlyHeld.ResetFlags();
                     break;
                 default:
                     break;
@@ -773,7 +773,6 @@ namespace VogsBingoMod.Automarking
         [HarmonyPatch(typeof(SetBoolValue),nameof(SetBoolValue.OnEnter))]
         static void BoolValuePatch(SetBoolValue __instance)
         {
-            VogsBingoModPlugin.LogInfo($"bool set by: {__instance.owner.name}");
             switch (__instance.owner.name)
             {
                 case GoalHelper.ObjectNameMaskShard: case GoalHelper.ObjectNameMaskShardDupe:
@@ -792,10 +791,10 @@ namespace VogsBingoMod.Automarking
                             Automarker.MarkIfAvailable(GoalID.BilewaterMaskShard);
                             break;
                         case "Shellwood_14":
-                            VogsBingoModPlugin.instance.SaveData.ShellwoodMaskShard.Value = true;
+                            SaveData.ShellwoodMaskShard.Value = true;
                             break;
                         case "Library_05":
-                            VogsBingoModPlugin.instance.SaveData.VaultsMaskShard.Value = true;
+                            SaveData.VaultsMaskShard.Value = true;
                             break;
                         case "Coral_19b":
                             Automarker.MarkIfAvailable(GoalID.BlastedStepsMaskShard);
@@ -817,14 +816,14 @@ namespace VogsBingoMod.Automarking
                     }
                     break;
                 case GoalHelper.ObjectNameSilkSpool:
-                    VogsBingoModPlugin.instance.SaveData.SpoolFragments.Value++;
+                    SaveData.SpoolFragments.Value++;
                     switch (GetSceneName())
                     {
                         case "Bone_East_13":
-                            VogsBingoModPlugin.instance.SaveData.DeepDocksSpoolFragNearSpa.Value = true;
+                            SaveData.DeepDocksSpoolFragNearSpa.Value = true;
                             break;
                         case "Dock_03c":
-                            VogsBingoModPlugin.instance.SaveData.DeeperDocksSpoolFrag.Value = true;
+                            SaveData.DeeperDocksSpoolFrag.Value = true;
                             break;
                         case "Greymoor_02":
                             Automarker.MarkIfAvailable(GoalID.GreymoorSpoolFragment);
@@ -836,17 +835,17 @@ namespace VogsBingoMod.Automarking
                             Automarker.MarkIfAvailable(GoalID.HighHallsSpoolFragment);
                             break;
                         case "Under_10":
-                            VogsBingoModPlugin.instance.SaveData.UnderworksArenaSpoolFrag.Value = true;
+                            SaveData.UnderworksArenaSpoolFrag.Value = true;
                             break;
                         case "Library_11b":
-                            VogsBingoModPlugin.instance.SaveData.UnderworksLibrary_11bSpoolFrag.Value = true;
+                            SaveData.UnderworksLibrary_11bSpoolFrag.Value = true;
                             break;
                         default:
                             break;
                     }
                     break;
                 case GoalHelper.ObjectNameWoodWaspNest: case GoalHelper.ObjectNameWoodWaspNestOne:
-                    VogsBingoModPlugin.instance.SaveData.WoodWaspNestsBroken.Value++;
+                    SaveData.WoodWaspNestsBroken.Value++;
                     break;
                 default:
                     break;
@@ -859,7 +858,7 @@ namespace VogsBingoMod.Automarking
         {
             if (eventName == "MEMORY ORB COLLECT")
             {
-                VogsBingoModPlugin.instance.SaveData.SilkHearts.Value++;
+                SaveData.SilkHearts.Value++;
             }
         }
 
@@ -882,10 +881,10 @@ namespace VogsBingoMod.Automarking
 
         // [HarmonyPrefix]
         // [HarmonyPatch(typeof(GameManager),nameof(GameManager.SaveGame),[typeof(int),typeof(Action<bool>),typeof(bool),typeof(AutoSaveName)])]
-        // static void VogsBingoModPlugin.instance.SaveDataPatch(int saveSlot)
+        // static void SaveDataPatch(int saveSlot)
         // {
         //     VogsBingoModPlugin.LogInfo("Saving Automarker Data...   Don't turn off the power.");
-        //     VogsBingoModPlugin.instance.SaveData.VogsBingoModPlugin.instance.SaveData(saveSlot);
+        //     SaveData.SaveData(saveSlot);
         // }
 
         // [HarmonyPostfix]
@@ -895,13 +894,13 @@ namespace VogsBingoMod.Automarking
         //     if (newState == GameState.LOADING && AutomarkPatches.wasInMainMenu)
         //     {
         //         AutomarkPatches.wasInMainMenu = false;
-        //         VogsBingoModPlugin.instance.SaveData.LoadData(__instance.profileID);
+        //         SaveData.LoadData(__instance.profileID);
         //     }
         //     if (newState == GameState.MAIN_MENU)
         //     {
         //         if (!AutomarkPatches.wasInMainMenu)
         //         {
-        //             VogsBingoModPlugin.instance.SaveData.SetDefaultData();
+        //             SaveData.SetDefaultData();
         //             AutomarkPatches.wasInMainMenu = true;
         //         }
         //     }
@@ -911,7 +910,7 @@ namespace VogsBingoMod.Automarking
         [HarmonyPatch(typeof(PlayerData),nameof(PlayerData.AddToMaxHealth))]
         static void AddToMaxHealthPatch()
         {
-            VogsBingoModPlugin.instance.SaveData.ExtraMasks.Value = PlayerData.instance.CurrentMaxHealth - 5;
+            SaveData.ExtraMasks.Value = PlayerData.instance.CurrentMaxHealth - 5;
         }
 
         [HarmonyPrefix]
@@ -928,37 +927,37 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.PollenHeart);
                     if (PlayerData.instance.CollectedHeartClover && PlayerData.instance.CollectedHeartCoral && PlayerData.instance.CollectedHeartHunter)
                     {
-                        VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                        SaveData.MementosObtained.Value++;
                     }
                     break;
                 case GoalHelper.ItemNameConjoinedHeart:
                     Automarker.MarkIfAvailable(GoalID.ConjoinedHeart);
                     if (PlayerData.instance.CollectedHeartHunter && PlayerData.instance.CollectedHeartCoral && PlayerData.instance.CollectedHeartFlower)
                     {
-                        VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                        SaveData.MementosObtained.Value++;
                     }
                     break;
                 case GoalHelper.ItemNameHuntersHeart:
                     Automarker.MarkIfAvailable(GoalID.HuntersHeart);
                     if (PlayerData.instance.CollectedHeartClover && PlayerData.instance.CollectedHeartCoral && PlayerData.instance.CollectedHeartFlower)
                     {
-                        VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                        SaveData.MementosObtained.Value++;
                     }
                     break;
                 case GoalHelper.ItemNameEncrustedHeart when PlayerData.instance.CollectedHeartClover && PlayerData.instance.CollectedHeartCoral && PlayerData.instance.CollectedHeartFlower:
-                    VogsBingoModPlugin.instance.SaveData.MementosObtained.Value++;
+                    SaveData.MementosObtained.Value++;
                     break;
                 case "Rosary_Set_Frayed":
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddFrayedString();
+                    SaveData.automarkRosaryStringHandler.AddFrayedString();
                     break;
                 case "Rosary_Set_Small":
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
+                    SaveData.automarkRosaryStringHandler.AddNonPurchasedString();
                     break;
                 case GoalHelper.ItemNameHereticKey:
                     Automarker.MarkIfAvailable(GoalID.KeyofHeretic);
                     break;
                 case GoalHelper.ItemNamePsalmCylinderLibraryRoof: case GoalHelper.ItemNamePsalmCylinderCardinius: case GoalHelper.ItemNamePsalmCylinderHighHalls: case GoalHelper.ItemNamePsalmCylinderUnderworks:
-                    VogsBingoModPlugin.instance.SaveData.PsalmCylinders.Value++;
+                    SaveData.PsalmCylinders.Value++;
                     break;
                 case GoalHelper.ItemNameMemoryLocket when IsScene("Crawl_09"):
                     Automarker.MarkIfAvailable(GoalID.WormwaysMemoryLocket);
@@ -997,7 +996,7 @@ namespace VogsBingoMod.Automarking
             }
             if (IsScene("Clover_18"))
             {
-                VogsBingoModPlugin.instance.SaveData.VerdaniaFountainOrbs.Value++;
+                SaveData.VerdaniaFountainOrbs.Value++;
             }
         }
 
@@ -1038,7 +1037,7 @@ namespace VogsBingoMod.Automarking
             if (!__instance.IsUnlocked)
             {
                 VogsBingoModPlugin.LogInfo($"Crest unlocked: {__instance.name}");
-                VogsBingoModPlugin.instance.SaveData.Crests.Value++;
+                SaveData.Crests.Value++;
             }
         }
 
@@ -1234,13 +1233,13 @@ namespace VogsBingoMod.Automarking
             switch (item.name)
             {
                 case "Great Shard":
-                    VogsBingoModPlugin.instance.SaveData.BeastShards.Value += amount;
+                    SaveData.BeastShards.Value += amount;
                     break;
                 case "Silk Grub":
-                    VogsBingoModPlugin.instance.SaveData.Silkeaters.Value += amount;
+                    SaveData.Silkeaters.Value += amount;
                     Automarker.CheckIfGoalCompleted(GoalID.DeadBugsPurseaSilkeater);
                     if (IsScene("Coral_37"))
-                        VogsBingoModPlugin.instance.SaveData.BlastedSilkeater.Value = true;
+                        SaveData.BlastedSilkeater.Value = true;
                     break;
                 default:
                     break;
@@ -1254,7 +1253,7 @@ namespace VogsBingoMod.Automarking
             switch (item.name)
             {
                 case "Rosary_Set_Small":
-                    VogsBingoModPlugin.instance.SaveData.automarkRosaryStringHandler.AddPurchasedString();
+                    SaveData.automarkRosaryStringHandler.AddPurchasedString();
                     break;
                 default:
                     break;

@@ -177,6 +177,7 @@ namespace VogsBingoMod
                 } else
                 {
                     VogsBingoModPlugin.LogInfo("The room link that was entered could not be recognized.");
+                    Coroutiner.CreateCoroutine(UIHelper.NotifyOfConnectingToRoomCancel_Main(0));
                     return;
                 }
                 connectState = ConnectionState.Connecting;

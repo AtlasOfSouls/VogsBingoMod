@@ -1,36 +1,26 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
-using Newtonsoft.Json;
 
 namespace VogsBingoMod.Automarking
 {
-    public class SaveDataBitmask
+    internal class SaveDataBitmask
     {
-        public string Name;
-        public uint bitmask = 0;
-        public AutomarkIntValue[] AutomarkValues {get; private set;}
+        internal string Name;
+        internal AutomarkIntValue[] AutomarkValues {get; private set;}
         internal void AddFlag(uint flag)
         {
-            bitmask = bitmask | flag;
-            this.CheckForAutomarks();
+            uint newValue = (uint)(this.GetValue()) | flag;
+            this.SetValue((int)newValue);
         }
-        public SaveDataBitmask(AutomarkIntValue[] AutomarkValues, string Name)
+        internal SaveDataBitmask(AutomarkIntValue[] AutomarkValues, string Name)
         {
             this.Name = Name;
             this.AutomarkValues = AutomarkValues;
-        }
-
-        [JsonConstructor]
-        public SaveDataBitmask(AutomarkIntValue[] AutomarkValues, string Name, uint bitmask)
-        {
-            this.Name = Name;
-            this.AutomarkValues = AutomarkValues;
-            this.bitmask = bitmask;
         }
 
         internal void ResetFlags()
         {
-            this.bitmask = 0;
+            this.SetValue(0);
         }
 
         void CheckForAutomarks()
@@ -39,12 +29,36 @@ namespace VogsBingoMod.Automarking
             int flagCount = 0;
             for (int i = 0; i < bitCount; i++)
             {
-                if((uint)(this.bitmask & (1 << i)) > 0)
+                if((uint)(this.GetValue() & (1 << i)) > 0)
                 {
                     flagCount++;
                 }
             }
             Automarker.CheckIfGoalsCompleted(AutomarkValues, flagCount);
+        }
+
+        internal int GetValue()
+        {
+            return SceneData.instance.PersistentInts.GetValueOrDefault(VogsBingoModPlugin.PersistentName, this.Name);
+        }
+
+        internal void SetValue(int value)
+        {
+            if (SceneData.instance.PersistentInts.TryGetValue(VogsBingoModPlugin.PersistentName, this.Name, out PersistentItemData<int> persistent))
+            {
+                persistent.Value = value;
+            } else
+            {
+                PersistentItemData<int> newPersistent = new PersistentItemData<int>
+                {
+                    SceneName = VogsBingoModPlugin.PersistentName,
+                    ID = this.Name,
+                    IsSemiPersistent = false,
+                    Value = value
+                };
+                SceneData.instance.PersistentInts.SetValue(newPersistent);
+            }
+            this.CheckForAutomarks();
         }
     }
 }

@@ -2,28 +2,39 @@
 /// © 2026 AtlasOfSouls
 namespace VogsBingoMod.Automarking
 {
-    public class SaveDataBool
+    internal class SaveDataBool
     {
-        internal const bool defaultValue = false;
-        internal bool _value = defaultValue;
-        public bool Value {get=>_value; set{_value = value;VogsBingoModPlugin.LogInfo($"Updated value {Name} to {_value}."); Automarker.CheckIfGoalsCompleted(this.GoalIDs);}}
-        public GoalID[] GoalIDs;
-        public string Name {get; private set;}
+        internal bool Value {get=> this.GetValue(); set{SetValue(value);}}
+        internal GoalID[] GoalIDs;
+        internal string Name {get; private set;}
         public static implicit operator bool(SaveDataBool data) => data.Value;
         internal SaveDataBool(GoalID[] GoalIDs, string Name)
         {
             this.GoalIDs = GoalIDs;
             this.Name = Name;
         }
-        public SaveDataBool(GoalID[] GoalIDs, string Name, bool Value)
+        internal bool GetValue()
         {
-            this._value = Value;
-            this.GoalIDs = GoalIDs;
-            this.Name = Name;
+            return SceneData.instance.PersistentBools.GetValueOrDefault(VogsBingoModPlugin.PersistentName, this.Name);
         }
-        internal void ResetToDefault()
+
+        internal void SetValue(bool value)
         {
-            this.Value = false;
+            if (SceneData.instance.PersistentBools.TryGetValue(VogsBingoModPlugin.PersistentName, this.Name, out PersistentItemData<bool> persistent))
+            {
+                persistent.Value = value;
+            } else
+            {
+                PersistentItemData<bool> newPersistent = new PersistentItemData<bool>
+                {
+                    SceneName = VogsBingoModPlugin.PersistentName,
+                    ID = this.Name,
+                    IsSemiPersistent = false,
+                    Value = value
+                };
+                SceneData.instance.PersistentBools.SetValue(newPersistent);
+            }
+            Automarker.CheckIfGoalsCompleted(this.GoalIDs);
         }
     }
 }

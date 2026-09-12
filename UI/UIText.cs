@@ -22,7 +22,7 @@ namespace VogsBingoMod.UI
         {
             if (textComponent != null && textComponent.font == null)
             {
-                textComponent.font = FontHandler.GetFont("ARIAL");
+                textComponent.font = FontHandler.GetFont("LegacyRuntime");
             }
         }
     }

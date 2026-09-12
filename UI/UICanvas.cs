@@ -145,7 +145,7 @@ namespace VogsBingoMod.UI
             VogsBingoModPlugin.LogInfo($"The room link that was entered was: {roomUrlInputField?.GetText()}");
             if (NetworkHandler.CanConnectToRoom && roomUrlInputField != null && nicknameInputField != null && passwordInputField != null)
             {
-                NetworkHandler.JoinRoom(roomUrlInputField.GetText(), nicknameInputField.GetText(), passwordInputField.GetText());
+                NetworkHandler.JoinRoom(roomUrlInputField.GetText().Trim(), nicknameInputField.GetText().Trim(), passwordInputField.GetText());
             }
         }
 
