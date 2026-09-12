@@ -913,7 +913,7 @@ namespace VogsBingoMod.Automarking
             SaveData.ExtraMasks.Value = PlayerData.instance.CurrentMaxHealth - 5;
         }
 
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(CollectableItemPickup),nameof(CollectableItemPickup.DoPickupAction))]
         static void ItemPickupPatch(CollectableItemPickup __instance, bool __result)
         {
