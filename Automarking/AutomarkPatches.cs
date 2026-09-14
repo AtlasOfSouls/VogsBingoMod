@@ -475,9 +475,6 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.EnemyNameGarmondZaza:
                     Automarker.MarkIfAvailable(GoalID.GarmondandZaza);
                     break;
-                case GoalHelper.EnemyNamePilgrimPouncer when IsScene("Bone_09"):
-                    Automarker.MarkIfAvailable(GoalID.KillPebb);
-                    break;
                 default:
                     break;
             }
@@ -1271,6 +1268,16 @@ namespace VogsBingoMod.Automarking
                 {
                     Automarker.MarkIfAvailable(GoalID.OpentheCitadelSpaEastDoor);
                 }
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(HealthManager),nameof(HealthManager.Die), [typeof(float?), typeof(AttackTypes),typeof(NailElements),typeof(GameObject),typeof(bool),typeof(float),typeof(bool),typeof(bool)])]
+        static void DeathPatch(HealthManager __instance)
+        {
+            if (IsScene("Bone_09") && __instance.name.Equals(GoalHelper.EnemyNamePilgrimPouncer))
+            {
+                Automarker.MarkIfAvailable(GoalID.KillPebb);
             }
         }
         
