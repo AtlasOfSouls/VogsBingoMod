@@ -652,7 +652,7 @@ namespace VogsBingoMod.Automarking
             if (IsScene("Coral_42") && !__instance.Item.name.Equals("Rosary_Set_Small"))
             {
                 Automarker.MarkIfAvailable(GoalID.BuyFromGrindleNoString);
-                if (__instance.Item.name == GoalHelper.ShopItemNameGrindleSpoolFrag)
+                if (__instance.Item.name == GoalHelper.ItemNamePsalmCylinderGrindle)
                 {
                     SaveData.PsalmCylinders.Value++;
                 }
@@ -954,7 +954,7 @@ namespace VogsBingoMod.Automarking
                 case GoalHelper.ItemNameHereticKey:
                     Automarker.MarkIfAvailable(GoalID.KeyofHeretic);
                     break;
-                case GoalHelper.ItemNamePsalmCylinderLibraryRoof: case GoalHelper.ItemNamePsalmCylinderCardinius: case GoalHelper.ItemNamePsalmCylinderHighHalls: case GoalHelper.ItemNamePsalmCylinderUnderworks:
+                case GoalHelper.ItemNamePsalmCylinderLibraryRoof: case GoalHelper.ItemNamePsalmCylinderCardinius: case GoalHelper.ItemNamePsalmCylinderHighHalls: case GoalHelper.ItemNamePsalmCylinderUnderworks: case GoalHelper.ItemNameSacredCylinder:
                     SaveData.PsalmCylinders.Value++;
                     break;
                 case GoalHelper.ItemNameMemoryLocket when IsScene("Crawl_09"):
