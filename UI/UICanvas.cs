@@ -9,6 +9,7 @@ namespace VogsBingoMod.UI
 {
     internal class UICanvas : MonoBehaviour
     {
+        const string infoTextString = "How to Use VOG'S BINGO MOD\n\nTo use the bingo mod, you need to create a bingo room. There is a brief guide to using BingyFlea (a discord bot that makes rooms for you) on youtube titled \"How to Set up Silksong Bingo\".\n\nOnce you have the room link, you put it the room link field as well as your nickname and password (The default password is \"fast\").\n\nYou can change the board opacity, show/hide this mod's UI, and reveal the board with keybinds that can be set in options->mods->Vogs Bingo Mod. If you don't have that menu, you may need to install the ModMenu mod or use a different way of changing BepInEx configs.\nThe config also has options for sound cues and UI size, so make sure to check those out as well.\n\nLastly, when you've revealed a bingo board, if a goal doesn't mark automatically, you can click the goal to manually mark it. Goals that end with \"(M)\" will always need to be marked manually.\n\nHave fun playing Bingo!\n\n(Click this box or the \"How to Use\" button to close the How to Use information)";
         const int goalSpacing = 110;
         const int goalsXOffset = 90;
         const int goalsYOffset = -10;
@@ -24,6 +25,7 @@ namespace VogsBingoMod.UI
         internal UIButton? revealHandModeButton;
         internal UIButton? joinRoomButton;
         internal UIButton? exitRoomButton;
+        internal UIButton? infoButton;
         internal UITextInput? roomUrlInputField;
         internal UITextInput? nicknameInputField;
         internal UITextInput? passwordInputField;
@@ -31,6 +33,7 @@ namespace VogsBingoMod.UI
         internal UIText? loadingCardText;
         internal UIText? errorText;
         internal UIText? connectingErrorText;
+        internal UIButton? infoText;
         internal GameObject? connectionPendingIcon;
         internal List<Dropdown.OptionData> bingosyncColorOptions;
         internal List<Dropdown.OptionData> caravanColorOptions;
@@ -94,6 +97,10 @@ namespace VogsBingoMod.UI
             this.nicknameInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "NicknameInput", "Enter your nickname...", 0, -180, startingText: VogsBingoModPlugin.instance.nameAutofill.Value);
             this.passwordInputField = UIHelper.CreateUITextInput(this.joinRoomButton.gameObject.transform, "PasswordInput", "Enter the room password...", 0, -260, true, VogsBingoModPlugin.instance.passwordAutofill.Value);
             UIHelper.SetupJoinRoomFieldNavigation();
+            this.infoButton = UIHelper.CreateUIButton(joinRoomButton.gameObject.transform, "InfoButton", ToggleInfoText, null, "How to Use", 59, -325, width: 300, height: 50);
+            this.infoText = UIHelper.CreateUIButton(UICanvas.GetInstance().transform, "InformationText", ToggleInfoText, null, infoTextString, width: 1000, height: 1000);
+            this.infoText.transform.GetChild(0).gameObject.GetComponent<Text>().alignment = TextAnchor.MiddleLeft;
+            this.ToggleInfoText();
             bingosyncColorOptions = new List<Dropdown.OptionData>();
             caravanColorOptions = new List<Dropdown.OptionData>();
             for (int i = 0; i < defaultcolorOptions; i++)
@@ -305,6 +312,14 @@ namespace VogsBingoMod.UI
             }
         }
 
+        internal void CloseInfoTextIfOpen()
+        {
+            if (infoText != null && infoText.gameObject.activeSelf)
+            {
+                infoText.gameObject.SetActive(false);
+            }
+        }
+
         float GetUIScaleFromConfig() =>(VogsBingoModPlugin.UIScaleOptions)VogsBingoModPlugin.instance.uiScaleConfig.BoxedValue
         switch
         {
@@ -337,6 +352,14 @@ namespace VogsBingoMod.UI
             uiGoals = newGoals;
             this.connectionPendingIcon?.GetComponent<RectTransform>().anchoredPosition = Vector2.right * (-goalSpacing * boardSize) + Vector2.up * 25;
             HideGoals();
+        }
+
+        void ToggleInfoText()
+        {
+            if (infoText != null)
+            {
+                infoText.gameObject.SetActive(!infoText.gameObject.activeSelf);
+            }
         }
     }
 }

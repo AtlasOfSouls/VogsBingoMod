@@ -66,6 +66,7 @@ namespace VogsBingoMod.UI
         {
             yield return null;
             uiCanvas.joinRoomButton?.gameObject.SetActive(false);
+            uiCanvas.CloseInfoTextIfOpen();
         }
 
         internal static IEnumerator NotifyOfConnectingToRoomCancel_Main(int errorCode = 0)
@@ -253,7 +254,7 @@ namespace VogsBingoMod.UI
             SetupImageComponent(newObj, TextureHandler.standardBackgroundName, width, height);
             UIButton buttonComponent = newObj.AddComponent<UIButton>();
             buttonComponent.SetupCallbacks(leftClickCallback, rightClickCallback);
-            CreateUIText(newObj.transform, $"{objName}Text", displayText, defaultButtonFontSize, width: newObj.GetComponent<RectTransform>().rect.width);
+            CreateUIText(newObj.transform, $"{objName}Text", displayText, defaultButtonFontSize, width: width - 20, height: height);
             return buttonComponent;
         }
 
