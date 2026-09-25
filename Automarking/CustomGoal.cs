@@ -20,7 +20,7 @@ namespace VogsBingoMod.Automarking
 
         /// <summary>
         /// Creates and registers a new bingo goal by name that can be marked by triggering Mark(), allowing for custom implementations.
-        /// Will not work if the given goal name already has automarking support.
+        /// Will not work if the given goal name (case insensitive) already has automarking support.
         /// </summary>
         /// <param name="goalName">The name of the goal that will be automatically marked.</param>
         /// <returns>Returns the resulting CustomGoal object if registration is successful. Returns null and prints the error if one occurs, such as the goal already having automarking support.</returns>
@@ -31,7 +31,7 @@ namespace VogsBingoMod.Automarking
                 return new CustomGoal(goalName);
             } catch (Exception e)
             {
-                VogsBingoModPlugin.LogError(e);
+                VogsBingoModPlugin.LogError(e.Message);
                 return null;
             }
         }

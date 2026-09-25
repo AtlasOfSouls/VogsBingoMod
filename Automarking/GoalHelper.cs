@@ -141,6 +141,7 @@ namespace VogsBingoMod.Automarking
         static Dictionary<string, int> nameToID = GenerateNameToIDs();
         internal static int RegisterCustomGoal(string goalName)
         {
+            goalName = goalName.ToLower();
             if (!nameToID.ContainsKey(goalName))
             {
                 int newGoalID = idToName.Count;
@@ -162,6 +163,11 @@ namespace VogsBingoMod.Automarking
                 VogsBingoModPlugin.LogError($"Could not find a goal ID for goal: \"{goalName}\"");
                 return -1;
             }
+        }
+
+        internal static bool HasRegisteredGoal(string goalName)
+        {
+            return nameToID.ContainsKey(goalName);
         }
 
         static Dictionary<string, int> GenerateNameToIDs()

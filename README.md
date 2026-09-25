@@ -2,7 +2,7 @@
 This mod adds a Bingo gamemode to Silksong, where you'll have small tasks to complete on a grid of squares (e.g. "Complete 7 wishes" or "Defeat Skull Tyrant").
 
 You and others can join a Bingo room, which then allows you to track which goals have been completed. There are many ways to play, such as first to three lines, lockout, or a co-op blackout.  
-If you use the custom-made set of goals maintained by the Silksong Bingo community, the mod will also automatically mark squares as you complete them. Goals outside this set will be listed with an (M) for "manual mark", which you will have to click yourself by clicking on the square.
+If you use the custom-made set of goals maintained by the Silksong Bingo community, the mod will also automatically mark squares as you complete them. Goals outside this set will be listed with an (M) for "manual mark", which you will have to click yourself by clicking on the square. Goals that automark due to other add-on mods will have a * symbol at the end of them.
 
 # Keybinds
 B: Shows or hides the current UI. Helpful for only showing the board (or hiding it completely) during gameplay.  

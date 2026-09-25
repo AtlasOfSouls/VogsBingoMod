@@ -44,9 +44,11 @@ namespace VogsBingoMod.Automarking
                     {
                         goalNames[i] = $"{goalNames[i]} (U)";
                     }
+                } else if (GoalHelper.HasRegisteredGoal(goalStr))
+                {
+                    goalNames[i] = $"{goalNames[i]}*";
                 } else
                 {
-                    //TODO: add a check that runs through the custom goals and annotates off of that
                     goalNames[i] = $"{goalNames[i]} (M)";
                 }
             }
