@@ -20,6 +20,15 @@ If you have any questions or are interested in seeing more about Silksong Bingo,
 
 You can also ask in the discord if you find any bugs, or if you want to make additions/suggestions!
 
+# Adding Custom Goals  
+Modders can add their own automarking support for goals in their own mods!  
+To set up the dependencies, follow these steps:  
+1. Go to your .csproj file and add the nuget package by adding `<PackageReference Include="Silksong.VogsBingoMod" Version="1.4.0"/>`, preferably with whatever the latest version is at the time.  
+2. Add the dependency to your thunderstore.toml: `AtlasOfSouls-VogsBingoMod = "1.4.0"`  
+3. Lastly, add this line into your plugin class below the BepInAutoPlugin attribute: `[BepInDependency(Silksong.VogsBingoMod.VogsBingoModPlugin.Id)]`  
+
+Once you have this set up, you can register a custom goal by using `CustomGoal.Create(string goalName)` which will return a `CustomGoal` object that can be marked on the board by calling `myCustomGoalObject.TryMark()`. The goal will be registered by name, and all goals on the board with the given name will be marked when `TryMark()` is called.
+
 Credits:  
 Abby, for curating the goalset and hosting caravan  
 Bingosync, for hosting the servers that the mod connects to  

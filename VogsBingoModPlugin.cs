@@ -8,7 +8,6 @@ using HarmonyLib;
 using VogsBingoMod.Automarking;
 using VogsBingoMod.UI;
 using UnityEngine;
-using System.Diagnostics.CodeAnalysis;
 
 namespace VogsBingoMod;
 

@@ -11,8 +11,8 @@ namespace VogsBingoMod.Automarking
     internal class Automarker : MonoBehaviour
     {
         static float currentTimer = 1;
-        static Dictionary<string, bool> supportedGoals = GetSupportedGoals();
-        static Dictionary<int, int> currentGoals = new Dictionary<int, int>();
+        static Dictionary<string, bool> nativeSupportedGoals = GetNativeSupportedGoals();
+        static Dictionary<int, List<int>> currentGoals = new Dictionary<int, List<int>>();
 
         internal static void SetGoalNames(string[] goalNames)
         {
@@ -24,7 +24,12 @@ namespace VogsBingoMod.Automarking
                 {
                     key = -i - 1;
                 }
-                currentGoals.Add(key, i);
+                if (currentGoals.ContainsKey(key))
+                {
+                    currentGoals[key].Add(i);
+                } else {
+                    currentGoals.Add(key, [i]);
+                }
             }
         }
 
@@ -33,7 +38,7 @@ namespace VogsBingoMod.Automarking
             for (int i = 0; i < goalNames.Length; i++)
             {
                 string goalStr = goalNames[i].ToLower();
-                if (supportedGoals.TryGetValue(goalStr, out bool supported))
+                if (nativeSupportedGoals.TryGetValue(goalStr, out bool supported))
                 {
                     if (!supported)
                     {
@@ -41,6 +46,7 @@ namespace VogsBingoMod.Automarking
                     }
                 } else
                 {
+                    //TODO: add a check that runs through the custom goals and annotates off of that
                     goalNames[i] = $"{goalNames[i]} (M)";
                 }
             }
@@ -57,13 +63,34 @@ namespace VogsBingoMod.Automarking
             return BoardHasGoal((int)goalID);
         }
 
-        internal static void MarkIfAvailable(int goalID)
+        /// Returns true if the mark should succeed, false otherwise
+        internal static bool MarkIfAvailable(int goalID, bool debug = false)
         {
+            if (UICanvas.GetInstance().revealCardButton == null)
+            {
+                VogsBingoModPlugin.LogError("Failed to mark a goal because the reveal card button does not exist.");
+                return false;
+            }
             if (BoardHasGoal(goalID))
             {
-                UIHelper.MarkIfUnmarkedGoal(currentGoals[goalID]);
+                if (debug)
+                {
+                    VogsBingoModPlugin.LogInfo($"Goal ID {goalID} was found on the board at slot number {currentGoals[goalID]} (0 indexed).");
+                }
+                bool flag = true;
+                foreach (int slotIndex in currentGoals[goalID])
+                {
+                    if (!UIHelper.MarkIfUnmarkedGoal(slotIndex, debug))
+                    {
+                        flag = false;
+                    }
+                }
+                return flag;
+            } else if (debug)
+            {
+                VogsBingoModPlugin.LogInfo($"Goal ID {goalID} was not found on the board.");
             }
-            return;
+            return false;
         }
 
         internal static void MarkIfAvailable(GoalID goalID)
@@ -82,10 +109,10 @@ namespace VogsBingoMod.Automarking
             return Encoding.UTF8.GetString(bytes);
         }
 
-        static Dictionary<string, bool> GetSupportedGoals()
+        static Dictionary<string, bool> GetNativeSupportedGoals()
         {
             string json = GetGoalsJson();
-            return JsonHelper.GetSupportedGoals(json);
+            return JsonHelper.GetNativeSupportedGoals(json);
         }
 
         internal static void UpdateSilkSkills()

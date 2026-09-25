@@ -137,8 +137,22 @@ namespace VogsBingoMod.Automarking
         internal const string ItemNamePsalmCylinderCardinius = "Psalm Cylinder Librarian";
         internal const string ItemNameSacredCylinder = "Librarian Melody Cylinder";
         internal const string ItemNameMemoryLocket = "Crest Socket Unlocker";
-        static string[] idToName = GetEmbeddedGoals();
+        static List<string> idToName = GetEmbeddedGoals();
         static Dictionary<string, int> nameToID = GenerateNameToIDs();
+        internal static int RegisterCustomGoal(string goalName)
+        {
+            if (!nameToID.ContainsKey(goalName))
+            {
+                int newGoalID = idToName.Count;
+                idToName.Add(goalName);
+                nameToID.Add(goalName, newGoalID);
+                return newGoalID;
+            } else
+            {
+                throw new Exception($"Failed to register custom goal: \"{goalName}\". A custom goal has already been registered with that name.");
+            }
+        }
+        
         internal static int NameToID(string goalName)
         {
             try{
@@ -153,14 +167,14 @@ namespace VogsBingoMod.Automarking
         static Dictionary<string, int> GenerateNameToIDs()
         {
             Dictionary<string, int> nameToID = new Dictionary<string, int>();
-            for (int i = 0; i < idToName.Length; i++)
+            for (int i = 0; i < idToName.Count; i++)
             {
                 nameToID.Add(idToName[i].ToLower(), i);
             }
             return nameToID;
         }
 
-        static string[] GetEmbeddedGoals()
+        static List<string> GetEmbeddedGoals()
         {
             string json;
             try{

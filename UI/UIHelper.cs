@@ -344,17 +344,22 @@ namespace VogsBingoMod.UI
             NetworkHandler.MarkGoal(slotIndex, remove, GoalColors.MyColorName);
         }
 
-        internal static void MarkIfUnmarkedGoal(int slotIndex)
+        /// Returns true if the marks should succeed, false otherwise
+        internal static bool MarkIfUnmarkedGoal(int slotIndex, bool debug = false)
         {
-            if (uiCanvas.revealCardButton == null)
-            {
-                VogsBingoModPlugin.LogInfo("the reveal card button was null");
-                return;
-            }
             if (uiCanvas.CanMarkGoals && !uiCanvas.HasColor(slotIndex, GoalColors.myColorID))
             {
+                if (debug)
+                {
+                    VogsBingoModPlugin.LogInfo($"Slot number {slotIndex} is marking as color {GoalColors.IDToName(GoalColors.myColorID)}.");
+                }
                 UIHelper.MarkGoal(slotIndex, false);
+                return true;
+            } else if (debug)
+            {
+                VogsBingoModPlugin.LogInfo($"Slot number {slotIndex} could not be marked, either due to marking being disabled or the player's color is already present.");
             }
+            return false;
         }
 
         internal static void UpdateUIScale()

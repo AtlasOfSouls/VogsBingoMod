@@ -65,17 +65,17 @@ namespace VogsBingoMod
             return $"{{\"room\": \"{roomCode}\"}}";
         }
 
-        internal static string[] GetGoalNamesFromJson(string json)
+        internal static List<string> GetGoalNamesFromJson(string json)
         {
-            string[] goalNames = GetSupportedGoals(json).Keys.ToArray();
-            for (int i = 0; i < goalNames.Length; i++)
+            List<string> goalNames = GetNativeSupportedGoals(json).Keys.ToList();
+            for (int i = 0; i < goalNames.Count; i++)
             {
                 goalNames[i] = goalNames[i].ToLower();
             }
             return goalNames;
         }
 
-        internal static Dictionary<string, bool> GetSupportedGoals(string json)
+        internal static Dictionary<string, bool> GetNativeSupportedGoals(string json)
         {
             Dictionary<string, bool> goals = new Dictionary<string, bool>();
             JsonSupportedGoal[]? jsonSupportedGoals = JsonConvert.DeserializeObject<JsonSupportedGoal[]>(json);
