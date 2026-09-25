@@ -1,3 +1,5 @@
+/// author: AtlasOfSouls
+/// © 2026 AtlasOfSouls
 using System;
 
 namespace VogsBingoMod.Automarking
