@@ -481,16 +481,6 @@ namespace VogsBingoMod.Automarking
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(CompleteJournalRecordV2),nameof(CompleteJournalRecordV2.OnEnter))]
-        static void JournalFullCompletePatch()
-        {
-            if (IsScene("Hang_14"))
-            {
-                Automarker.MarkIfAvailable(GoalID.DisabletheClawmaidens);
-            }
-        }
-
-        [HarmonyPrefix]
         [HarmonyPatch(typeof(PlayMakerNPC),nameof(PlayMakerNPC.OnStartingDialogue))]
         static void NPCDialogueStartPatch(PlayMakerNPC __instance)
         {
@@ -1278,6 +1268,17 @@ namespace VogsBingoMod.Automarking
             if (IsScene("Bone_09") && __instance.name.Equals(GoalHelper.EnemyNamePilgrimPouncer))
             {
                 Automarker.MarkIfAvailable(GoalID.KillPebb);
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(SetPlayerDataVariable),nameof(SetPlayerDataVariable.OnEnter))]
+        static void PlayerDataPatch(SetPlayerDataVariable __instance)
+        {
+            VogsBingoModPlugin.LogInfo($"player data variable set: {__instance.VariableName.Value}");
+            if (__instance.VariableName.Value.Equals("marionettesBurned"))
+            {
+                Automarker.MarkIfAvailable(GoalID.DisabletheClawmaidens);
             }
         }
         
