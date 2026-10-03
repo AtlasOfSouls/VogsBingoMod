@@ -680,9 +680,6 @@ namespace VogsBingoMod.Automarking
                     case "Tool Metal":
                         SaveData.Craftmetal.Value++;
                         break;
-                    case GoalHelper.ObjectNameSilkSpool:
-                        SaveData.SpoolFragments.Value++;
-                        break;
                     default:
                         break;
                 }
@@ -804,7 +801,6 @@ namespace VogsBingoMod.Automarking
                     }
                     break;
                 case GoalHelper.ObjectNameSilkSpool:
-                    SaveData.SpoolFragments.Value++;
                     switch (GetSceneName())
                     {
                         case "Bone_East_13":
@@ -1271,14 +1267,33 @@ namespace VogsBingoMod.Automarking
             }
         }
 
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(SetPlayerDataVariable),nameof(SetPlayerDataVariable.OnEnter))]
         static void PlayerDataPatch(SetPlayerDataVariable __instance)
         {
             VogsBingoModPlugin.LogInfo($"player data variable set: {__instance.VariableName.Value}");
-            if (__instance.VariableName.Value.Equals("marionettesBurned"))
+            VogsBingoModPlugin.LogInfo($"silk parts: {PlayerData.instance.silkParts}, silk max: {PlayerData.instance.silkMax}");
+            switch(__instance.VariableName.Value)
             {
-                Automarker.MarkIfAvailable(GoalID.DisabletheClawmaidens);
+                case "marionettesBurned":
+                    Automarker.MarkIfAvailable(GoalID.DisabletheClawmaidens);
+                    break;
+                case "silkSpoolParts":
+                    if (PlayerData.instance.silkMax >= 10)
+                    {
+                        Automarker.MarkIfAvailable(GoalID.OneSpoolUpgrade);
+                    }
+                    if (PlayerData.instance.silkMax >= 11)
+                    {
+                        Automarker.MarkIfAvailable(GoalID.TwoSpoolUpgrades);
+                    }
+                    if (PlayerData.instance.silkMax >= 12)
+                    {
+                        Automarker.MarkIfAvailable(GoalID.ThreeSpoolUpgrades);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         
