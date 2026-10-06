@@ -1271,8 +1271,6 @@ namespace VogsBingoMod.Automarking
         [HarmonyPatch(typeof(SetPlayerDataVariable),nameof(SetPlayerDataVariable.OnEnter))]
         static void PlayerDataPatch(SetPlayerDataVariable __instance)
         {
-            VogsBingoModPlugin.LogInfo($"player data variable set: {__instance.VariableName.Value}");
-            VogsBingoModPlugin.LogInfo($"silk parts: {PlayerData.instance.silkParts}, silk max: {PlayerData.instance.silkMax}");
             switch(__instance.VariableName.Value)
             {
                 case "marionettesBurned":

@@ -128,25 +128,25 @@ namespace VogsBingoMod
         {
             HttpResponseMessage markResponse = markTask.Result;
             CurrentHttpTasks.Remove(markTask);
-            bool flag = false;
-            try{
-            markResponse.EnsureSuccessStatusCode();
-            } catch (Exception){
-                flag = true;
-            }
             Task<string> readResponse = markResponse.Content.ReadAsStringAsync();
-            readResponse.ContinueWith(CheckForLockoutBlock, flag);
+            try
+            {
+                markResponse.EnsureSuccessStatusCode();
+                readResponse.ContinueWith(LogComplete);
+            } catch (Exception)
+            {
+                readResponse.ContinueWith(CheckForLockoutBlock);
+            }
         }
 
-        static void CheckForLockoutBlock(Task<string> task, object data)
+        static void CheckForLockoutBlock(Task<string> task)
         {
-            bool failedToMark = (bool)data;
             string result = task.Result;
             task.Dispose();
-            if (failedToMark && !result.Equals("Blocked by Lockout"))
+            if (!result.Equals("Blocked by Lockout"))
             {
                 Coroutiner.CreateCoroutine(UIHelper.TriggerErrorText_Main());
-            } else if (failedToMark)
+            } else
             {
                 VogsBingoModPlugin.LogInfo("Mark was blocked by lockout.");
             }
