@@ -17,6 +17,7 @@ namespace VogsBingoMod.UI
             if (currentColorIDs.BinarySearch(colorID) < 0){
                 currentColorIDs.Add(colorID);
                 currentColorIDs.Sort();
+                VogsBingoModPlugin.LogInfo($"Refreshing colors for a goal");
                 RefreshColors();
             }
         }
@@ -69,7 +70,9 @@ namespace VogsBingoMod.UI
                     Texture.SetPixel(i, j, GoalColors.colorsList[currentColorIDs[colorIndex]]);
                 }
             }
-            Texture.Apply();
+            VogsBingoModPlugin.LogInfo($"About to apply the texture change.");
+            Texture.Apply(false);
+            VogsBingoModPlugin.LogInfo($"Done applying the texture change.");
         }
     }
 }

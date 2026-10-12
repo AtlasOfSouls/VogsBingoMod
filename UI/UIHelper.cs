@@ -106,6 +106,7 @@ namespace VogsBingoMod.UI
             {
                 uiCanvas.UnmarkGoal(colorID, slotIndex);
             } else {
+                VogsBingoModPlugin.LogInfo($"Updating goal UI for slot {slotIndex} with color number {colorID}");
                 uiCanvas.MarkGoal(colorID, slotIndex);
             }
         }

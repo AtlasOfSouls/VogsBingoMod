@@ -35,6 +35,7 @@ namespace VogsBingoMod
         static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         static float timer = 0;
         internal static RoomType roomType {get; private set;} = RoomType.Bingosync;
+        static Task<WebSocketReceiveResult>? testWSTask = null;
 
         internal static void Update()
         {
@@ -112,6 +113,7 @@ namespace VogsBingoMod
                 string goalMarkJson = JsonHelper.CreateGoalMarkJson(slotIndex+1, roomCode, color, remove, roomType);
                 StringContent postReqContent = new StringContent(goalMarkJson, Encoding.UTF8, "application/json");
                 try{
+                    VogsBingoModPlugin.LogInfo($"Sending a mark post request");
                     Task<HttpResponseMessage>? markTask = SendPostRequest($"https://{domainName}.com/api/select", postReqContent, true);
                     if (markTask != null)
                     {
@@ -132,6 +134,7 @@ namespace VogsBingoMod
             try
             {
                 markResponse.EnsureSuccessStatusCode();
+                VogsBingoModPlugin.LogInfo("Mark completed successfully.");
                 readResponse.ContinueWith(LogComplete);
             } catch (Exception)
             {
@@ -348,6 +351,7 @@ namespace VogsBingoMod
 
         static void ReceiveWSMessage(Task<WebSocketReceiveResult> wsTask)
         {
+            VogsBingoModPlugin.LogInfo($"Received a WS message, status: {wsTask.Status}");
             WebSocketReceiveResult result = wsTask.Result;
             if (result.MessageType == WebSocketMessageType.Text)
             {
@@ -369,6 +373,7 @@ namespace VogsBingoMod
             {
                 try{
                     wsTask = webSocketClient.ReceiveAsync(receivedWebSocketMessage, cancellationTokenSource.Token);
+                    testWSTask = wsTask;
                     wsTask.ContinueWith(ReceiveWSMessage);
                 } catch (Exception e)
                 {
@@ -397,6 +402,7 @@ namespace VogsBingoMod
             {
                 VogsBingoModPlugin.LogError(e);
             }
+            VogsBingoModPlugin.LogInfo("Done handling goal mark message. UI updates will happen next frame.");
         }
 
         static void HandleNewCardMessage()
