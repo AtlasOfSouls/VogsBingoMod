@@ -1,5 +1,6 @@
 /// author: AtlasOfSouls
 /// © 2026 AtlasOfSouls
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,13 +39,12 @@ namespace VogsBingoMod.UI
         internal List<Dropdown.OptionData> bingosyncColorOptions;
         internal List<Dropdown.OptionData> caravanColorOptions;
         internal float currentScale {get; private set;}
-        internal float CurrentOpacity {get => opacityOptions[currentOpacityIndex];}
-        internal float CurrentTextOpacity {get => textOpacityOptions[currentOpacityIndex];}
+        internal float CurrentOpacity {get => opacityOptions[(int)VogsBingoModPlugin.instance.opacitySetting.Value];}
+        internal float CurrentTextOpacity {get => textOpacityOptions[(int)VogsBingoModPlugin.instance.opacitySetting.Value];}
         internal bool CanMarkGoals => (revealCardButton != null && !revealCardButton.gameObject.activeSelf) || (revealHandModeButton != null && !revealHandModeButton.gameObject.activeSelf);
         static UICanvas? instance;
         float[] opacityOptions = {1, 0.8f, 0.5f, 0.3f, 0.1f};
         float[] textOpacityOptions = {1, 1, 0.9f, 0.7f, 0.5f};
-        int currentOpacityIndex = 0;
         UIGoal[] uiGoals;
 
         internal static UICanvas GetInstance()
@@ -260,10 +260,17 @@ namespace VogsBingoMod.UI
 
         internal void CycleOpacity()
         {
-            currentOpacityIndex++;
-            if (currentOpacityIndex >= opacityOptions.Length){
-                currentOpacityIndex = 0;
+            int currentOpacity = (int)VogsBingoModPlugin.instance.opacitySetting.Value + 1;
+            if (currentOpacity >= Enum.GetValues(typeof(OpacityOptions)).Length)
+            {
+                currentOpacity = (int)OpacityOptions.Opaque;
             }
+            VogsBingoModPlugin.instance.opacitySetting.Value = (OpacityOptions)currentOpacity;
+            UpdateOpacity();
+        }
+
+        internal void UpdateOpacity()
+        {
             Image[] images = gameObject.GetComponentsInChildren<Image>(true);
             foreach (Image image in images)
             {

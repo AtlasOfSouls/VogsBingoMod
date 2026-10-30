@@ -26,6 +26,7 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     internal ConfigEntry<UIScaleOptions> uiScaleConfig;
     internal ConfigEntry<AudioVolume> teamMarkSoundsVolume;
     internal ConfigEntry<AudioVolume> opponentMarkSoundsVolume;
+    internal ConfigEntry<OpacityOptions> opacitySetting;
 
     internal enum UIScaleOptions
     {
@@ -77,24 +78,27 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
         instance = this;
         this.logger = Logger;
 
-        this.toggleUIVisibility = Config.Bind<KeyCode>("Keybinds","6: Toggle UI", KeyCode.B,"Cycles the currently active UI elements, allowing the user to show or hide the board as necessary.");
-        this.toggleUIOpacity = Config.Bind<KeyCode>("Keybinds","7: Toggle Opacity", KeyCode.O,"Changes how transparent the UI is over the game.");
-        this.revealBoardKeybind = Config.Bind<KeyCode>("Keybinds","8: Reveal Card", KeyCode.None,"Reveals the current bingo card.");
+        this.toggleUIVisibility = Config.Bind<KeyCode>("Keybinds","7: Toggle UI", KeyCode.B,"Cycles the currently active UI elements, allowing the user to show or hide the board as necessary.");
+        this.toggleUIOpacity = Config.Bind<KeyCode>("Keybinds","8: Toggle Opacity", KeyCode.O,"Changes how transparent the UI is over the game.");
+        this.revealBoardKeybind = Config.Bind<KeyCode>("Keybinds","9: Reveal Card", KeyCode.None,"Reveals the current bingo card.");
         this.uiScaleConfig = Config.Bind<UIScaleOptions>("UI Settings","5: UI Scale",UIScaleOptions.Default,"Change the size of the UI, such as the Bingo board.");
         this.nameAutofill = Config.Bind<string>("Autofill Options", "1: Default Name", "", "The nickname field for entering rooms will default to this value, helpful for reusing names.");
         this.passwordAutofill = Config.Bind<string>("Autofill Options", "2: Default Password", "fast", "The password field for entering rooms will default to this value. The default is \"fast\".");
         this.teamMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "3: Team Mark Sound Volume", AudioVolume.Medium, "Plays a sound when your color marks a goal.");
         this.opponentMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "4: Opponent Mark Sound Volume", AudioVolume.Medium, "Plays a sound when any color other than yours marks a goal.");
+        this.opacitySetting = Config.Bind<OpacityOptions>("UI Settings", "6: Opacity Level", OpacityOptions.Opaque, "The current opacity level of the UI.");
         uiScaleConfig.SettingChanged += UIScaleChanged;
         nameAutofill.SettingChanged += NameAutofillChanged;
         passwordAutofill.SettingChanged += PasswordAutofillChanged;
         teamMarkSoundsVolume.SettingChanged += TeamMarkVolumeChanged;
         opponentMarkSoundsVolume.SettingChanged += OpponentMarkVolumeChanged;
+        opacitySetting.SettingChanged += UpdateOpacity;
         Harmony harmony = new Harmony(Id);
         harmony.PatchAll();
 
         UIHelper.uiCanvas.FirstAwake();
         Coroutiner.Initialize();
+        UICanvas.GetInstance().UpdateOpacity();
     }
 
     void OnDisable()
@@ -133,5 +137,10 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     void OpponentMarkVolumeChanged(object sender, EventArgs args)
     {
         AudioHelper.Instance.PlayOpponentMarkSound(true);
+    }
+
+    void UpdateOpacity(object sender, EventArgs args)
+    {
+        UICanvas.GetInstance().UpdateOpacity();
     }
 }
