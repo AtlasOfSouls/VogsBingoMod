@@ -19,11 +19,11 @@
     {"name": "Have 3 Yellow Tools", "automarking_support": true},
     {"name": "Have 5 Yellow Tools", "automarking_support": true},
     {"name": "Have 2 of Each Tool Type", "automarking_support": true},
-    {"name": "Straight, Threefold, and Long Pin", "automarking_support": true},
+    {"name": "Straight, Threefold, & Long Pin", "automarking_support": true},
     {"name": "Dead Bug's Purse & a Silkeater", "automarking_support": true},
     {"name": "Barbed Bracelet & Fractured Mask", "automarking_support": true},
     {"name": "Magnetite Dice & Magnetite Brooch", "automarking_support": true},
-    {"name": "Compass, Pendant, Brooch", "automarking_support": true},
+    {"name": "Compass, Pendant & Brooch", "automarking_support": true},
     {"name": "Warding Bell & Claw Mirror", "automarking_support": true},
     {"name": "Warding Bell & Sawtooth Circlet", "automarking_support": true},
     {"name": "Magma Bell & Curveclaw", "automarking_support": true},
@@ -180,7 +180,7 @@
     {"name": "Obtain 4 Beast Shards", "automarking_support": true},
     {"name": "Obtain 5 Beast Shards", "automarking_support": true},
     {"name": "Bilewater Bellway", "automarking_support": true},
-    {"name": "Talk to Forge Daughter and Twelfth Architect", "automarking_support": true},
+    {"name": "Talk to Forge Daughter & Twelfth Architect", "automarking_support": true},
     {"name": "1 Cogheart Piece", "automarking_support": true},
     {"name": "2 Cogheart Pieces", "automarking_support": true},
     {"name": "Activate Second Sentinel", "automarking_support": true},
@@ -242,5 +242,6 @@
     {"name": "Upper Bilewater Flea", "automarking_support": true},
     {"name": "Talk to Grishkin and Gilly", "automarking_support": true},
     {"name": "Covetous Pilgrim Journal Entry", "automarking_support": true},
-    {"name": "Open the Citadel Spa East Door", "automarking_support": true}
+    {"name": "Open the Citadel Spa East Door", "automarking_support": true},
+    {"name": "Kill 2 Shardillards", "automarking_support": true}
 ]

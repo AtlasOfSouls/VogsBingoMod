@@ -99,6 +99,7 @@ namespace VogsBingoMod.Automarking
         internal static SaveDataInt VerdaniaFountainOrbs = new([new(){markValue = 5, goalToMark = GoalID.VerdaniaFountainOrbs}], "VerdaniaFountainOrbs");
         internal static SaveDataInt MementosObtained = new([new(){markValue = 2, goalToMark = GoalID.TwoMementos}], "MementosObtained");
         internal static SaveDataInt WoodWaspNestsBroken = new([new(){markValue = 3, goalToMark = GoalID.BreakThreeWoodWaspNests}], "WoodWaspNestsBroken");
+        internal static SaveDataInt ShardillardsKilled = new([new(){markValue = 1, goalToMark = GoalID.KillOneShardillard}, new(){markValue = 2, goalToMark = GoalID.KillTwoShardillards}], "ShardillardsKilled");
         internal static SaveDataBitmask ShakraLocations = new([new(){markValue = 5, goalToMark = GoalID.TalktoShakraatFiveLocations}], "ShakraLocations");
         internal static SaveDataBitmask RelicTypesObtained = new([new(){markValue = 4, goalToMark = GoalID.ObtainFourDifferentTypesofRelic}], "RelicTypesObtained");
         internal static SaveDataBitmask RelicTypesCurrentlyHeld = new([new(){markValue = 3, goalToMark = GoalID.HaveThreeDifferentTypesofRelic}], "RelicTypesCurrentlyHeld");

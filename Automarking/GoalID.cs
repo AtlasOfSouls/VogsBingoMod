@@ -247,6 +247,7 @@ namespace VogsBingoMod.Automarking
         UpperBilewaterFlea = 240,
         TalktoGrishkinandGilly = 241,
         CovetousPilgrimJournalEntry = 242,
-        OpentheCitadelSpaEastDoor = 243
+        OpentheCitadelSpaEastDoor = 243,
+        KillTwoShardillards = 244
     }
 }

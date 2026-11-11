@@ -13,6 +13,7 @@ namespace VogsBingoMod.UI
             this.ClearOptions();
             this.AddOptions(options);
             this.SetValueWithoutNotify(defaultValue);
+            UICanvas.GetInstance().UpdateOpacity();
         }
 
         internal int IsOpen()

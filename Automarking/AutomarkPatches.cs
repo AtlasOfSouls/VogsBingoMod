@@ -470,7 +470,7 @@ namespace VogsBingoMod.Automarking
                     Automarker.MarkIfAvailable(GoalID.DefeataBlackthreadedBoss);
                     break;
                 case GoalHelper.EnemyNameShardillard:
-                    Automarker.MarkIfAvailable(GoalID.KillOneShardillard);
+                    SaveData.ShardillardsKilled.Value++;
                     break;
                 case GoalHelper.EnemyNameGarmondZaza:
                     Automarker.MarkIfAvailable(GoalID.GarmondandZaza);
