@@ -27,7 +27,7 @@ namespace VogsBingoMod.UI
         const int defaultGoalHeight = 100;
         internal static UICanvas uiCanvas = UICanvas.GetInstance();
         internal static bool CanPlayGoalMarkSounds => uiCanvas.revealCardButton != null && !uiCanvas.revealCardButton.gameObject.activeSelf;
-        static VisibilityState visibilityState = VisibilityState.Everything;
+        internal static VisibilityState visibilityState = VisibilityState.Everything;
         internal enum VisibilityState
         {
             Everything,
@@ -154,12 +154,14 @@ namespace VogsBingoMod.UI
                     break;
                 case VisibilityState.JustBoard:
                     uiCanvas.boardObj.SetActive(false);
+                    uiCanvas.ShowHideTimerIfAllowed(false);
                     visibilityState = VisibilityState.Nothing;
                     break;
                 case VisibilityState.Nothing:
                     if (NetworkHandler.connectState == ConnectionState.Connected)
                     {
                         uiCanvas.boardObj.SetActive(true);
+                        uiCanvas.ShowHideTimerIfAllowed(true);
                         uiCanvas.exitRoomButton?.gameObject.SetActive(true);
                         visibilityState = VisibilityState.Everything;
                     } else

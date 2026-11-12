@@ -34,6 +34,7 @@ namespace VogsBingoMod.UI
         internal UIText? loadingCardText;
         internal UIText? errorText;
         internal UIText? connectingErrorText;
+        internal UIText? timerText;
         internal UIButton? infoText;
         internal GameObject? connectionPendingIcon;
         internal List<Dropdown.OptionData> bingosyncColorOptions;
@@ -42,10 +43,16 @@ namespace VogsBingoMod.UI
         internal float CurrentOpacity {get => opacityOptions[(int)VogsBingoModPlugin.instance.opacitySetting.Value];}
         internal float CurrentTextOpacity {get => textOpacityOptions[(int)VogsBingoModPlugin.instance.opacitySetting.Value];}
         internal bool CanMarkGoals => (revealCardButton != null && !revealCardButton.gameObject.activeSelf) || (revealHandModeButton != null && !revealHandModeButton.gameObject.activeSelf);
+        internal bool areGoalsVisible = false;
         static UICanvas? instance;
         float[] opacityOptions = {1, 0.8f, 0.5f, 0.3f, 0.1f};
         float[] textOpacityOptions = {1, 1, 0.9f, 0.7f, 0.5f};
         UIGoal[] uiGoals;
+        float currentTimerSegment = 0f;
+        float timerStartPoint;
+        float previousTimerAmount = 0f;
+        float previousGoalMarkTime = 0f;
+        bool isTimerPaused = true;
 
         internal static UICanvas GetInstance()
         {
@@ -99,6 +106,8 @@ namespace VogsBingoMod.UI
             UIHelper.SetupJoinRoomFieldNavigation();
             this.infoButton = UIHelper.CreateUIButton(joinRoomButton.gameObject.transform, "InfoButton", ToggleInfoText, null, "How to Use", 59, -325, width: 300, height: 50);
             this.infoText = UIHelper.CreateUIButton(UICanvas.GetInstance().transform, "InformationText", ToggleInfoText, null, infoTextString, width: 1000, height: 1000);
+            this.timerText = UIHelper.CreateUIText(boardObj.transform, "TimerText", "00:00:00\n00:00:00", 30, -830, 10, 400, 200, anchor: TextAnchor.MiddleRight);
+            this.ShowHideTimerIfAllowed(false);
             this.infoText.transform.GetChild(0).gameObject.GetComponent<Text>().alignment = TextAnchor.MiddleLeft;
             this.ToggleInfoText();
             bingosyncColorOptions = new List<Dropdown.OptionData>();
@@ -120,21 +129,38 @@ namespace VogsBingoMod.UI
             }
         }
 
+        internal void Update()
+        {
+            if (!isTimerPaused)
+            {
+                currentTimerSegment = Mathf.Abs(Time.realtimeSinceStartup - timerStartPoint);
+            }
+            string currentTime = TimeSpan.FromSeconds(Mathf.RoundToInt(previousTimerAmount + currentTimerSegment)).ToString();
+            string lastGoalMarkTime = TimeSpan.FromSeconds(Mathf.RoundToInt(previousGoalMarkTime)).ToString();
+            timerText?.textComponent.text = $"Last Goal Marked: {lastGoalMarkTime}\n Current: {currentTime}";
+        }
+
         internal void ShowGoals()
         {
             revealCardButton?.gameObject.SetActive(false);
+            this.ShowHideTimerIfAllowed(true);
             for (int i = 0; i < uiGoals.Length; i++)
             {
                 uiGoals[i].gameObject.SetActive(true);
             }
+            areGoalsVisible = true;
+            ShowHideTimerIfAllowed(true);
         }
 
         internal void HideGoals()
         {
+            this.ShowHideTimerIfAllowed(false);
             for (int i = 0; i < uiGoals.Length; i++)
             {
                 uiGoals[i].gameObject.SetActive(false);
             }
+            areGoalsVisible = false;
+            ShowHideTimerIfAllowed(false);
         }
 
         internal void OnSceneChange(Scene oldScene, Scene newScene)
@@ -222,6 +248,10 @@ namespace VogsBingoMod.UI
             NetworkHandler.SendRevealCardMessage();
             this.HideRevealCardButton();
             this.ShowGoals();
+            if (isTimerPaused && VogsBingoModPlugin.instance.startTimerOnReveal.Value)
+            {
+                this.StartStopTimer();
+            }
         }
 
         internal void RevealCardInHandMode()
@@ -327,6 +357,49 @@ namespace VogsBingoMod.UI
             }
         }
 
+        internal void ShowHideTimerIfAllowed(bool shouldShow)
+        {
+            if (VogsBingoModPlugin.instance.showTimer.Value && shouldShow && areGoalsVisible)
+            {
+                this.timerText?.gameObject.SetActive(true);
+            } else
+            {
+                this.timerText?.gameObject.SetActive(false);
+            }
+        }
+
+        internal void StartStopTimer()
+        {
+            if (isTimerPaused)
+            {
+                isTimerPaused = false;
+                timerStartPoint = Time.realtimeSinceStartup;
+            } else
+            {
+                previousTimerAmount += currentTimerSegment;
+                currentTimerSegment = 0f;
+                isTimerPaused = true;
+            }
+        }
+
+        internal void ResetTimer()
+        {
+            if (!isTimerPaused)
+            {
+                StartStopTimer();
+            }
+            currentTimerSegment = 0f;
+            previousTimerAmount = 0f;
+            previousGoalMarkTime = 0f;
+            timerText?.textComponent.text = "00:00:00";
+        }
+
+        internal void UpdateGoalMarkTime()
+        {
+            previousGoalMarkTime = previousTimerAmount + currentTimerSegment;
+
+        }
+
         float GetUIScaleFromConfig() =>(VogsBingoModPlugin.UIScaleOptions)VogsBingoModPlugin.instance.uiScaleConfig.BoxedValue
         switch
         {
@@ -357,7 +430,7 @@ namespace VogsBingoMod.UI
                 newGoals[i] = UIHelper.CreateUIGoal(this.boardObj.transform, $"Goal{i}", xPos, yPos, i);
             }
             uiGoals = newGoals;
-            this.connectionPendingIcon?.GetComponent<RectTransform>().anchoredPosition = Vector2.right * (-goalSpacing * boardSize) + Vector2.up * 25;
+            this.connectionPendingIcon?.GetComponent<RectTransform>().anchoredPosition = Vector2.right * (-goalSpacing * boardSize) + Vector2.up * -35;
             HideGoals();
         }
 

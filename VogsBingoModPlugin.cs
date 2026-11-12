@@ -21,6 +21,10 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     ConfigEntry<KeyCode> toggleUIVisibility;
     ConfigEntry<KeyCode> toggleUIOpacity;
     ConfigEntry<KeyCode> revealBoardKeybind;
+    ConfigEntry<KeyCode> startStopTimerKeybind;
+    ConfigEntry<KeyCode> resetTimer;
+    internal ConfigEntry<bool> startTimerOnReveal;
+    internal ConfigEntry<bool> showTimer;
     internal ConfigEntry<string> nameAutofill;
     internal ConfigEntry<string> passwordAutofill;
     internal ConfigEntry<UIScaleOptions> uiScaleConfig;
@@ -69,6 +73,14 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
             {
                 UIHelper.RevealCardPressed();
             }
+            if (Input.GetKeyDown(startStopTimerKeybind.Value))
+            {
+                UICanvas.GetInstance().StartStopTimer();
+            }
+            if (Input.GetKeyDown(resetTimer.Value))
+            {
+                UICanvas.GetInstance().ResetTimer();
+            }
         }
         NetworkHandler.Update();
     }
@@ -78,21 +90,26 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
         instance = this;
         this.logger = Logger;
 
-        this.toggleUIVisibility = Config.Bind<KeyCode>("Keybinds","7: Toggle UI", KeyCode.B,"Cycles the currently active UI elements, allowing the user to show or hide the board as necessary.");
-        this.toggleUIOpacity = Config.Bind<KeyCode>("Keybinds","8: Toggle Opacity", KeyCode.O,"Changes how transparent the UI is over the game.");
-        this.revealBoardKeybind = Config.Bind<KeyCode>("Keybinds","9: Reveal Card", KeyCode.None,"Reveals the current bingo card.");
-        this.uiScaleConfig = Config.Bind<UIScaleOptions>("UI Settings","5: UI Scale",UIScaleOptions.Default,"Change the size of the UI, such as the Bingo board.");
-        this.nameAutofill = Config.Bind<string>("Autofill Options", "1: Default Name", "", "The nickname field for entering rooms will default to this value, helpful for reusing names.");
-        this.passwordAutofill = Config.Bind<string>("Autofill Options", "2: Default Password", "fast", "The password field for entering rooms will default to this value. The default is \"fast\".");
-        this.teamMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "3: Team Mark Sound Volume", AudioVolume.Medium, "Plays a sound when your color marks a goal.");
-        this.opponentMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "4: Opponent Mark Sound Volume", AudioVolume.Medium, "Plays a sound when any color other than yours marks a goal.");
-        this.opacitySetting = Config.Bind<OpacityOptions>("UI Settings", "6: Opacity Level", OpacityOptions.Opaque, "The current opacity level of the UI.");
+        this.toggleUIVisibility = Config.Bind<KeyCode>("Keybinds","3.1: Toggle UI", KeyCode.B,"Cycles the currently active UI elements, allowing the user to show or hide the board as necessary.");
+        this.toggleUIOpacity = Config.Bind<KeyCode>("Keybinds","3.2: Toggle Opacity", KeyCode.O,"Changes how transparent the UI is over the game.");
+        this.revealBoardKeybind = Config.Bind<KeyCode>("Keybinds","3.3: Reveal Card", KeyCode.None,"Reveals the current bingo card.");
+        this.uiScaleConfig = Config.Bind<UIScaleOptions>("UI Settings","4.3: UI Scale",UIScaleOptions.Default,"Change the size of the UI, such as the Bingo board.");
+        this.nameAutofill = Config.Bind<string>("Autofill Options", "1.1: Default Name", "", "The nickname field for entering rooms will default to this value, helpful for reusing names.");
+        this.passwordAutofill = Config.Bind<string>("Autofill Options", "1.2: Default Password", "fast", "The password field for entering rooms will default to this value. The default is \"fast\".");
+        this.teamMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "2.1: Team Mark Sound Volume", AudioVolume.Medium, "Plays a sound when your color marks a goal.");
+        this.opponentMarkSoundsVolume = Config.Bind<AudioVolume>("Audio Options", "2.2: Opponent Mark Sound Volume", AudioVolume.Medium, "Plays a sound when any color other than yours marks a goal.");
+        this.opacitySetting = Config.Bind<OpacityOptions>("UI Settings", "4.1: Opacity Level", OpacityOptions.Opaque, "The current opacity level of the UI.");
+        this.showTimer = Config.Bind<bool>("UI Settings", "4.2: Show Timer", true, "Whether or not to display the timer when the board is visible.");
+        this.startStopTimerKeybind = Config.Bind<KeyCode>("Keybinds", "3.4: Start/Stop Timer", KeyCode.None, "Starts or stops the timer. Will work even if the timer is not visible.");
+        this.resetTimer = Config.Bind<KeyCode>("Keybinds", "3.5: Reset Timer", KeyCode.None, "Resets the timer.");
+        this.startTimerOnReveal = Config.Bind<bool>("Other", "5.1: Start Timer on Card Reveal", true, "Whether or not the timer automatically starts upon revealing the card. If the timer is already going, it continues.");
         uiScaleConfig.SettingChanged += UIScaleChanged;
         nameAutofill.SettingChanged += NameAutofillChanged;
         passwordAutofill.SettingChanged += PasswordAutofillChanged;
         teamMarkSoundsVolume.SettingChanged += TeamMarkVolumeChanged;
         opponentMarkSoundsVolume.SettingChanged += OpponentMarkVolumeChanged;
         opacitySetting.SettingChanged += UpdateOpacity;
+        showTimer.SettingChanged += UpdateTimerVisibility;
         Harmony harmony = new Harmony(Id);
         harmony.PatchAll();
 
@@ -142,5 +159,10 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     void UpdateOpacity(object sender, EventArgs args)
     {
         UICanvas.GetInstance().UpdateOpacity();
+    }
+
+    void UpdateTimerVisibility(object sender, EventArgs args)
+    {
+        UICanvas.GetInstance().ShowHideTimerIfAllowed(UICanvas.GetInstance().areGoalsVisible);
     }
 }

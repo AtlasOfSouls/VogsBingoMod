@@ -28,6 +28,7 @@ namespace VogsBingoMod.UI
             if (colorID == GoalColors.myColorID)
             {
                 AudioHelper.Instance.PlayTeamMarkSound();
+                UICanvas.GetInstance().UpdateGoalMarkTime();
             } else
             {
                 AudioHelper.Instance.PlayOpponentMarkSound();
