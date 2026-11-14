@@ -1020,7 +1020,6 @@ namespace VogsBingoMod.Automarking
         {
             if (!__instance.IsUnlocked)
             {
-                VogsBingoModPlugin.LogInfo($"Crest unlocked: {__instance.name}");
                 SaveData.Crests.Value++;
             }
         }

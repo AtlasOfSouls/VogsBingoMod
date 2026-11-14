@@ -17,7 +17,6 @@ namespace VogsBingoMod.UI
             if (currentColorIDs.BinarySearch(colorID) < 0){
                 currentColorIDs.Add(colorID);
                 currentColorIDs.Sort();
-                VogsBingoModPlugin.LogInfo($"Refreshing colors for a goal");
                 RefreshColors();
             }
         }

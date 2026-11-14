@@ -258,6 +258,10 @@ namespace VogsBingoMod.UI
         {
             this.revealHandModeButton?.gameObject.SetActive(false);
             UIHelper.CycleVisibility(UIHelper.VisibilityState.Nothing);
+            if (isTimerPaused && VogsBingoModPlugin.instance.startTimerOnAutomarkWithHidden.Value)
+            {
+                this.StartStopTimer();
+            }
         }
 
         internal void UnrevealCard()

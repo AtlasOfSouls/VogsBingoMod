@@ -7,7 +7,9 @@ If you use the custom-made set of goals maintained by the Silksong Bingo communi
 # Keybinds
 B: Shows or hides the current UI. Helpful for only showing the board (or hiding it completely) during gameplay.  
 O: Changes the opacity of the current UI. Helpful for being able to see both gameplay and the board at the same time.  
-(Unmapped): Reveals the current board, effectively starting the bingo. You can also click the button manually.  
+(Default Unmapped): Reveals the current board, effectively starting the bingo. You can also click the button manually.  
+(Default Unmapped): Starts or stops the timer, which is helpful for knowing how quickly you completed a bingo.  
+(Default Unmapped): Resets the timer.  
 (All of these can be remapped in the config options)
 
 

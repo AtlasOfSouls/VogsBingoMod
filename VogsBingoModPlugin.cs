@@ -24,6 +24,7 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     ConfigEntry<KeyCode> startStopTimerKeybind;
     ConfigEntry<KeyCode> resetTimer;
     internal ConfigEntry<bool> startTimerOnReveal;
+    internal ConfigEntry<bool> startTimerOnAutomarkWithHidden;
     internal ConfigEntry<bool> showTimer;
     internal ConfigEntry<string> nameAutofill;
     internal ConfigEntry<string> passwordAutofill;
@@ -31,6 +32,8 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
     internal ConfigEntry<AudioVolume> teamMarkSoundsVolume;
     internal ConfigEntry<AudioVolume> opponentMarkSoundsVolume;
     internal ConfigEntry<OpacityOptions> opacitySetting;
+    internal ConfigEntry<BingosyncDefaultColorOptions> defaultBingosyncColor;
+    internal ConfigEntry<CaravanDefaultColorOptions> defaultCaravanColor;
 
     internal enum UIScaleOptions
     {
@@ -103,6 +106,9 @@ public partial class VogsBingoModPlugin : BaseUnityPlugin
         this.startStopTimerKeybind = Config.Bind<KeyCode>("Keybinds", "3.4: Start/Stop Timer", KeyCode.None, "Starts or stops the timer. Will work even if the timer is not visible.");
         this.resetTimer = Config.Bind<KeyCode>("Keybinds", "3.5: Reset Timer", KeyCode.None, "Resets the timer.");
         this.startTimerOnReveal = Config.Bind<bool>("Other", "5.1: Start Timer on Card Reveal", true, "Whether or not the timer automatically starts upon revealing the card. If the timer is already going, it continues.");
+        this.startTimerOnAutomarkWithHidden = Config.Bind<bool>("Other", "5.2: Start Timer on Automark With Card Hidden", false, "Starts the timer when clicking automark with card hidden.");
+        this.defaultBingosyncColor = Config.Bind<BingosyncDefaultColorOptions>("Other", "5.3: Default Bingosync Color", BingosyncDefaultColorOptions.red, "The color that you will default to when joining a bingosync room.");
+        this.defaultCaravanColor = Config.Bind<CaravanDefaultColorOptions>("Other", "5.4: Default Caravan Color", CaravanDefaultColorOptions.hornet, "The color that you will default to when joining a caravan room.");
         uiScaleConfig.SettingChanged += UIScaleChanged;
         nameAutofill.SettingChanged += NameAutofillChanged;
         passwordAutofill.SettingChanged += PasswordAutofillChanged;

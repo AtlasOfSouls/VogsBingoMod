@@ -42,6 +42,7 @@ namespace VogsBingoMod.UI
             uiCanvas.exitRoomButton?.gameObject.SetActive(true);
             uiCanvas.SetDropdownOptions(roomType);
             GoalColors.SetMyColorToDefault(roomType);
+            uiCanvas.teamColorsDropdown?.SetValueWithoutNotify(GoalColors.GetDropdownColor(roomType));
         }
 
         internal static IEnumerator SetBoard_Main(string boardJson, RoomType roomType)
@@ -106,7 +107,6 @@ namespace VogsBingoMod.UI
             {
                 uiCanvas.UnmarkGoal(colorID, slotIndex);
             } else {
-                VogsBingoModPlugin.LogInfo($"Updating goal UI for slot {slotIndex} with color number {colorID}");
                 uiCanvas.MarkGoal(colorID, slotIndex);
             }
         }

@@ -329,10 +329,8 @@ namespace VogsBingoMod.Automarking
 
         internal static void CheckIfGoalCompleted(AutomarkIntValue markValue, int currentValue)
         {
-            VogsBingoModPlugin.LogInfo($"Checking if goal {markValue.goalToMark} is finished");
             if (currentValue >= markValue.markValue)
             {
-                VogsBingoModPlugin.LogInfo($"Goal {markValue.goalToMark} is finished, checking if the goal is on the board...");
                 MarkIfAvailable(markValue.goalToMark);
             }
         }

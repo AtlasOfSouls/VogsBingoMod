@@ -29,6 +29,41 @@ namespace VogsBingoMod.UI
         architect
     }
 
+    /// <summary>
+    /// This enum is for use with the default color config options, not for picking goal/team colors
+    /// </summary>
+    internal enum BingosyncDefaultColorOptions
+    {
+        pink,
+        red,
+        orange,
+        brown,
+        yellow,
+        green,
+        teal,
+        blue,
+        navy,
+        purple
+    }
+    
+    /// <summary>
+    /// This enum is for use with the default color config options, not for picking goal/team colors
+    /// </summary>
+    internal enum CaravanDefaultColorOptions
+    {
+        beastling,
+        hornet,
+        vespa,
+        scrounge,
+        sherma,
+        huntress,
+        gilly,  //The goat (again)
+        magnetite,
+        plasmium,
+        architect
+    }
+    
+
     internal static class GoalColors
     {
         internal const int BingosyncColorsFirstID = 1;
@@ -117,13 +152,47 @@ namespace VogsBingoMod.UI
 
         internal static void SetMyColorToDefault(RoomType roomType)
         {
+            myColorID = (int)GetDefaultColor(roomType);
+        }
+
+        internal static int GetDropdownColor(RoomType roomType)
+        {
             if (roomType == RoomType.Bingosync)
             {
-                myColorID = (int)GoalColorID.red;
+                return myColorID - BingosyncColorsFirstID;
+            } else if (roomType == RoomType.Caravan)
+            {
+                VogsBingoModPlugin.LogInfo($"{myColorID - CaravanColorsFirstID}");
+                return myColorID - CaravanColorsFirstID;
             } else
             {
-                myColorID = (int)GoalColorID.hornet;
+                return 0;
             }
         }
+
+        internal static GoalColorID GetDefaultColor(RoomType roomType)
+        {
+            if (roomType == RoomType.Bingosync)
+            {
+                return ConvertToGoalColorID(VogsBingoModPlugin.instance.defaultBingosyncColor.Value);
+            } else if (roomType == RoomType.Caravan)
+            {
+                return ConvertToGoalColorID(VogsBingoModPlugin.instance.defaultCaravanColor.Value);
+            } else
+            {
+                return GoalColorID.none;
+            }
+        }
+
+        internal static GoalColorID ConvertToGoalColorID(BingosyncDefaultColorOptions bingosyncColor)
+        {
+            return (GoalColorID)((int)(bingosyncColor) + BingosyncColorsFirstID);
+        }
+        
+        internal static GoalColorID ConvertToGoalColorID(CaravanDefaultColorOptions caravanColor)
+        {
+            return (GoalColorID)((int)(caravanColor) + CaravanColorsFirstID);
+        }
+        
     }
 }

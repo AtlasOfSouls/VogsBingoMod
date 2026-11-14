@@ -79,6 +79,7 @@ namespace VogsBingoMod
 
         internal static void SetMyColor(int newColorID)
         {
+            VogsBingoModPlugin.LogInfo("color set");
             if (connectState == ConnectionState.Connected)
             {
                 string switchColorJson = JsonHelper.CreateColorSwitchJson(newColorID, roomCode, roomType);
@@ -113,7 +114,6 @@ namespace VogsBingoMod
                 string goalMarkJson = JsonHelper.CreateGoalMarkJson(slotIndex+1, roomCode, color, remove, roomType);
                 StringContent postReqContent = new StringContent(goalMarkJson, Encoding.UTF8, "application/json");
                 try{
-                    VogsBingoModPlugin.LogInfo($"Sending a mark post request");
                     Task<HttpResponseMessage>? markTask = SendPostRequest($"https://{domainName}.com/api/select", postReqContent, true);
                     if (markTask != null)
                     {
@@ -134,7 +134,6 @@ namespace VogsBingoMod
             try
             {
                 markResponse.EnsureSuccessStatusCode();
-                VogsBingoModPlugin.LogInfo("Mark completed successfully.");
                 readResponse.ContinueWith(LogComplete);
             } catch (Exception)
             {
@@ -261,6 +260,7 @@ namespace VogsBingoMod
             StartListeningForMessages();
             connectState = ConnectionState.Connected;
             Coroutiner.CreateCoroutine(UIHelper.NotifyOfRoomEnter_Main(roomType));
+            SetMyColor((int)GoalColors.GetDefaultColor(roomType));
             RequestBoardViaHttp();
         }
 
@@ -402,7 +402,6 @@ namespace VogsBingoMod
             {
                 VogsBingoModPlugin.LogError(e);
             }
-            VogsBingoModPlugin.LogInfo("Done handling goal mark message. UI updates will happen next frame.");
         }
 
         static void HandleNewCardMessage()
@@ -452,7 +451,6 @@ namespace VogsBingoMod
         {
             cancellationTokenSource.Dispose();
             cancellationTokenSource = new CancellationTokenSource();
-            VogsBingoModPlugin.LogInfo("Forcing disconnect");
             if (webSocketClient != null){
                 webSocketClient.Dispose();
                 webSocketClient = null;
@@ -550,7 +548,6 @@ namespace VogsBingoMod
                 }
                 if (flag || (webSocketClient != null && connectState == ConnectionState.Connected && webSocketClient.State != WebSocketState.Open))
                 {
-                    VogsBingoModPlugin.LogInfo("CANCEL REQUESTED");
                     ForceExitRoomWithDisconnectError(1);
                 }
             }
